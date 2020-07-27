@@ -7,25 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 public class ParserTests {
-	@Test
-	void PropertyNameParserTest() {
-		PropertyNameParser parser = new PropertyNameParser();
-		String errormsg = "PropertyNameParser incorrectly parsed a property name at start of string";
 
-		assertAll(
-			() -> assertNull(parser.parse(""), errormsg),
-			() -> assertNull(parser.parse(" abc"), errormsg),
-			() -> assertNull(parser.parse("\nabc def"), errormsg),
-
-			() -> assertEquals("abc", parser.parse("abc"), errormsg),
-			() -> assertEquals("_abc", parser.parse("_abc"), errormsg),
-			() -> assertEquals("$abc", parser.parse("$abc"), errormsg),
-			() -> assertEquals("$", parser.parse("$ abc"), errormsg),
-			() -> assertEquals("ab_c", parser.parse("ab_c"), errormsg),
-			() -> assertEquals("abc", parser.parse("abc _def"), errormsg),
-			() -> assertEquals("abc", parser.parse("abc def"), errormsg)
-		);
-	}
 
 	@Test
 	void SequenceParserTest() {
