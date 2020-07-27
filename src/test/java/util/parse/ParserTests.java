@@ -8,26 +8,6 @@ import org.junit.jupiter.api.Test;
 
 public class ParserTests {
 	@Test
-	void WhitespaceParserTest() {
-		WhitespaceParser whitespaceParser = new WhitespaceParser();
-		String errormsg = "WhitespaceParser incorrectly parsed whitespace at start of string";
-
-		assertAll(
-			() -> assertNull(whitespaceParser.parse(""), errormsg),
-			() -> assertNull(whitespaceParser.parse("test"), errormsg),
-			() -> assertNull(whitespaceParser.parse("_test"), errormsg),
-
-			() -> assertEquals(" ", whitespaceParser.parse(" "), errormsg),
-			() -> assertEquals(" ", whitespaceParser.parse(" test"), errormsg),
-			() -> assertEquals("   ", whitespaceParser.parse("   test"), errormsg),
-			() -> assertEquals("\n", whitespaceParser.parse("\ntest"), errormsg),
-			() -> assertEquals("\t", whitespaceParser.parse("\ttest"), errormsg),
-			() -> assertEquals("\r", whitespaceParser.parse("\rtest"), errormsg),
-			() -> assertEquals("  \n  \t ", whitespaceParser.parse("  \n  \t test"), errormsg)
-		);
-	}
-
-	@Test
 	void PropertyNameParserTest() {
 		PropertyNameParser parser = new PropertyNameParser();
 		String errormsg = "PropertyNameParser incorrectly parsed a property name at start of string";

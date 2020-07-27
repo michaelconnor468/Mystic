@@ -11,31 +11,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b5e2a144-19a1-4844-b61b-fb128b7d56fe" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/util/parse/CaseParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/util/parse/obj/ParserProperty.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/util/parse/NumberParserTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/james.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/util/parse/WhiteSpaceParserTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.5.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.5.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5.1/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.5.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.5.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.5.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/util/parse/ArrayParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/parse/ArrayParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/parse/PropertyParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/parse/PropertyParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/parse/obj/ParserArray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/parse/obj/ParserArray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/parse/obj/ParserBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/parse/obj/ParserBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/parse/obj/ParserDouble.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/parse/obj/ParserDouble.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/parse/obj/ParserInt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/parse/obj/ParserInt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/parse/obj/ParserNumber.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/parse/obj/ParserNumber.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/parse/obj/ParserObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/parse/obj/ParserObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/parse/obj/ParserString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/parse/obj/ParserString.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/parse/obj/Property.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/util/parse/ParserTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/util/parse/ParserTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -83,7 +69,7 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.smartKeys" />
   </component>
-  <component name="RunManager" selected="Gradle.NumberParserTests">
+  <component name="RunManager" selected="Gradle.WhiteSpaceParserTests">
     <configuration name="NumberParserTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -122,8 +108,28 @@
       <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="WhiteSpaceParserTests" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;util.parse.WhiteSpaceParserTests&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.WhiteSpaceParserTests" />
         <item itemvalue="Gradle.NumberParserTests" />
         <item itemvalue="Gradle.ParserTests.ArrayParserTest" />
       </list>
@@ -160,22 +166,22 @@
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="644" y="237" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1595817702209" />
-    <state width="1750" height="190" key="GridCell.Tab.0.bottom" timestamp="1595881306067">
+    <state width="1750" height="190" key="GridCell.Tab.0.bottom" timestamp="1595881902390">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state width="1750" height="190" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1595881306067" />
-    <state width="1750" height="190" key="GridCell.Tab.0.center" timestamp="1595881306067">
+    <state width="1750" height="190" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1595881902390" />
+    <state width="1750" height="190" key="GridCell.Tab.0.center" timestamp="1595881902389">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state width="1750" height="190" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1595881306067" />
-    <state width="1750" height="190" key="GridCell.Tab.0.left" timestamp="1595881306066">
+    <state width="1750" height="190" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1595881902389" />
+    <state width="1750" height="190" key="GridCell.Tab.0.left" timestamp="1595881902388">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state width="1750" height="190" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1595881306066" />
-    <state width="1750" height="190" key="GridCell.Tab.0.right" timestamp="1595881306067">
+    <state width="1750" height="190" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1595881902388" />
+    <state width="1750" height="190" key="GridCell.Tab.0.right" timestamp="1595881902390">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state width="1750" height="190" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1595881306067" />
+    <state width="1750" height="190" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1595881902390" />
     <state width="1750" height="278" key="GridCell.Tab.1.bottom" timestamp="1595867510073">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
@@ -204,16 +210,5 @@
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="561" y="251" width="670" height="676" key="search.everywhere.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1595818919783" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/util/parse/ParserTests.java</url>
-          <line>108</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

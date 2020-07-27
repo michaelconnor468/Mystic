@@ -36,14 +36,18 @@ public class ArrayParser implements Parser<ParserArray> {
             return null;
         
         while ( text != "" ) {
-            text = text.trim();
+            String whitespace = (new WhitespaceParser()).parse(text);
+            text = whitespace == null ? text : text.substring(whitespace.length());
+            if ( text == "" )
+                continue;
             CaseParser caseParser = new CaseParser(type);
             ParserObject parsedObject = caseParser.parse(text);
             if ( parsedObject == null )
                 return null;
             text = text.substring(caseParser.getParsedText().length());
             array.add(parsedObject);
-            text = text.trim();
+            whitespace = (new WhitespaceParser()).parse(text);
+            text = whitespace == null ? text : text.substring(whitespace.length());
             if ( text.length() < 1 )
                 continue;
             if ( text.charAt(0) == ',' )
