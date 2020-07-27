@@ -2,11 +2,11 @@ package util.parse;
 
 import util.parse.obj.*;
 
-public class PropertyParser implements Parser<Property> {
+public class PropertyParser implements Parser<ParserProperty> {
     String parsedText = "";
 
-    public Property parse(String text) {
-        Property property = new Property();
+    public ParserProperty parse(String text) {
+        ParserProperty property = new ParserProperty();
         String next = (new PropertyNameParser()).parse(text);
         if ( next == null ) 
             return null;

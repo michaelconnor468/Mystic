@@ -8,9 +8,9 @@ public class ParserArray implements ParserObject {
     private ArrayList<ParserObject> array;
     private int length;
 
-    public ParserArray() {
+    private ParserArray() {
         length = 0;
-        arrayType = null;
+        array = new ArrayList<ParserObject>();
     }
 
     public ParserArray( ObjectType type ) {
@@ -26,8 +26,8 @@ public class ParserArray implements ParserObject {
     public Iterator getIterator() {
         return array.iterator();
     }
-
-    public ObjectType getType() {
+    public int getLength() { return length; }
+    public ObjectType getElementType() {
         return arrayType;
     }
 
@@ -35,5 +35,17 @@ public class ParserArray implements ParserObject {
         if ( index > length - 1 )
             return null;
         return array.get(index);
+    }
+
+    public ObjectType getType() { return ObjectType.ARRAY; }
+    public String toJSON() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for ( ParserObject obj : array ) {
+            sb.append(obj.toJSON());
+            sb.append(", ");
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }

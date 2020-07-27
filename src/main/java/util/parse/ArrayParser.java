@@ -1,6 +1,7 @@
 package util.parse;
 
 import javax.lang.model.util.ElementScanner14;
+import java.util.ArrayList;
 
 import util.parse.obj.*;
 import util.parse.obj.ParserObject.ObjectType;
@@ -16,57 +17,37 @@ public class ArrayParser implements Parser<ParserArray> {
     public ParserArray parse(String text) {
         if ( !( text.charAt(0) == '[' ) && ( text.charAt(text.length()) == ']' ) )
             return null;
-        text = text.substring(1, text.length() - 1);
-        array = new ParserArray();
+        text = text.substring(1, text.length() - 1).trim();
+        array = new ParserArray(ObjectType.STRING);
         if ( text.length() < 1 )
             return array;
-        String[] elements = text.split(",");
-        
-        String firstElement = elements[0].trim();
-        if ( (( firstElement.charAt(0) == '\'' || firstElement.charAt(0) != '"' ) && ( firstElement.charAt(firstElement.length() - 1) == '\'' || firstElement.charAt(firstElement.length() - 1) == '"' ) && ( firstElement.charAt(0) == firstElement.charAt(firstElement.length() - 1) )) ) 
+
+        if ( (( text.charAt(0) == '\'' || text.charAt(0) != '"' ) && ( text.charAt(text.length() - 1) == '\'' || text.charAt(text.length() - 1) == '"' ) && ( text.charAt(0) == text.charAt(text.length() - 1) )) )
             type = ObjectType.STRING;
-        else if ( firstElement.charAt(0) == '[' && firstElement.charAt(firstElement.length() - 1) == ']' )
+        else if ( text.charAt(0) == '[' && text.charAt(text.length() - 1) == ']' )
             type = ObjectType.ARRAY;
-        else if ( firstElement.charAt(0) == '{' && firstElement.charAt(firstElement.length() - 1) == '}' )
+        else if ( text.charAt(0) == '{' && text.charAt(text.length() - 1) == '}' )
             type = ObjectType.BLOCK;
-        else if ( (new NumberParser()).parse(firstElement) != null && (new NumberParser()).parse(firstElement) instanceof ParserInt )
+        else if ( (new NumberParser()).parse(text) != null && (new NumberParser()).parse(text) instanceof ParserInt )
             type = ObjectType.INT;
-        else if ( (new NumberParser()).parse(firstElement) != null && (new NumberParser()).parse(firstElement) instanceof ParserDouble )
+        else if ( (new NumberParser()).parse(text) != null && (new NumberParser()).parse(text) instanceof ParserDouble )
             type = ObjectType.DOUBLE;
         else
             return null;
         
-        for ( String x : elements ) {
-            x = x.trim();
-            switch (type) {
-                case STRING:
-                    if ( !(( x.charAt(0) == '\'' || x.charAt(0) != '"' ) && ( x.charAt(x.length() - 1) == '\'' || x.charAt(x.length() - 1) == '"' ) && ( x.charAt(0) == x.charAt(x.length() - 1) )) )
-                        return null;
-                    array.add( new ParserString(x.substring(1, x.length() - 1)) );
-                    break;
-                case ARRAY:
-                    ParserArray parsedArray = (new ArrayParser()).parse(x);
-                    if ( parsedArray == null )
-                        return null;
-                    array.add( parsedArray );
-                    break;
-                case BLOCK:
-                    ParserBlock parsedBlock = (new BlockParser()).parse(x);
-                    if ( parsedBlock == null )
-                        return null;
-                    array.add( parsedBlock );
-                    break;
-                case INT:
-                    if ( (new NumberParser()).parse(x) == null || ((new NumberParser()).parse(x) instanceof ParserInt) )
-                        return null;
-                    array.add( (new NumberParser()).parse(x) );
-                    break;
-                case DOUBLE:
-                    if ( (new NumberParser()).parse(x) == null || ((new NumberParser()).parse(x) instanceof ParserDouble) )
-                    return null;
-                    array.add( (new NumberParser()).parse(x) );
-                    break;
-            }
+        while ( text != "" ) {
+            text = text.trim();
+            CaseParser caseParser = new CaseParser(type);
+            ParserObject parsedObject = caseParser.parse(text);
+            if ( parsedObject == null )
+                return null;
+            text = text.substring(caseParser.getParsedText().length());
+            array.add(parsedObject);
+            text = text.trim();
+            if ( text.length() < 1 )
+                continue;
+            if ( text.charAt(0) == ',' )
+                text = text.substring(1);
         }
 
         return array;
