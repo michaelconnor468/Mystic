@@ -1,5 +1,9 @@
 package util.parse;
 
+/**
+ * Gives a formal parser class for parsing to check if a given string is present at the start of the text for
+ * removal. It doesn't have much novel functionality except for making existing code cleaner.
+ */
 public class SequenceParser implements Parser<String> {
     String startString;
 

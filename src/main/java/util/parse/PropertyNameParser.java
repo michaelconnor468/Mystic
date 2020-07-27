@@ -3,6 +3,10 @@ package util.parse;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+/**
+ * Used to parse the name of a property that comes before : in JSON. Since these are going to be mapped to java
+ * variables within the program, the regex picks on any name suitable for the java language.
+ */
 public class PropertyNameParser implements Parser<String> {
     public String parse(String text) {
         Pattern pattern = Pattern.compile("^[a-zA-Z_$][a-zA-Z_$0-9]*");

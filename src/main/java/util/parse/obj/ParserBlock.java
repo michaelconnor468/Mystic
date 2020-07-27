@@ -1,9 +1,10 @@
 package util.parse.obj;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ParserBlock implements ParserObject {
-	private ArrayList<ParserProperty> properties;
+	private ArrayList<ParserObject> properties;
 
 	public ParserBlock() { this.properties = new ArrayList<>(); }
 
