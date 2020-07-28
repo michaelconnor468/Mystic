@@ -49,7 +49,7 @@ public class ArrayParser implements Parser<ParserArray> {
     }
 
     private void setTypeToParse(String text) {
-        if ( (( text.charAt(0) == '\'' || text.charAt(0) != '"' ) && ( text.charAt(text.length() - 1) == '\'' || text.charAt(text.length() - 1) == '"' ) && ( text.charAt(0) == text.charAt(text.length() - 1) )) )
+        if ( text.charAt(0) == '\'' || text.charAt(0) == '"' )
             type = ObjectType.STRING;
         else if ( text.charAt(0) == '[' && text.charAt(text.length() - 1) == ']' )
             type = ObjectType.ARRAY;

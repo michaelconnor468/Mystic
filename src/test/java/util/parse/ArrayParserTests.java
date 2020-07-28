@@ -1,6 +1,7 @@
 package util.parse;
 
 import org.junit.jupiter.api.Test;
+import util.parse.obj.ParserArray;
 import util.parse.obj.ParserString;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,6 +32,23 @@ public class ArrayParserTests {
 
 	@Test
 	void NestedArrayTest() {
+		String errormsg = "Array parser failed to correctly parse a nested array";
 
+		assertAll(
+			() -> assertEquals("test3",
+				((ParserString)
+					((ParserArray)
+						(new ArrayParser()).parse("[['test1', 'test3'], ['test2']]").getIndex(0)
+					).getIndex(1)
+				).getString(), errormsg),
+			() -> assertEquals("test3",
+				((ParserString)
+					((ParserArray)
+						((ParserArray)
+							(new ArrayParser()).parse("[[['test1'], ['test3']], ['test2']]").getIndex(0)
+						).getIndex(1)
+					).getIndex(0)
+				).getString(), errormsg)
+		);
 	}
 }
