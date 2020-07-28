@@ -6,7 +6,6 @@ package util.parse.obj;
  */
 public class ParserProperty implements ParserObject {
     protected String name;
-    protected String parsedText;
     protected ObjectType propertyType;
     protected ParserObject content;
 
@@ -18,7 +17,6 @@ public class ParserProperty implements ParserObject {
     public void setName(String name) {this.name = name;}
     public void setPropertyType(ObjectType propertyType) {this.propertyType = propertyType;}
     public void setContent(ParserObject content) {this.content = content;}
-    public void setParsedText(String parsedText) {this.parsedText = parsedText;}
 
 	public String toJSON() {
 		return name + ": " + content.toJSON();

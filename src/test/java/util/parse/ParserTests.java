@@ -27,25 +27,4 @@ public class ParserTests {
 			() -> assertEquals(0, (new ArrayParser()).parse("[]").getLength(), errormsg)
 		);
 	}
-
-	@Test
-	void PropertyParserStringTest() {
-		String errormsg = "Property parser failed to correctly parse a property of type string";
-
-		assertAll(
-			() -> assertNull((new PropertyParser()).parse("hello"), errormsg),
-			() -> assertNull((new PropertyParser()).parse(" hello:\"test\""), errormsg),
-			() -> assertNull((new PropertyParser()).parse(""), errormsg),
-			() -> assertNull((new PropertyParser()).parse("test:"), errormsg),
-			() -> assertNull((new PropertyParser()).parse("test: "), errormsg)
-		);
-
-		ParserProperty property1 = (new PropertyParser()).parse("test:\"tester\"");
-		ParserProperty property2 = (new PropertyParser()).parse("test:'tester'");
-		assertAll(
-			() -> assertEquals("test", property1.getName(), errormsg),
-			() -> assertEquals("tester", ((ParserString) property1.getContent()).getString(), errormsg),
-			() -> assertEquals("tester", ((ParserString) property2.getContent()).getString(), errormsg)
-		);
-	}
 }
