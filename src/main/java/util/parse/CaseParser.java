@@ -33,7 +33,7 @@ public class CaseParser implements Parser<ParserObject> {
 		switch ( type ) {
 			case STRING:
 				parsedText = (new BracketedExpressionParser()).parse(text);
-				return parsedText == null || parsedText.charAt(0) != '\'' || parsedText.charAt(0) != '"' ?
+				return parsedText == null || (parsedText.charAt(0) != '\'' && parsedText.charAt(0) != '"') ?
 					null : new ParserString(parsedText.substring(1, parsedText.length() - 1 ));
 			case INT:
 			case DOUBLE:

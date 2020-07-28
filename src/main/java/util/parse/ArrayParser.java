@@ -15,30 +15,21 @@ public class ArrayParser implements Parser<ParserArray> {
     ParserObject.ObjectType type;
 
     public ParserArray parse(String text) {
-        if ( !( text.charAt(0) == '[' ) && ( text.charAt(text.length()) == ']' ) )
+        if ( text.length() < 1 || text.charAt(0) != '[' || text.charAt(text.length() - 1) != ']' )
             return null;
         text = text.substring(1, text.length() - 1).trim();
         array = new ParserArray(ObjectType.STRING);
         if ( text.length() < 1 )
             return array;
 
-        if ( (( text.charAt(0) == '\'' || text.charAt(0) != '"' ) && ( text.charAt(text.length() - 1) == '\'' || text.charAt(text.length() - 1) == '"' ) && ( text.charAt(0) == text.charAt(text.length() - 1) )) )
-            type = ObjectType.STRING;
-        else if ( text.charAt(0) == '[' && text.charAt(text.length() - 1) == ']' )
-            type = ObjectType.ARRAY;
-        else if ( text.charAt(0) == '{' && text.charAt(text.length() - 1) == '}' )
-            type = ObjectType.BLOCK;
-        else if ( (new NumberParser()).parse(text) != null && (new NumberParser()).parse(text) instanceof ParserInt )
-            type = ObjectType.INT;
-        else if ( (new NumberParser()).parse(text) != null && (new NumberParser()).parse(text) instanceof ParserDouble )
-            type = ObjectType.DOUBLE;
-        else
+        setTypeToParse(text);
+        if ( type == null )
             return null;
-        
-        while ( text != "" ) {
+
+        while ( !text.equals("") ) {
             String whitespace = (new WhitespaceParser()).parse(text);
             text = whitespace == null ? text : text.substring(whitespace.length());
-            if ( text == "" )
+            if ( text.equals("") )
                 continue;
             CaseParser caseParser = new CaseParser(type);
             ParserObject parsedObject = caseParser.parse(text);
@@ -55,5 +46,20 @@ public class ArrayParser implements Parser<ParserArray> {
         }
 
         return array;
+    }
+
+    private void setTypeToParse(String text) {
+        if ( (( text.charAt(0) == '\'' || text.charAt(0) != '"' ) && ( text.charAt(text.length() - 1) == '\'' || text.charAt(text.length() - 1) == '"' ) && ( text.charAt(0) == text.charAt(text.length() - 1) )) )
+            type = ObjectType.STRING;
+        else if ( text.charAt(0) == '[' && text.charAt(text.length() - 1) == ']' )
+            type = ObjectType.ARRAY;
+        else if ( text.charAt(0) == '{' && text.charAt(text.length() - 1) == '}' )
+            type = ObjectType.BLOCK;
+        else if ( (new NumberParser()).parse(text) != null && (new NumberParser()).parse(text) instanceof ParserInt )
+            type = ObjectType.INT;
+        else if ( (new NumberParser()).parse(text) != null && (new NumberParser()).parse(text) instanceof ParserDouble )
+            type = ObjectType.DOUBLE;
+        else
+            type = null;
     }
 }
