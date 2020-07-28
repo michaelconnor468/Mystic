@@ -10,52 +10,6 @@ public class ParserTests {
 
 
 	@Test
-	void SequenceParserTest() {
-		SequenceParser parser = new SequenceParser("hello");
-		String errormsg = "SequenceParser incorrectly parsed a substring at start of string";
-
-		assertAll(
-			() -> assertNull(parser.parse(" hello"), errormsg),
-			() -> assertNull(parser.parse("he llo"), errormsg),
-			() -> assertNull(parser.parse("he\nllo"), errormsg),
-			() -> assertNull(parser.parse("_hello"), errormsg),
-			() -> assertNull(parser.parse("abc"), errormsg),
-			() -> assertNull(parser.parse("\nhello"), errormsg),
-			() -> assertNull(parser.parse(""), errormsg),
-
-			() -> assertEquals("hello", parser.parse("hello"), errormsg),
-			() -> assertEquals("hello", parser.parse("hellohi"), errormsg),
-			() -> assertEquals("hello", parser.parse("hello hi"), errormsg),
-			() -> assertEquals("hello", parser.parse("hello\nhi"), errormsg)
-		);
-	}
-
-	@Test
-	void BracketParserTest() {
-		BracketedExpressionParser parser = new BracketedExpressionParser();
-		String errormsg = "Bracketed expression parser failed to correctly parse a bracketed string correctly";
-
-		assertAll(
-			() -> assertNull(parser.parse("'hello"), errormsg),
-			() -> assertNull(parser.parse(" [ test ]"), errormsg),
-			() -> assertNull(parser.parse(""), errormsg),
-			() -> assertNull(parser.parse("[ hi "), errormsg),
-			() -> assertNull(parser.parse("{"), errormsg),
-			() -> assertNull(parser.parse("{ hello { hi }"), errormsg),
-			() -> assertNull(parser.parse("\""), errormsg),
-			() -> assertNull(parser.parse("\" \n"), errormsg),
-			() -> assertNull(parser.parse("{ \n\t { \n }"), errormsg),
-
-			() -> assertEquals("{test}", parser.parse("{test}"), errormsg),
-			() -> assertEquals("{\n{test} test}", parser.parse("{\n{test} test}"), errormsg),
-			() -> assertEquals("[test]", parser.parse("[test]"), errormsg),
-			() -> assertEquals("(test)", parser.parse("(test)"), errormsg),
-			() -> assertEquals("\"test\"", parser.parse("\"test\""), errormsg),
-			() -> assertEquals("'test'", parser.parse("'test'"), errormsg)
-		);
-	}
-
-	@Test
 	void ArrayParserTest() {
 		String errormsg = "Array parser failed to correctly parse an array";
 

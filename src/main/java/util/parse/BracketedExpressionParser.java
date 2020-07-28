@@ -7,31 +7,14 @@ public class BracketedExpressionParser implements Parser<String> {
     public String parse(String text) {
         if (text.length() < 1) return null;
         char firstBracket = text.charAt(0);
-        char finalBracket;
-        StringBuilder sb = new StringBuilder();
+        char finalBracket = getBracketComplement(firstBracket);
+        if ( finalBracket == 'e' )
+            return null;
 
-        switch ( firstBracket ){
-            case '[':
-                finalBracket = ']';
-                break;
-            case '(':
-                finalBracket = ')';
-                break;
-            case '{':
-                finalBracket = '}';
-                break;
-            case '"':
-                finalBracket = '"';
-                break;
-            case '\'':
-                finalBracket = '\'';
-                break;
-            default:
-                return null;
-        }
+        StringBuilder sb = new StringBuilder();
         sb.append(text.charAt(0));
 
-        // Used as a sort of semaphor that increments when a firstBracket is found and decraments when an finalBracket is found
+        // Used as a sort of semaphore that increments when a firstBracket is found and decraments when an finalBracket is found
         int count = 1;
         for (int i = 1; count > 0 && i < text.length(); i++) {
             if ( text.charAt(i) == firstBracket && finalBracket != firstBracket )
@@ -42,5 +25,23 @@ public class BracketedExpressionParser implements Parser<String> {
         }
 
         return count == 0 ? sb.toString() : null;
+    }
+
+    // Returns e on none found
+    private char getBracketComplement(char bracket) {
+            switch ( bracket ){
+            case '[':
+                return ']';
+            case '(':
+                return ')';
+            case '{':
+                return '}';
+            case '"':
+                return '"';
+            case '\'':
+                return '\'';
+            default:
+                return 'e';
+        }
     }
 }
