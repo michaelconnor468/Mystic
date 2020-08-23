@@ -4,19 +4,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ParserBlock implements ParserObject {
-	private ArrayList<ParserObject> properties;
+	private HashMap<String, ParserObject> properties;
 
-	public ParserBlock() { this.properties = new ArrayList<>(); }
+	public ParserBlock() { this.properties = new HashMap<>(); }
 
 	public ObjectType getType() { return ObjectType.BLOCK; }
 	public String toJSON() {
 		StringBuilder sb = new StringBuilder();
         sb.append("{");
-        for ( ParserObject obj : properties ) {
+        for ( ParserObject obj : properties.values() ) {
             sb.append(obj.toJSON());
             sb.append(", ");
         }
         sb.append("}");
         return sb.toString();
+	}
+
+	public void addProperty(ParserProperty p) {
+		properties.put(p.getName(), p.getContent());
+	}
+
+	public HashMap<String, ParserObject> getProperties() {
+		return properties;
 	}
 }
