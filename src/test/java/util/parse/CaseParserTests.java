@@ -13,8 +13,8 @@ public class CaseParserTests {
 
 		assertNull((new CaseParser(ParserObject.ObjectType.INT)).parse("'hello'"), errormsg);
 		assertNull((new CaseParser(ParserObject.ObjectType.STRING)).parse("['hello']"), errormsg);
-//TODO	assertNull((new CaseParser(ParserObject.ObjectType.ARRAY)).parse("'hello'"), errormsg);
-//TODO	assertNull((new CaseParser(ParserObject.ObjectType.BLOCK)).parse("'hello'"), errormsg);
+		assertNull((new CaseParser(ParserObject.ObjectType.ARRAY)).parse("'hello'"), errormsg);
+		assertNull((new CaseParser(ParserObject.ObjectType.BLOCK)).parse("'hello'"), errormsg);
 		assertNull((new CaseParser(ParserObject.ObjectType.DOUBLE)).parse("436"), errormsg);
 		assertNull((new CaseParser()).parse(" 'hello'"), errormsg);
 	}
