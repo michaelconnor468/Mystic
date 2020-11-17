@@ -34,27 +34,25 @@ public class ArrayParserTests {
 	void NestedArrayTest() {
 		String errormsg = "Array parser failed to correctly parse a nested array";
 
-		assertAll(
-			() -> assertEquals("test3",
+		assertEquals("test3",
 				((ParserString)
 					((ParserArray)
-						(new ArrayParser()).parse("[['test1', 'test3'], ['test2']]").getIndex(0)
-					).getIndex(1)
-				).getString(), errormsg),
-			() -> assertEquals("test3",
+							(new ArrayParser()).parse("[['test1', 'test3'], ['test2']]").getIndex(0))
+					.getIndex(1)
+				).getString(), errormsg);
+		assertEquals("test3",
 				((ParserString)
 					((ParserArray)
 						((ParserArray)
 							(new ArrayParser()).parse("[[['test1'], ['test3']], ['test2']]").getIndex(0)
 						).getIndex(1)
 					).getIndex(0)
-				).getString(), errormsg),
-			() -> assertEquals("test1", 
-        ((ParserString) 
-          ((ParserArray) 
-            (new ArrayParser()).parse("[['test1', 'test3'], ['test2']]").getIndex(1)
-          ).getIndex(0)
-        ).getString(), errormsg) // TODO fix error here
-		);
+				).getString(), errormsg);
+		assertEquals("test2",
+			((ParserString)
+          		((ParserArray)
+            		(new ArrayParser()).parse("[['test1', 'test3'], ['test2']]").getIndex(1)
+          		).getIndex(0)
+        	).getString(), errormsg);
 	}
 }
