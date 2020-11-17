@@ -15,7 +15,7 @@ public class ArrayParserTests {
 		assertAll(
 			() -> assertNull((new PropertyParser()).parse("'test']"), errormsg),
 			() -> assertNull((new PropertyParser()).parse("['test'"), errormsg),
-		    () -> assertNull((new PropertyParser()).parse(""), errormsg)
+      () -> assertNull((new PropertyParser()).parse(""), errormsg)
 		);
 	}
 
@@ -48,7 +48,13 @@ public class ArrayParserTests {
 							(new ArrayParser()).parse("[[['test1'], ['test3']], ['test2']]").getIndex(0)
 						).getIndex(1)
 					).getIndex(0)
-				).getString(), errormsg)
+				).getString(), errormsg),
+			() -> assertEquals("test1", 
+        ((ParserString) 
+          ((ParserArray) 
+            (new ArrayParser()).parse("[['test1', 'test3'], ['test2']]").getIndex(1)
+          ).getIndex(0)
+        ).getString(), errormsg) // TODO fix error here
 		);
 	}
 }
