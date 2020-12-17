@@ -8,7 +8,7 @@ public class BlockParser implements Parser<ParserBlock> {
         if ( text == null )
             return null;
         text = text.substring(1, text.length() - 1);
-        text = (new WhitespaceParser()).parse(text) == null? text : text.substring((new WhitespaceParser()).parse(text).length());
+        text = WhitespaceParser.cutWhitespace(text);
         ParserBlock block = new ParserBlock();
 
         while ( !text.equals("") ) {

@@ -14,4 +14,8 @@ public class WhitespaceParser implements Parser<String> {
             sb.append(text.charAt(i));
         return sb.toString();
     }
+
+    static String cutWhitespace(String text) {
+        return (new WhitespaceParser()).parse(text) == null ? text : text.substring((new WhitespaceParser()).parse(text).length());
+    }
 }
