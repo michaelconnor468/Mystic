@@ -2,13 +2,20 @@ package util.parse;
 
 import util.parse.obj.*;
 
-public class BlockParser implements Parser<ParserBlock> {
+public class BlockParser implements Parser<ParserBlock> {  
+    public int parsedLength;
+
     public ParserBlock parse(String text) {
+        parsedLength = 0;
         text = (new BracketedExpressionParser()).parse(text);
         if ( text == null )
             return null;
         text = text.substring(1, text.length() - 1);
-        text = WhitespaceParser.cutWhitespace(text);
+        parsedLength = parsedLength + 2;
+        WhitespaceParser whitespaceParser = new WhitespaceParser();
+        text = whitespaceParser.cutWhitespace(text);
+        parsedLength = parsedLength + whitespaceParser.parsedLength;
+
         ParserBlock block = new ParserBlock();
 
         while ( !text.equals("") ) {
@@ -28,5 +35,9 @@ public class BlockParser implements Parser<ParserBlock> {
                 return text.substring(1);
         }
         return null;
+    }
+
+    public int getParsedLength() {
+      return parsedLength;
     }
 }
