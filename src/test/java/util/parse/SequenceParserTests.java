@@ -35,4 +35,17 @@ public class SequenceParserTests {
 			() -> assertEquals("hello", parser.parse("hello\nhi"), errormsg)
 		);
 	}
+
+  @Test
+  void ParserCountTest() {
+    SequenceParser parser = new SequenceParser("test");
+    String errormsg = "SequenceParser failed to correctly count number of characters parsed";
+
+    parser.parse("test");
+    assertEquals(4, parser.getParsedLength(), errormsg);
+    parser.parse("test test");
+    assertEquals(4, parser.getParsedLength(), errormsg);
+    parser.parse("ntest");
+    assertEquals(0, parser.getParsedLength(), errormsg);
+  }
 }

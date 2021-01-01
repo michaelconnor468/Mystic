@@ -6,6 +6,7 @@ package util.parse;
  */
 public class SequenceParser implements Parser<String> {
     String startString;
+    private int parseCount;
 
     private SequenceParser() {}
 
@@ -15,10 +16,17 @@ public class SequenceParser implements Parser<String> {
     }
 
     public String parse(String text) {
+        parseCount = 0;
         if ( text.length() < startString.length() )
             return null;
-        else if ( text.substring(0, startString.length()).equals(startString) )
+        else if ( text.substring(0, startString.length()).equals(startString) ) {
+            parseCount = startString.length();
             return startString;
+        }
         return null;
+    }
+
+    public int getParsedLength() {
+      return parseCount;
     }
 }
