@@ -27,6 +27,6 @@ public class WhitespaceParser implements Parser<String> {
     }
 
     public int getParsedLength() {
-      return parsedLength();
+      return parsedLength;
     }
 }

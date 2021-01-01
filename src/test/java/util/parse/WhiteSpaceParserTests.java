@@ -40,4 +40,19 @@ public class WhiteSpaceParserTests {
 			() -> assertEquals("  \n  \t ", (new WhitespaceParser()).parse("  \n  \t test"), errormsg)
 		);
 	}
+
+  @Test
+  void ParseCountTest() {
+    String errormsgs = "Whitespace parser failed to correctly count number of characters parsed";
+
+    WhitespaceParser parser = new WhitespaceParser();
+    parser.parse("test");
+    assertEquals(0, parser.getParsedLength());
+    parser.parse("");
+    assertEquals(0, parser.getParsedLength());
+    parser.parse("   hello");
+    assertEquals(3, parser.getParsedLength());
+    parser.parse(" \n\ttest");
+    assertEquals(3, parser.getParsedLength());
+  }
 }
