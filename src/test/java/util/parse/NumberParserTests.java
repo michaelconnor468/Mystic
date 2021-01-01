@@ -43,4 +43,19 @@ public class NumberParserTests {
 			() -> assertEquals(14.24, ((ParserDouble) (new NumberParser()).parse("14.24,")).getNumber(), errormsg3)
 		);
 	}
+
+  @Test
+  void ParseCountTest() {
+    String errormsg = "Number parser failed to correctly count number of characters parsed";
+
+    NumberParser parser = new NumberParser();
+    parser.parse("");
+    assertEquals(0, parser.getParsedLength(), errormsg);
+    parser.parse("123");
+    assertEquals(3, parser.getParsedLength(), errormsg);
+    parser.parse("0.32");
+    assertEquals(4, parser.getParsedLength(), errormsg);
+    parser.parse("123test");
+    assertEquals(3, parser.getParsedLength(), errormsg);
+  }
 }
