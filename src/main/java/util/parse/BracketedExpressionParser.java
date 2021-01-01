@@ -4,7 +4,10 @@ package util.parse;
  * Parses a string from a starting bracket to the matching final bracket or parenthesis. Used primarily as a utility to extract text contained within two brackets.
  */
 public class BracketedExpressionParser implements Parser<String> {
+    private int parsedLength;
+
     public String parse(String text) {
+        parsedLength = 0;
         if (text.length() < 1) return null;
         char firstBracket = text.charAt(0);
         char finalBracket = getBracketComplement(firstBracket);
@@ -14,7 +17,7 @@ public class BracketedExpressionParser implements Parser<String> {
         StringBuilder sb = new StringBuilder();
         sb.append(text.charAt(0));
 
-        // Used as a sort of semaphore that increments when a firstBracket is found and decraments when an finalBracket is found
+        // Used as a counter that increments when a firstBracket is found and decraments when an finalBracket is found so the matching bracket is known when it reaches 0
         int count = 1;
         for (int i = 1; count > 0 && i < text.length(); i++) {
             if ( text.charAt(i) == firstBracket && finalBracket != firstBracket )
@@ -23,7 +26,7 @@ public class BracketedExpressionParser implements Parser<String> {
                 count--;
             sb.append(text.charAt(i));
         }
-
+        parsedLength = count == 0 ? sb.toString().length() : 0;
         return count == 0 ? sb.toString() : null;
     }
 
@@ -43,5 +46,9 @@ public class BracketedExpressionParser implements Parser<String> {
             default:
                 return 'e';
         }
+    }
+
+    public int getParsedLength() {
+      return parsedLength;
     }
 }

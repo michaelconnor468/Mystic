@@ -52,4 +52,19 @@ public class BracketedExpressionParserTests {
 			() -> assertEquals("'test'", (new BracketedExpressionParser()).parse("'test'"), errormsg)
 		);
 	}
+
+  @Test
+  void ParsedCountTest() {
+    String errormsg = "Bracketed expression parser failed to correctly count number of characters parsed.";
+
+    BracketedExpressionParser parser = new BracketedExpressionParser();
+    parser.parse("[test]");
+    assertEquals(6, parser.getParsedLength(), errormsg);
+    parser.parse("");
+    assertEquals(0, parser.getParsedLength(), errormsg);
+    parser.parse("[test");
+    assertEquals(0, parser.getParsedLength(), errormsg);
+    parser.parse("{\n{test} test}");
+    assertEquals(14, parser.getParsedLength(), errormsg);
+  }
 }
