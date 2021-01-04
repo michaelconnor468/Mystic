@@ -14,6 +14,7 @@ import util.parse.obj.*;
 public class CaseParser implements Parser<ParserObject> {
 	private ParserObject.ObjectType type;
 	private String parsedText;
+  private int parsedLength;
 
 	public CaseParser() {
 		parsedText = "";
@@ -25,27 +26,38 @@ public class CaseParser implements Parser<ParserObject> {
 	}
 
 	public ParserObject parse(String text) {
-		if ( type == null )
+		parsedLength = 0;
+    if ( type == null )
 			discernType(text);
 		if ( type == null )
 			return null;
 		StringBuilder sb = new StringBuilder();
+    BracketedExpressionParser bracketParser = new BracketedExpressionParser();
 		switch ( type ) {
 			case STRING:
-				parsedText = (new BracketedExpressionParser()).parse(text);
-				return ( parsedText == null || (parsedText.charAt(0) != '\'' && parsedText.charAt(0) != '"') ) ?
-						null : new ParserString(parsedText.substring(1, parsedText.length() - 1));
+				parsedText = bracketParser.parse(text);
+        parsedLength = parsedLength + bracketParser.getParsedLength();
+				if ( parsedText == null || (parsedText.charAt(0) != '\'' && parsedText.charAt(0) != '"') ) {
+            parsedLength = 0;
+            return null;
+        }
+        else 
+            return new ParserString(parsedText.substring(1, parsedText.length() - 1));
 			case INT:
 			case DOUBLE:
-				ParserNumber parserNumber = (new NumberParser()).parse(text);
+        NumberParser numParser = new NumberParser();
+				ParserNumber parserNumber = numParser.parse(text);
 				if ( parserNumber == null ) return null;
 				parsedText = parserNumber.toJSON();
+        parsedLength = numParser.getParsedLength();
 				return parserNumber.getType() == type ? parserNumber : null;
 			case ARRAY:
-				parsedText = (new BracketedExpressionParser()).parse(text);
+				parsedText = bracketParser.parse(text);
+        parsedLength = bracketParser.getParsedLength();
 				return parsedText == null ? null : (new ArrayParser()).parse(parsedText);
 			case BLOCK:
-				parsedText = (new BracketedExpressionParser()).parse(text);
+				parsedText = bracketParser.parse(text);
+        parsedLength = bracketParser.getParsedLength();
 				return parsedText == null ? null : (new BlockParser()).parse(parsedText);
 			default:
 				return null;
@@ -74,4 +86,5 @@ public class CaseParser implements Parser<ParserObject> {
 	}
 
 	public String getParsedText() { return parsedText; }
+  public int getParsedLength() { return parsedLength; }
 }

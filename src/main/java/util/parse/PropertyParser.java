@@ -3,45 +3,63 @@ package util.parse;
 import util.parse.obj.*;
 
 public class PropertyParser implements Parser<ParserProperty> {
+    private int parsedLength;
+
     public ParserProperty parse(String text) {
+        parsedLength = 0;
         ParserProperty property = new ParserProperty();
         text = parseName(property, text);
-        if ( text == null )
+        if ( text == null ) {
+            parsedLength = 0;
             return null;
+        }
 
-        String next = (new SequenceParser(":")).parse(text);
-        if ( next == null )
+        SequenceParser colonParser = new SequenceParser(":");
+        String next = colonParser.parse(text);
+        if ( next == null ) {
+            parsedLength = 0;
             return null;
+        }
+
+        parsedLength = parsedLength + colonParser.getParsedLength();
         text = text.substring(next.length());
-        text = cutWhitespace(text);
-        if ( text.length() < 1 )
+        WhitespaceParser whitespaceParser = new WhitespaceParser();
+        text = whitespaceParser.cutWhitespace(text);
+        parsedLength = parsedLength + whitespaceParser.getParsedLength();
+        if ( text.length() < 1 ) {
+            parsedLength = 0;
             return null;
+        }
 
-        ParserObject content = (new CaseParser()).parse(text);
-        if ( content == null )
+        CaseParser caseParser = new CaseParser();
+        ParserObject content = caseParser.parse(text);
+        if ( content == null ) {
+            parsedLength = 0;
             return null;
+        }
+
         property.setPropertyType(content.getType());
         property.setContent(content);
+        parsedLength = parsedLength + caseParser.getParsedLength();
         return property;
     }
 
-    private String cutWhitespace(String text) {
-        if ( text == "" ) {
-            return text;
-        }
-        String whitespace = (new WhitespaceParser()).parse(text);
-        if ( whitespace == null )
-            return text;
-        return text.substring(whitespace.length());
+    public int getParsedLength() {
+      return parsedLength;
     }
 
+    /**
+     *  Helper method for parse
+     */
     private String parseName(ParserProperty property, String text) {
-        String parsedText = (new PropertyNameParser()).parse(text);
+        PropertyNameParser nameParser = new PropertyNameParser();
+        String parsedText = nameParser.parse(text);
         if ( parsedText == null )
             return null;
         property.setName(parsedText);
         text = text.substring(parsedText.length());
-        text = cutWhitespace(text);
+        parsedLength = parsedLength + text.length();
+        text = (new WhitespaceParser()).cutWhitespace(text);
         return text;
     }
 }

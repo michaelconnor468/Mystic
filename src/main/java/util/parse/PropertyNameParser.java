@@ -8,11 +8,14 @@ import java.util.regex.Matcher;
  * variables within the program, the regex picks on any name suitable for the java language.
  */
 public class PropertyNameParser implements Parser<String> {
+    private int parsedLength;
     public String parse(String text) {
+        parsedLength = 0;
         Pattern pattern = Pattern.compile("^[a-zA-Z_$][a-zA-Z_$0-9]*");
         Matcher matcher = pattern.matcher(text);
         if ( !matcher.find() )
             return null;
+        parsedLength = matcher.group().length();
         return matcher.group();
     }
 }
