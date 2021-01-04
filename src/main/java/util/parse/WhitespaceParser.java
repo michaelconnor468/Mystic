@@ -8,11 +8,11 @@ public class WhitespaceParser implements Parser<String> {
     public int parsedLength = 0;
 
     public String parse(String text) {
+        parsedLength = 0;
         if ( text.length() < 1 || !Character.isWhitespace(text.charAt(0)) ) 
             return null;
 
         StringBuilder sb = new StringBuilder();
-        parsedLength = 0;
         for ( int i = 0; i < text.length() && Character.isWhitespace(text.charAt(i)); i++ ) {
             sb.append(text.charAt(i));
             parsedLength++;
@@ -21,8 +21,9 @@ public class WhitespaceParser implements Parser<String> {
     }
 
     public String cutWhitespace(String text) {
+        parsedLength = 0;
         String ret = (new WhitespaceParser()).parse(text) == null ? text : text.substring((new WhitespaceParser()).parse(text).length());
-        parsedLength = ret.length();
+        parsedLength = text.length() - ret.length();
         return ret;
     }
 

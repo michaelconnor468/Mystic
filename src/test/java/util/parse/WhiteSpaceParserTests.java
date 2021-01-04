@@ -43,16 +43,18 @@ public class WhiteSpaceParserTests {
 
   @Test
   void ParseCountTest() {
-    String errormsgs = "Whitespace parser failed to correctly count number of characters parsed";
+    String errormsg = "Whitespace parser failed to correctly count number of characters parsed";
 
     WhitespaceParser parser = new WhitespaceParser();
     parser.parse("test");
-    assertEquals(0, parser.getParsedLength());
+    assertEquals(0, parser.getParsedLength(), errormsg);
     parser.parse("");
-    assertEquals(0, parser.getParsedLength());
+    assertEquals(0, parser.getParsedLength(), errormsg);
     parser.parse("   hello");
-    assertEquals(3, parser.getParsedLength());
+    assertEquals(3, parser.getParsedLength(), errormsg);
     parser.parse(" \n\ttest");
-    assertEquals(3, parser.getParsedLength());
+    assertEquals(3, parser.getParsedLength(), errormsg);
+    parser.cutWhitespace(" \n\ttest");
+    assertEquals(3, parser.getParsedLength(), errormsg);
   }
 }

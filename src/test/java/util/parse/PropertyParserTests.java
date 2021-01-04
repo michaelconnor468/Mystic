@@ -54,13 +54,13 @@ public class PropertyParserTests {
     String errormsg = "PropertyParser failed to correctly count the total number of characters parsed";
     PropertyParser parser = new PropertyParser();
 
-    /*parser.parse("test: 546");
+    parser.parse("test: 546");
     assertEquals(9, parser.getParsedLength(), errormsg);
     parser.parse("test:");
     assertEquals(0, parser.getParsedLength(), errormsg);
     parser.parse("");
     assertEquals(0, parser.getParsedLength(), errormsg);
     parser.parse("test:\"tester\"");
-    assertEquals(13, parser.getParsedLength(), errormsg);*/
+    assertEquals(13, parser.getParsedLength(), errormsg);
   }
 }
