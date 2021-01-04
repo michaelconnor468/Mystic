@@ -18,4 +18,6 @@ public class PropertyNameParser implements Parser<String> {
         parsedLength = matcher.group().length();
         return matcher.group();
     }
+
+    public int getParsedLength() { return parsedLength; }
 }

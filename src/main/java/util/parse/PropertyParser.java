@@ -57,9 +57,11 @@ public class PropertyParser implements Parser<ParserProperty> {
         if ( parsedText == null )
             return null;
         property.setName(parsedText);
-        text = text.substring(parsedText.length());
-        parsedLength = parsedLength + text.length();
-        text = (new WhitespaceParser()).cutWhitespace(text);
+        text = text.substring(nameParser.getParsedLength());
+        parsedLength = parsedLength + nameParser.getParsedLength();
+        WhitespaceParser whitespaceParser = new WhitespaceParser();
+        text = whitespaceParser.cutWhitespace(text);
+        parsedLength = parsedLength + whitespaceParser.getParsedLength();
         return text;
     }
 }

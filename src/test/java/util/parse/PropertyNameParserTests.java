@@ -36,11 +36,25 @@ public class PropertyNameParserTests {
 		String errormsg = "PropertyNameParser incorrectly parsed a property name with characters other than letters";
 
 		assertAll(
-
 			() -> assertEquals("_abc", (new PropertyNameParser()).parse("_abc"), errormsg),
 			() -> assertEquals("abc42", (new PropertyNameParser()).parse("abc42"), errormsg),
 			() -> assertEquals("$", (new PropertyNameParser()).parse("$ abc"), errormsg),
 			() -> assertEquals("ab_c", (new PropertyNameParser()).parse("ab_c"), errormsg)
 		);
 	}
+
+  @Test
+  void ParsedLengthTest() {
+    String errormsg = "PropertyNameParser failed to correctly count the parsed length";
+    PropertyNameParser nameParser = new PropertyNameParser();
+
+    nameParser.parse("_abc");
+    assertEquals(4, nameParser.getParsedLength(), errormsg);
+    nameParser.parse("$ abc");
+    assertEquals(1, nameParser.getParsedLength(), errormsg);
+    nameParser.parse("");
+    assertEquals(0, nameParser.getParsedLength(), errormsg);
+    nameParser.parse(" abc");
+    assertEquals(0, nameParser.getParsedLength(), errormsg);
+  }
 }
