@@ -12,11 +12,9 @@ public class ArrayParserTests {
 	void InvalidInputTest() {
 		String errormsg = "Failed to return null upon invalid input to ArrayParser.";
 
-		assertAll(
-			() -> assertNull((new PropertyParser()).parse("'test']"), errormsg),
-			() -> assertNull((new PropertyParser()).parse("['test'"), errormsg),
-      () -> assertNull((new PropertyParser()).parse(""), errormsg)
-		);
+		assertNull((new ArrayParser()).parse("'test']"), errormsg);
+		assertNull((new ArrayParser()).parse("['test'"), errormsg);
+    assertNull((new ArrayParser()).parse(""), errormsg);
 	}
 
 	@Test
@@ -55,4 +53,22 @@ public class ArrayParserTests {
           		).getIndex(0)
         	).getString(), errormsg);
 	}
+
+  @Test
+  void ParsedLengthTest() {
+    String errormsg = "Array parser failed to correctly count number of characters parsed";
+    ArrayParser arrayParser = new ArrayParser();
+    
+    arrayParser.parse("'test']");
+    assertEquals(0, arrayParser.getParsedLength(), errormsg);
+    arrayParser.parse("['test'");
+    assertEquals(0, arrayParser.getParsedLength(), errormsg);
+    arrayParser.parse("");
+    assertEquals(0, arrayParser.getParsedLength(), errormsg);
+
+    arrayParser.parse("[['test1', 'test3'], ['test2']]");
+    assertEquals(31, arrayParser.getParsedLength(), errormsg);
+    arrayParser.parse("[]");
+    assertEquals(2, arrayParser.getParsedLength(), errormsg);
+  }
 }
