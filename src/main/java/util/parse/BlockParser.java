@@ -3,7 +3,7 @@ package util.parse;
 import util.parse.obj.*;
 
 public class BlockParser implements Parser<ParserBlock> {  
-    public int parsedLength;
+    private int parsedLength;
 
     public ParserBlock parse(String text) {
         parsedLength = 0;
@@ -19,20 +19,26 @@ public class BlockParser implements Parser<ParserBlock> {
         ParserBlock block = new ParserBlock();
 
         while ( !text.equals("") ) {
-            ParserProperty property = (new PropertyParser()).parse(text);
-            if ( property == null )
+            PropertyParser propertyParser = new PropertyParser();
+            ParserProperty property = propertyParser.parse(text);
+            if ( property == null ) {
+                parsedLength = 0;
                 return null;
+            }
             block.addProperty(property);
-            text = cutToNextProperty(text);
+            text = cutToNextProperty(text) == null ? text : cutToNextProperty(text);
+            text = whitespaceParser.cutWhitespace(text);
+            parsedLength = parsedLength + whitespaceParser.getParsedLength() + propertyParser.getParsedLength();
         }
         return block;
     }
 
     private String cutToNextProperty( String text ) {
-        while ( text.length() > 0 ) {
-            text = text.substring((new WhitespaceParser()).parse(text).length());
-            if ( text != null && text.length() > 0 && text.charAt(0) == ',' )
-                return text.substring(1);
+        WhitespaceParser whitespaceParser = new WhitespaceParser();
+        text = text.substring(whitespaceParser.parse(text).length());
+        if ( text != null && text.length() > 0 && text.charAt(0) == ',' ) {
+            parsedLength = whitespaceParser.getParsedLength() + 1 + parsedLength;
+            return text.substring(1);
         }
         return null;
     }

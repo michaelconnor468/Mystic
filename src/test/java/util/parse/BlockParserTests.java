@@ -10,9 +10,30 @@ public class BlockParserTests {
 	@Test
 	void InvalidInputTest() {
 		String errormsg = "BlockParser failed to return null when there was no whitespace to parse";
+    String errormsg2 = "BlockParser failed to count number of characters parsed";
+    BlockParser blockParser = new BlockParser();		
 
-		assertNull((new BlockParser()).parse("{"), errormsg);
-	  assertNull((new BlockParser()).parse("test"), errormsg);
-	  assertNull((new BlockParser()).parse("{test}"), errormsg);
+    assertNull(blockParser.parse("{"), errormsg);
+    assertEquals(0, blockParser.getParsedLength(), errormsg2);
+	  assertNull(blockParser.parse("test"), errormsg);
+    assertEquals(0, blockParser.getParsedLength(), errormsg2);
+	  assertNull(blockParser.parse("{test}"), errormsg);
+    assertEquals(0, blockParser.getParsedLength(), errormsg2);
 	}
+
+  @Test
+  void StringPropertyBlockTest() {
+    String errormsg = "BlockParser failed to correctly parse a block consisting of only string properties";
+    String errormsg2 = "BlockParser failed to correctly count number of characters parsed in a block with only string properties";
+
+    // TODO
+  }
+  
+  @Test
+  void COmplexPropertyTest() {
+    String errormsg = "BlockParser failed to correctly parse a block consisting of complex mixed properties";
+    String errormsg2 = "BlockParser failed to correctly count number of characters parsed in a block with complex mixed properties properties";
+
+    // TODO
+  }
 }
