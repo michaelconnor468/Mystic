@@ -25,9 +25,9 @@ public class CaseParserTests {
 
 		assertEquals(645, ((ParserInt)(new CaseParser()).parse("645")).getNumber(), errormsg);
 		assertEquals(4.645, ((ParserDouble)(new CaseParser()).parse("4.645")).getNumber(), errormsg);
-// TODO add case for array
-// TODO add case for block
-		assertEquals("hello", ((ParserString)(new CaseParser()).parse("'hello'")).getString(), errormsg);
+		assertEquals("test", ((ParserString) ((ParserArray)(new CaseParser()).parse("['test', 'test2']")).getIndex(0)).getString(), errormsg);
+    assertEquals("test", ((ParserString) ((ParserBlock) (new CaseParser()).parse("{first: 'test', second: 'test2'}")).getProperty("first")).getString(), errormsg);
+    assertEquals("hello", ((ParserString)(new CaseParser()).parse("'hello'")).getString(), errormsg);
 	}
 
   @Test
@@ -45,8 +45,5 @@ public class CaseParserTests {
     caseParser = new CaseParser();
     caseParser.parse("'test'");
     assertEquals(6, caseParser.getParsedLength());
-
-    // TODO add case for array
-    // TODO add case for block
   }
 }

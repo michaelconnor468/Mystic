@@ -20,11 +20,7 @@ public class ParserBlock implements ParserObject {
         return sb.toString();
 	}
 
-	public void addProperty(ParserProperty p) {
-		properties.put(p.getName(), p.getContent());
-	}
-
-	public HashMap<String, ParserObject> getProperties() {
-		return properties;
-	}
+	public void addProperty(ParserProperty p) { properties.put(p.getName(), p.getContent()); }
+  public ParserObject getProperty(String str) { return properties.get(str); }
+	public HashMap<String, ParserObject> getProperties() { return properties; }
 }

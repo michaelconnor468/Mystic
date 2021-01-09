@@ -38,10 +38,15 @@ public class BlockParserTests {
   }
   
   @Test
-  void COmplexPropertyTest() {
+  void ComplexPropertyTest() {
     String errormsg = "BlockParser failed to correctly parse a block consisting of complex mixed properties";
     String errormsg2 = "BlockParser failed to correctly count number of characters parsed in a block with complex mixed properties properties";
-
-    // TODO
+    BlockParser parser = new BlockParser();
+    
+    ParserBlock block = (ParserBlock) parser.parse("{first: ['test', 'tst'], second: 'test2', third: {inner: 'inside'}}");
+    assertEquals(67, parser.getParsedLength(), errormsg2);
+    assertEquals("test2", ((ParserString) (block.getProperties().get("second"))).getString(), errormsg);
+    assertEquals("tst", ((ParserString) (((ParserArray) (block.getProperties().get("first"))).getIndex(1))).getString(), errormsg);
+    assertEquals("inside", ((ParserString) (((ParserBlock) (block.getProperties().get("third"))).getProperties().get("inner"))).getString(), errormsg);
   }
 }
