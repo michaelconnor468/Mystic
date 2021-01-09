@@ -26,16 +26,23 @@ public class BlockParser implements Parser<ParserBlock> {
                 return null;
             }
             block.addProperty(property);
-            text = cutToNextProperty(text) == null ? text : cutToNextProperty(text);
+            text = text.substring(propertyParser.getParsedLength());
+            String cutText = cutToNextProperty(text);
+            text = cutText == null ? text : cutText;
             text = whitespaceParser.cutWhitespace(text);
             parsedLength = parsedLength + whitespaceParser.getParsedLength() + propertyParser.getParsedLength();
         }
         return block;
     }
 
+    /**
+     * Helper method to basically remove comma and whitespace before it between properties
+     *
+     * SIDE EFFECT: increments parsedLength so be sure to update working string each time it is called
+     */
     private String cutToNextProperty( String text ) {
         WhitespaceParser whitespaceParser = new WhitespaceParser();
-        text = text.substring(whitespaceParser.parse(text).length());
+        text = whitespaceParser.cutWhitespace(text);
         if ( text != null && text.length() > 0 && text.charAt(0) == ',' ) {
             parsedLength = whitespaceParser.getParsedLength() + 1 + parsedLength;
             return text.substring(1);

@@ -25,8 +25,10 @@ public class BlockParserTests {
   void StringPropertyBlockTest() {
     String errormsg = "BlockParser failed to correctly parse a block consisting of only string properties";
     String errormsg2 = "BlockParser failed to correctly count number of characters parsed in a block with only string properties";
-
-    // TODO
+    BlockParser parser = new BlockParser();
+    
+    ParserBlock block = (ParserBlock) parser.parse("{first: 'test', second: 'test2'}");
+    assertEquals(32, parser.getParsedLength(), errormsg2);
   }
   
   @Test
