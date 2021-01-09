@@ -29,6 +29,12 @@ public class BlockParserTests {
     
     ParserBlock block = (ParserBlock) parser.parse("{first: 'test', second: 'test2'}");
     assertEquals(32, parser.getParsedLength(), errormsg2);
+    assertEquals("test", ((ParserString) (block.getProperties().get("first"))).getString(), errormsg);
+    assertEquals("test2", ((ParserString) (block.getProperties().get("second"))).getString(), errormsg);
+    
+    block = (ParserBlock) parser.parse("{first: 'test'}");
+    assertEquals(15, parser.getParsedLength(), errormsg2);
+    assertEquals("test", ((ParserString) (block.getProperties().get("first"))).getString(), errormsg);
   }
   
   @Test
