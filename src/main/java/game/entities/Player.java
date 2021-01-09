@@ -1,6 +1,10 @@
 package game.entities;
 
-public class Player extends DynamicEntity implements DestructibleEntity {
+import util.parse.*;
+import util.parse.obj.*;
+import java.nio.file.*;
+
+public class Player extends DynamicEntity implements DestructibleEntity, Saveable {
     int health;
     int maxHealth;
     
@@ -17,6 +21,14 @@ public class Player extends DynamicEntity implements DestructibleEntity {
     }
 
     public void onDestroy() {
+
+    }
+
+    public void load( Path path ) {
+          
+    }
+
+    public void save( Path path ) {
 
     }
 }
