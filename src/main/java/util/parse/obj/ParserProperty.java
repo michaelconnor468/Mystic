@@ -9,6 +9,12 @@ public class ParserProperty implements ParserObject {
     protected ObjectType propertyType;
     protected ParserObject content;
 
+    public ParserProperty() {}
+    public ParserProperty(String name, ParserObject content) {
+        this.name = name;
+        this.content = content;
+        this.propertyType = content.getType();
+    }
     public String getName() {return name;}
     public ObjectType getPropertyType() {return propertyType;}
     public ParserObject getContent() {return content;}

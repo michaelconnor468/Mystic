@@ -2,7 +2,7 @@ package game.entities;
 
 import util.parse.*;
 import util.parse.obj.*;
-import java.nio.file.*;
+import java.util.HashMap;
 
 public class Player extends DynamicEntity implements DestructibleEntity, Saveable {
     int health;
@@ -24,11 +24,16 @@ public class Player extends DynamicEntity implements DestructibleEntity, Saveabl
 
     }
 
-    public void load( Path path ) {
-          
+    public void load( ParserBlock block ) {
+        HashMap<String, ParserObject> map = block.getProperties();
+        this.maxHealth = ((ParserInt) map.get(maxHealth)).getNumber();
+        this.health = ((ParserInt) map.get(health)).getNumber();
     }
 
-    public void save( Path path ) {
-
+    public ParserBlock save() {
+        ParserBlock block = new ParserBlock();
+        block.addProperty((new ParserProperty("maxHealth", new ParserInt(maxHealth))));
+        block.addProperty((new ParserProperty("health", new ParserInt(health))));
+        return block;
     }
 }
