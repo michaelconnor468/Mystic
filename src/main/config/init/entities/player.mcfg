@@ -1,4 +1,6 @@
 {
-    maxHealth: 100,
-    health: 100
+    player : {
+        maxHealth: 100,
+        health: 100
+    }
 }
