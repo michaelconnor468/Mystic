@@ -14,7 +14,7 @@ import game.main.X;
  * processing and rendering on entities at a tiem. This decouples the game class from much of the implementation that can be driven through a simple and
  * lightweight interface.
  */
-public class Chunk implements TickObserver, Renderable {
+public class Chunk implements TickObserver, Renderable, Saveable {
     private int sizeInTiles;
     private double lowerxPosition;
     private double loweryPosition;
@@ -49,4 +49,12 @@ public class Chunk implements TickObserver, Renderable {
     public double getTileSize() { return tileSize; }
     public int getTileRowDimension() { return sizeInTiles; }
     public int getTileColumnDimension() { return sizeInTiles; }
+    
+    public void load(ParserBlock block) {
+        
+    }
+
+    public ParserBlock save() {
+
+    }
 }
