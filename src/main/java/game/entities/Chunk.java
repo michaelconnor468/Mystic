@@ -17,9 +17,17 @@ import game.main.X;
  */
 public class Chunk implements TickObserver, Renderable, Saveable {
     private int sizeInTiles;
-    private double lowerxPosition;
-    private double loweryPosition;
-    private double tileSize;
+    private int xChunkPosition;
+    private int yChunkPosition;
+    private int tileSize;
+
+    // Constructor ensures object cannot be initialized without required constant data
+    public Chunk(int xChunkPosition, int yChunkPosition, int tileSize, int sizeInTiles) {
+        this.xChunkPosition = xChunkPosition;
+        this.yChunkPosition = yChunkPosition;
+        this.tileSize = tileSize;
+        this.sizeInTiles = sizeInTiles;
+    }
 
     // Linked list provides layering, with each succesive index to be atop the other
     private LinkedList<TileEntityContainer> tileEntities;
@@ -45,9 +53,9 @@ public class Chunk implements TickObserver, Renderable, Saveable {
             container.render(renderer);
     }
 
-    public double getLowerxPosition() { return lowerxPosition; }
-    public double getLoweryPosition() { return loweryPosition; }
-    public double getTileSize() { return tileSize; }
+    public int getXChunkPosition() { return xChunkPosition; }
+    public int getYChunkPosition() { return yChunkPosition; }
+    public int getTileSize() { return tileSize; }
     public int getTileRowDimension() { return sizeInTiles; }
     public int getTileColumnDimension() { return sizeInTiles; }
     
