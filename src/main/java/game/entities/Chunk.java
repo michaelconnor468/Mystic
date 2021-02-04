@@ -1,5 +1,6 @@
 package game.entities;
 
+import util.parse.obj.ParserBlock;
 import java.util.LinkedList;
 import java.util.Iterator;
 import game.entities.containers.*;
@@ -55,6 +56,7 @@ public class Chunk implements TickObserver, Renderable, Saveable {
     }
 
     public ParserBlock save() {
-
+        ParserBlock block = new ParserBlock();
+        return block;
     }
 }
