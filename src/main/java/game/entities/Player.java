@@ -3,11 +3,14 @@ package game.entities;
 import util.parse.*;
 import util.parse.obj.*;
 import java.util.HashMap;
+import game.main.X;
 
 public class Player extends DynamicEntity implements DestructibleEntity, Saveable {
     int health;
     int maxHealth;
-    
+ 
+    public Player(X x, int xSize, int ySize, int xPosition, int yPosition) { super(x, xSize, ySize, xPosition, yPosition); }
+
     public void damage( int health ) {
         this.health -= health;
         if ( this.health <= 0 )

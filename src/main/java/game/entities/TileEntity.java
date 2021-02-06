@@ -17,8 +17,8 @@ public class TileEntity extends Entity implements Saveable {
     Biome biome;
     TileSpawnManager spawnManager;
 
-    public TileEntity(int xSize, int ySize, int xPosition, int yPosition, int chunkRow, int chunkColumn) {
-        super(xSize, ySize, xPosition, yPosition);
+    public TileEntity(X x, int xSize, int ySize, int xPosition, int yPosition, int chunkRow, int chunkColumn) {
+        super(x, xSize, ySize, xPosition, yPosition);
         this.chunkRow = chunkRow;
         this.chunkColumn = chunkColumn;
         assert xSize == ySize : "Tile Entities must have the same x and y size dimensions: " + this.toString();
