@@ -1,8 +1,9 @@
 package game.entities;
 
-import util.parse.obj.ParserBlock;
+import util.parse.obj.*;
 import java.util.LinkedList;
 import java.util.Iterator;
+import java.util.HashMap;
 import game.entities.containers.*;
 import game.main.timing.TickObserver;
 import game.main.render.Renderable;
@@ -20,13 +21,13 @@ public class Chunk implements TickObserver, Renderable, Saveable {
     private int xChunkPosition;
     private int yChunkPosition;
     private int tileSize;
+    private X x;
 
     // Constructor ensures object cannot be initialized without required constant data
-    public Chunk(int xChunkPosition, int yChunkPosition, int tileSize, int sizeInTiles) {
-        this.xChunkPosition = xChunkPosition;
-        this.yChunkPosition = yChunkPosition;
-        this.tileSize = tileSize;
-        this.sizeInTiles = sizeInTiles;
+    public Chunk(X x) {
+        this.tileSize = x.tileSize;
+        this.sizeInTiles = x.chunkSize;
+        this.x = x;
     }
 
     // Linked list provides layering, with each succesive index to be atop the other
@@ -60,7 +61,22 @@ public class Chunk implements TickObserver, Renderable, Saveable {
     public int getTileColumnDimension() { return sizeInTiles; }
     
     public void load(ParserBlock block) {
-        
+        HashMap<String, ParserObject> properties = block.getProperties();
+        xChunkPosition = ((ParserInt) properties.get("xLocation")).getNumber();
+        yChunkPosition = ((ParserInt) properties.get("yLocation")).getNumber();
+
+        ParserArray tileRows = (ParserArray) properties.get("tileEntities");
+        for ( int i = 0; i < tileRows.getLength(); i++ ) {
+            ParserArray tileColumn = (ParserArray) tileRows.getIndex(i);
+            TileEntityContainer tileEntityContainer = new TileEntityContainer(this);
+            for ( int ii = 0; ii < tileColumn.getLength(); ii++  ) {
+                ParserBlock tileBlock = (ParserBlock) tileColumn.getIndex(ii);
+                HashMap<String, ParserObject> tileProperties = tileBlock.getProperties();
+                TileEntity entity = new TileEntity(x, tileSize, (xChunkPosition*sizeInTiles + ii)*tileSize, (yChunkPosition*sizeInTiles + i)*tileSize, i, ii, ((ParserInt) tileProperties.get("type")).getNumber(), ((ParserInt) tileProperties.get("biome")).getNumber());
+                tileEntityContainer.addEntity(entity);
+            }
+            tileEntities.add(tileEntityContainer);
+        }
     }
 
     public ParserBlock save() {

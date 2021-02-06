@@ -12,15 +12,17 @@ import game.main.timing.TickObserver;
  * and can therefore be stored in a simple array to allow for quick indexing unlike other entities.
  */
 public class TileEntity extends Entity implements Saveable {
+    private int type;
     private int chunkRow;
     private int chunkColumn;
     Biome biome;
     TileSpawnManager spawnManager;
 
-    public TileEntity(X x, int xSize, int ySize, int xPosition, int yPosition, int chunkRow, int chunkColumn) {
-        super(x, xSize, ySize, xPosition, yPosition);
+    public TileEntity(X x, int size, int xPosition, int yPosition, int chunkRow, int chunkColumn, int type, int biome) {
+        super(x, size, size, xPosition, yPosition);
         this.chunkRow = chunkRow;
         this.chunkColumn = chunkColumn;
+        this.type = type;
         assert xSize == ySize : "Tile Entities must have the same x and y size dimensions: " + this.toString();
     }
 
@@ -30,14 +32,6 @@ public class TileEntity extends Entity implements Saveable {
 
     public void render(Renderer renderer) {
 
-    }
-
-    public int getChunkRow() {
-        return chunkRow;
-    }
-
-    public int getChunkColumn() {
-        return chunkColumn;
     }
 
     public void addSpawnableEntity(Entity entity, double probability, int ticksUntilNextSpawn) {
@@ -57,6 +51,9 @@ public class TileEntity extends Entity implements Saveable {
     public void load(ParserBlock block) {
         //TODO
     }
+
+    public int getChunkRow() { return chunkRow; }
+    public int getChunkColumn() { return chunkColumn; }
 
     public ParserBlock save() {
         ParserBlock block = new ParserBlock();

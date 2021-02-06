@@ -6,9 +6,10 @@ import game.entities.Entity;
  * whenever modifiying any variables and many should remain read-only.
  */
 public class X {
-    private Game game;
-    private int ticksPerSecond;
-    private int tileSize;
+    public Game game;
+    public int ticksPerSecond;
+    public int tileSize;
+    public int chunkSize;
 
     public Game getGame() {return game;}
     public void setGame(Game game) {this.game = game;}

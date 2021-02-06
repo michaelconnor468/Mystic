@@ -14,7 +14,6 @@ import game.main.X;
  */
 public class TileEntityContainer extends EntityContainer<TileEntity> {
     ArrayList<ArrayList<TileEntity>> tileEntities;
-    TileEntity defaultEntity;
     private int chunkRows;
     private int chunkColumns;
 
@@ -29,16 +28,15 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
      * 
      * @param defaultEntity - entity to be cloned and used as a default where there is no other added
      */
-    public TileEntityContainer( Chunk chunk, TileEntity defaultEntity ) {
+    public TileEntityContainer( Chunk chunk ) {
         this();
         this.chunkRows = chunk.getTileRowDimension();
         this.chunkColumns = chunk.getTileColumnDimension();
-        this.defaultEntity = (TileEntity) defaultEntity.clone();
 
         for ( int i = 0; i < chunkRows; i++ ) {
             ArrayList<TileEntity> tileEntityRow = new ArrayList<TileEntity>();
             for ( int j = 0; j < chunkColumns; j++ ) {
-                tileEntityRow.add(j, (TileEntity) defaultEntity.clone());
+                tileEntityRow.add(j, null);
                 entityCount++;
             }
             tileEntities.add(tileEntityRow);
@@ -91,8 +89,7 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
      */
     public void removeEntity( TileEntity tileEntity ) {
         assert tileEntity.getChunkRow() < chunkRows && tileEntity.getChunkColumn() < chunkColumns : "TileEntityContainer can only store TileEntities of its given dimenstions" + tileEntity.toString();
-        TileEntity defaultEntityClone = (TileEntity) this.defaultEntity.clone();
-        tileEntities.get(tileEntity.getChunkRow()).add(tileEntity.getChunkColumn(), defaultEntityClone);
+        tileEntities.get(tileEntity.getChunkRow()).add(tileEntity.getChunkColumn(), null);
     }
 
     public void tick( X x ) {
