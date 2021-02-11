@@ -27,7 +27,7 @@ public class Player extends DynamicEntity implements DestructibleEntity, Saveabl
 
     }
 
-    public void load( ParserBlock block ) {
+    public static Player load( ParserBlock block ) {
         HashMap<String, ParserObject> map = block.getProperties();
         this.maxHealth = ((ParserInt) map.get(maxHealth)).getNumber();
         this.health = ((ParserInt) map.get(health)).getNumber();

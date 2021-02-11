@@ -21,14 +21,8 @@ public class Chunk implements TickObserver, Renderable, Saveable {
     private int xChunkPosition;
     private int yChunkPosition;
     private int tileSize;
-    private X x;
 
-    // Constructor ensures object cannot be initialized without required constant data
-    public Chunk(X x) {
-        this.tileSize = x.tileSize;
-        this.sizeInTiles = x.chunkSize;
-        this.x = x;
-    }
+    private Chunk() {}
 
     // Linked list provides layering, with each succesive index to be atop the other
     private LinkedList<TileEntityContainer> tileEntities;
@@ -60,23 +54,28 @@ public class Chunk implements TickObserver, Renderable, Saveable {
     public int getTileRowDimension() { return sizeInTiles; }
     public int getTileColumnDimension() { return sizeInTiles; }
     
-    public void load(ParserBlock block) {
+    public static Chunk load(X x, ParserBlock block) {
+        Chunk chunk = new Chunk();
+        chunk.tileSize = x.tileSize;
+        chunk.sizeInTiles = x.chunkSize;
+
         HashMap<String, ParserObject> properties = block.getProperties();
-        xChunkPosition = ((ParserInt) properties.get("xLocation")).getNumber();
-        yChunkPosition = ((ParserInt) properties.get("yLocation")).getNumber();
+        chunk.xChunkPosition = ((ParserInt) properties.get("xLocation")).getNumber();
+        chunk.yChunkPosition = ((ParserInt) properties.get("yLocation")).getNumber();
 
         ParserArray tileRows = (ParserArray) properties.get("tileEntities");
         for ( int i = 0; i < tileRows.getLength(); i++ ) {
             ParserArray tileColumn = (ParserArray) tileRows.getIndex(i);
-            TileEntityContainer tileEntityContainer = new TileEntityContainer(this);
+            TileEntityContainer tileEntityContainer = new TileEntityContainer(chunk);
             for ( int ii = 0; ii < tileColumn.getLength(); ii++  ) {
                 ParserBlock tileBlock = (ParserBlock) tileColumn.getIndex(ii);
                 HashMap<String, ParserObject> tileProperties = tileBlock.getProperties();
-                TileEntity entity = new TileEntity(x, tileSize, (xChunkPosition*sizeInTiles + ii)*tileSize, (yChunkPosition*sizeInTiles + i)*tileSize, i, ii, ((ParserInt) tileProperties.get("type")).getNumber(), ((ParserInt) tileProperties.get("biome")).getNumber());
+                TileEntity entity = new TileEntity(x, chunk.tileSize, (chunk.xChunkPosition*chunk.sizeInTiles + ii)*chunk.tileSize, (chunk.yChunkPosition*chunk.sizeInTiles + i)*chunk.tileSize, i, ii, ((ParserInt) tileProperties.get("type")).getNumber(), ((ParserInt) tileProperties.get("biome")).getNumber());
                 tileEntityContainer.addEntity(entity);
             }
-            tileEntities.add(tileEntityContainer);
+            chunk.tileEntities.add(tileEntityContainer);
         }
+        return chunk;
     }
 
     public ParserBlock save() {
