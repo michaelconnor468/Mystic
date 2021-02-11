@@ -5,5 +5,7 @@ package game.main.render;
  * allow communication with rendering logic.
  */
 public class Renderer {
+    public void render(Animation animation) {
 
+    }
 }

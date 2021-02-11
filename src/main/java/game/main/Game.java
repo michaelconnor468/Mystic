@@ -9,6 +9,7 @@ import game.entities.Entity;
  */
 public class Game {
     private TimingManager timingManager;
+    private WindowManager windowManager;
     private X x;
 
     private Game() {
@@ -20,6 +21,7 @@ public class Game {
         this.x = x;
         x.setGame(this);
         timingManager = new TimingManager(x, ticksPerSecond);
+        windowManager = new WindowManager();
     }
 
     public void start() {
