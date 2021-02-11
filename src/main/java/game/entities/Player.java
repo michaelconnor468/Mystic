@@ -9,7 +9,7 @@ public class Player extends DynamicEntity implements DestructibleEntity, Saveabl
     int health;
     int maxHealth;
  
-    public Player(X x, int xSize, int ySize, int xPosition, int yPosition) { super(x, xSize, ySize, xPosition, yPosition); }
+    private Player() {}
 
     public void damage( int health ) {
         this.health -= health;
@@ -27,10 +27,16 @@ public class Player extends DynamicEntity implements DestructibleEntity, Saveabl
 
     }
 
-    public static Player load( ParserBlock block ) {
+    public static Player load(X x, ParserBlock block) {
+        Player player = new Player();
         HashMap<String, ParserObject> map = block.getProperties();
-        this.maxHealth = ((ParserInt) map.get(maxHealth)).getNumber();
-        this.health = ((ParserInt) map.get(health)).getNumber();
+        player.xSize = ((ParserInt) map.get("xSize")).getNumber();
+        player.ySize = ((ParserInt) map.get("ySize")).getNumber();
+        player.xPosition = ((ParserInt) map.get("xPosition")).getNumber();
+        player.yPosition = ((ParserInt) map.get("yPosition")).getNumber();
+        player.maxHealth = ((ParserInt) map.get("maxHealth")).getNumber();
+        player.health = ((ParserInt) map.get("health")).getNumber();
+        return player;
     }
 
     public ParserBlock save() {

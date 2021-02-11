@@ -18,8 +18,8 @@ public class TileEntity extends Entity implements Saveable {
     Biome biome;
     TileSpawnManager spawnManager;
 
-    public TileEntity(X x, int size, int xPosition, int yPosition, int chunkRow, int chunkColumn, int type, int biome) {
-        super(x, size, size, xPosition, yPosition);
+    public TileEntity(int size, int xPosition, int yPosition, int chunkRow, int chunkColumn, int type, int biome) {
+        super(size, size, xPosition, yPosition);
         this.chunkRow = chunkRow;
         this.chunkColumn = chunkColumn;
         this.type = type;

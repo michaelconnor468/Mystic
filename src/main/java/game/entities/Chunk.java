@@ -70,7 +70,7 @@ public class Chunk implements TickObserver, Renderable, Saveable {
             for ( int ii = 0; ii < tileColumn.getLength(); ii++  ) {
                 ParserBlock tileBlock = (ParserBlock) tileColumn.getIndex(ii);
                 HashMap<String, ParserObject> tileProperties = tileBlock.getProperties();
-                TileEntity entity = new TileEntity(x, chunk.tileSize, (chunk.xChunkPosition*chunk.sizeInTiles + ii)*chunk.tileSize, (chunk.yChunkPosition*chunk.sizeInTiles + i)*chunk.tileSize, i, ii, ((ParserInt) tileProperties.get("type")).getNumber(), ((ParserInt) tileProperties.get("biome")).getNumber());
+                TileEntity entity = new TileEntity(chunk.tileSize, (chunk.xChunkPosition*chunk.sizeInTiles + ii)*chunk.tileSize, (chunk.yChunkPosition*chunk.sizeInTiles + i)*chunk.tileSize, i, ii, ((ParserInt) tileProperties.get("type")).getNumber(), ((ParserInt) tileProperties.get("biome")).getNumber());
                 tileEntityContainer.addEntity(entity);
             }
             chunk.tileEntities.add(tileEntityContainer);

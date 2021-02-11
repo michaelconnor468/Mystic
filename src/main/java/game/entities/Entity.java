@@ -17,14 +17,13 @@ import game.entities.buffs.EntityBuff;
  */
 abstract public class Entity implements TickObserver, Renderable {
     // Size is not necessarily the same as the collision box dimensions
-    private X x;
     protected int xSize, ySize;
     protected int xPosition, yPosition;
     protected ArrayList<CollisionBox> collisionBoxes;
     protected ArrayList<EntityBuff> entityBuffs; 
 
-    public Entity(X x, int xSize, int ySize, int xPosition, int yPosition) {
-        this.x = x;
+    protected Entity() {}
+    public Entity(int xSize, int ySize, int xPosition, int yPosition) {
         this.xSize = xSize;
         this.ySize = ySize;
         this.xPosition = xPosition;

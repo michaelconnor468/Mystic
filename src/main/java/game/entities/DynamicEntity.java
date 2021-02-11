@@ -13,8 +13,6 @@ public class DynamicEntity extends Entity {
     private double speedModifier;
     private double movementAngle;
 
-    public DynamicEntity(X x, int xSize, int ySize, int xPosition, int yPosition) { super(x, xSize, ySize, xPosition, yPosition); }
-
     public void tick(X x) {
         move();
     }
