@@ -16,12 +16,13 @@ import game.main.X;
  * processing and rendering on entities at a tiem. This decouples the game class from much of the implementation that can be driven through a simple and
  * lightweight interface.
  */
-public class Chunk implements TickObserver, Renderable, Saveable {
+public class Chunk implements TickObserver, Renderable {
     private int sizeInTiles;
     private int xChunkPosition;
     private int yChunkPosition;
     private int tileSize;
 
+    // Use load method to instantiate object
     private Chunk() {}
 
     // Linked list provides layering, with each succesive index to be atop the other
@@ -78,7 +79,8 @@ public class Chunk implements TickObserver, Renderable, Saveable {
         return chunk;
     }
 
-    public ParserBlock save() {
+    public static ParserBlock save(Chunk chunk) {
+        // TODO
         ParserBlock block = new ParserBlock();
         return block;
     }

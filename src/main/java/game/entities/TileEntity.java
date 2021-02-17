@@ -11,13 +11,14 @@ import game.main.timing.TickObserver;
  * Separate entity to represent the tiles that make up the floor. This is a special entity due to the fact that its position is static and discrete within a chunk
  * and can therefore be stored in a simple array to allow for quick indexing unlike other entities.
  */
-public class TileEntity extends Entity implements Saveable {
+public class TileEntity extends Entity {
     private int type;
     private int chunkRow;
     private int chunkColumn;
     Biome biome;
     TileSpawnManager spawnManager;
 
+    // TODO deprecate this in favor of static load method
     public TileEntity(int size, int xPosition, int yPosition, int chunkRow, int chunkColumn, int type, int biome) {
         super(size, size, xPosition, yPosition);
         this.chunkRow = chunkRow;
@@ -48,16 +49,18 @@ public class TileEntity extends Entity implements Saveable {
         //TODO
     }
     
-    public void load(ParserBlock block) {
-        //TODO
-    }
-
     public int getChunkRow() { return chunkRow; }
     public int getChunkColumn() { return chunkColumn; }
 
-    public ParserBlock save() {
+    public static ParserBlock save(TileEntity tile) {
+        // TODO
         ParserBlock block = new ParserBlock();
         return block;
+    }
+
+    public static TileEntity load(X x, ParserBlock block) {
+        //TODO
+        return null;
     }
 
     /**

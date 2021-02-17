@@ -6,9 +6,9 @@ import java.util.HashMap;
 import game.main.render.Renderer;
 import game.main.X;
 
-public class Player extends DynamicEntity implements DestructibleEntity, Saveable {
-    int health;
-    int maxHealth;
+public class Player extends DynamicEntity implements DestructibleEntity {
+    private int health;
+    private int maxHealth;
  
     private Player() {}
 
@@ -44,10 +44,13 @@ public class Player extends DynamicEntity implements DestructibleEntity, Saveabl
         return player;
     }
 
-    public ParserBlock save() {
+    public static ParserBlock save(Player player) {
         ParserBlock block = new ParserBlock();
-        block.addProperty((new ParserProperty("maxHealth", new ParserInt(maxHealth))));
-        block.addProperty((new ParserProperty("health", new ParserInt(health))));
+        block.addProperty((new ParserProperty("maxHealth", new ParserInt(player.getMaxHealth()))));
+        block.addProperty((new ParserProperty("health", new ParserInt(player.getHealth()))));
         return block;
     }
+
+    public int getHealth() { return health; }
+    public int getMaxHealth() { return maxHealth; }
 }
