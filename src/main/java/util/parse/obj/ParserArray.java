@@ -3,18 +3,18 @@ package util.parse.obj;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Object used by API to represent a parsed JSON array of a single type so as to keep logic simple
+ */
 public class ParserArray implements ParserObject {
     private ObjectType arrayType;
     private ArrayList<ParserObject> array;
     private int length;
 
-    private ParserArray() {
+    private ParserArray() {}
+    public ParserArray( ObjectType type ) {
         length = 0;
         array = new ArrayList<ParserObject>();
-    }
-
-    public ParserArray( ObjectType type ) {
-        this();
         this.arrayType = type;
     }
 
@@ -23,21 +23,12 @@ public class ParserArray implements ParserObject {
         array.add(obj);
     }
 
-    public Iterator getIterator() {
-        return array.iterator();
-    }
-    public int getLength() { return length; }
-    public ObjectType getElementType() {
-        return arrayType;
-    }
-
-    public ParserObject getIndex(int index) {
-        if ( index > length - 1 )
-            return null;
-        return array.get(index);
-    }
-
-    public ObjectType getType() { return ObjectType.ARRAY; }
+    public Iterator     getIterator()       { return array.iterator();}
+    public int          getLength()         { return length; }
+    public ObjectType   getElementType()    { return arrayType;}
+    public ParserObject getIndex(int index) { return index > length - 1 ? null : array.get(index);}
+    public ObjectType   getType()           { return ObjectType.ARRAY; }
+    
     public String toJSON() {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
@@ -48,4 +39,6 @@ public class ParserArray implements ParserObject {
         sb.append("]");
         return sb.toString();
     }
+
+    public String toString() {return toJSON();}
 }

@@ -5,9 +5,9 @@ package util.parse.obj;
  * named property.
  */
 public class ParserProperty implements ParserObject {
-    protected String name;
-    protected ObjectType propertyType;
-    protected ParserObject content;
+    private String name;
+    private ObjectType propertyType;
+    private ParserObject content;
 
     public ParserProperty() {}
     public ParserProperty(String name, ParserObject content) {
@@ -20,12 +20,11 @@ public class ParserProperty implements ParserObject {
     public ParserObject getContent() {return content;}
     public ObjectType getType() { return ObjectType.PROPERTY; }
 
-    public void setName(String name) {this.name = name;}
-    public void setPropertyType(ObjectType propertyType) {this.propertyType = propertyType;}
-    public void setContent(ParserObject content) {this.content = content;}
+    public ParserProperty setName(String name) {this.name = name; return this;}
+    public ParserProperty setPropertyType(ObjectType propertyType) {this.propertyType = propertyType; return this;}
+    public ParserProperty setContent(ParserObject content) {this.content = content; return this;}
 
-	public String toJSON() {
-		return name + ": " + content.toJSON();
-	}
+	public String toJSON() { return name + ": " + content.toJSON();}
+    public String toString() { return toJSON(); }
 }
 

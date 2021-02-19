@@ -3,6 +3,12 @@ package util.parse.obj;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Higher level class that should be used as a wrapper for any JSON parse objects being written and read,
+ * decouples users from any underlying structure of a file being parsed by placing everything in a neat little programatic box.
+ *
+ * Also useful for representing JSON objects of course.
+ */
 public class ParserBlock implements ParserObject {
 	private HashMap<String, ParserObject> properties;
 
@@ -23,4 +29,5 @@ public class ParserBlock implements ParserObject {
 	public void addProperty(ParserProperty p) { properties.put(p.getName(), p.getContent()); }
     public ParserObject getProperty(String str) { return properties.get(str); }
 	public HashMap<String, ParserObject> getProperties() { return properties; }
+    public String toString() { return toJSON(); }
 }
