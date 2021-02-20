@@ -1,7 +1,7 @@
 # JSON Parser Library
 
 ## Overview
-The util.parse library is intended to parse files in json format. Once a section of JSON is parsed, it is represented by one of a few parser objects in util.parse.obj which store the data extracted from the JSON in a natural way. These can then be used by the game to load static settings and save files for the game in order to setup its state on startup in a way that is easy to change and modify.
+The util.parse library is intended to parse files in block json format using the API's BlockParser. Once a section of JSON is parsed, it is represented by one of a few parser objects in util.parse.obj which store the data extracted from the JSON in a natural way. These can then be used by the game to load static settings and save files for the game in order to setup its state on startup in a way that is easy to change and modify.
 
 &nbsp;
 &nbsp;

@@ -3,7 +3,7 @@ package util.parse;
 /**
  * Parses a string from a starting bracket to the matching final bracket or parenthesis. Used primarily as a utility to extract text contained within two brackets.
  */
-public class BracketedExpressionParser implements Parser<String> {
+class BracketedExpressionParser implements Parser<String> {
     private int parsedLength;
 
     public String parse(String text) {

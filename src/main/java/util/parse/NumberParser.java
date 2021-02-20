@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
  * Parses a number that can be of type int or double. Both parsing functionalities were merged into one parser
  * class to consolidate more complex lookahead functionality, and to make use of predefined wrapper class' parsing.
  */
-public class NumberParser implements Parser<ParserNumber> {
+class NumberParser implements Parser<ParserNumber> {
   private int parseCount;
 
   public ParserNumber parse(String text) {

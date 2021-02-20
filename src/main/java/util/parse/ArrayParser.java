@@ -10,7 +10,7 @@ import util.parse.obj.ParserObject.ObjectType;
  * Parses a JSON array type. Enforces a single type of object that must be stored within the array or else returns null. This is due to the array needing to be easily
  * used without extraneuos type checking needed leading to a more robust interface.
  */
-public class ArrayParser implements Parser<ParserArray> {
+class ArrayParser implements Parser<ParserArray> {
     private int parsedLength;
     ParserArray array;
     ParserObject.ObjectType type;

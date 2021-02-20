@@ -11,7 +11,7 @@ import util.parse.obj.*;
  * Does not support parsing of the property case as it is not necessary or useful to and would further conplicate the
  * logic.
  */
-public class CaseParser implements Parser<ParserObject> {
+class CaseParser implements Parser<ParserObject> {
 	private ParserObject.ObjectType type;
 	private String parsedText;
   private int parsedLength;

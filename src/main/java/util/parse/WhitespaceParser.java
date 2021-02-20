@@ -4,7 +4,7 @@ package util.parse;
  * This is a helper class that is often used throughout the parsers to simplify the logic of removing non-semantic
  * white space from the JSON
  */
-public class WhitespaceParser implements Parser<String> {
+class WhitespaceParser implements Parser<String> {
     public int parsedLength = 0;
 
     public String parse(String text) {

@@ -2,13 +2,14 @@ package util.parse;
 
 import util.parse.obj.*;
 
-public class PropertyParser implements Parser<ParserProperty> {
+class PropertyParser implements Parser<ParserProperty> {
     private int parsedLength;
 
     public ParserProperty parse(String text) {
         parsedLength = 0;
         ParserProperty property = new ParserProperty();
         text = parseName(property, text);
+        
         if ( text == null ) {
             parsedLength = 0;
             return null;
@@ -22,10 +23,8 @@ public class PropertyParser implements Parser<ParserProperty> {
         }
 
         parsedLength = parsedLength + colonParser.getParsedLength();
-        text = text.substring(next.length());
-        WhitespaceParser whitespaceParser = new WhitespaceParser();
-        text = whitespaceParser.cutWhitespace(text);
-        parsedLength = parsedLength + whitespaceParser.getParsedLength();
+        text = cutWhitespace(text.substring(next.length()));
+        
         if ( text.length() < 1 ) {
             parsedLength = 0;
             return null;
@@ -33,6 +32,7 @@ public class PropertyParser implements Parser<ParserProperty> {
 
         CaseParser caseParser = new CaseParser();
         ParserObject content = caseParser.parse(text);
+        
         if ( content == null ) {
             parsedLength = 0;
             return null;
@@ -57,8 +57,15 @@ public class PropertyParser implements Parser<ParserProperty> {
         if ( parsedText == null )
             return null;
         property.setName(parsedText);
-        text = text.substring(nameParser.getParsedLength());
+        text = cutWhitespace(text.substring(nameParser.getParsedLength()));
         parsedLength = parsedLength + nameParser.getParsedLength();
+        return text;
+    }
+
+    /**
+     * Helper method to cut whitespace and increment parsedLength accordingly
+     */
+    private String cutWhitespace(String text) {
         WhitespaceParser whitespaceParser = new WhitespaceParser();
         text = whitespaceParser.cutWhitespace(text);
         parsedLength = parsedLength + whitespaceParser.getParsedLength();
