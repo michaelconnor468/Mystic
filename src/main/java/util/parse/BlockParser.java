@@ -2,22 +2,24 @@ package util.parse;
 
 import util.parse.obj.*;
 
+/**
+ * Top level parse used to parse the outer blocks of JSON data and JSON objects.
+ */
 public class BlockParser implements Parser<ParserBlock> {  
     private int parsedLength;
+    private WhitespaceParser whitespaceParser;
+    private ParserBlock block;
+
+    public BlockParser() { whitespaceParser = new WhitespaceParser(); }
 
     public ParserBlock parse(String text) {
         parsedLength = 0;
-        text = (new BracketedExpressionParser()).parse(text);
-        if ( text == null )
-            return null;
-        text = text.substring(1, text.length() - 1);
-        parsedLength = parsedLength + 2;
-        WhitespaceParser whitespaceParser = new WhitespaceParser();
-        text = whitespaceParser.cutWhitespace(text);
-        parsedLength = parsedLength + whitespaceParser.parsedLength;
+        text = prepareForParsing(text);
+        if ( text == null ) return null;
 
-        ParserBlock block = new ParserBlock();
+        block = new ParserBlock();
 
+        // Iterates through all remaining properties and parses them accordingly
         while ( !text.equals("") ) {
             PropertyParser propertyParser = new PropertyParser();
             ParserProperty property = propertyParser.parse(text);
@@ -26,6 +28,7 @@ public class BlockParser implements Parser<ParserBlock> {
                 return null;
             }
             block.addProperty(property);
+
             text = text.substring(propertyParser.getParsedLength());
             String cutText = cutToNextProperty(text);
             text = cutText == null ? text : cutText;
@@ -37,11 +40,8 @@ public class BlockParser implements Parser<ParserBlock> {
 
     /**
      * Helper method to basically remove comma and whitespace before it between properties
-     *
-     * SIDE EFFECT: increments parsedLength so be sure to update working string each time it is called
      */
     private String cutToNextProperty( String text ) {
-        WhitespaceParser whitespaceParser = new WhitespaceParser();
         text = whitespaceParser.cutWhitespace(text);
         if ( text != null && text.length() > 0 && text.charAt(0) == ',' ) {
             parsedLength = whitespaceParser.getParsedLength() + 1 + parsedLength;
@@ -49,8 +49,24 @@ public class BlockParser implements Parser<ParserBlock> {
         }
         return null;
     }
-
-    public int getParsedLength() {
-      return parsedLength;
+    
+    /**
+     * Handles parsing of non-property boilerplate syntax of the block and returns a string of comma separated properties
+     *
+     * increments parsedLength as it should but there is not much reason to worry about this
+     */
+    private String prepareForParsing(String text) {
+        // Checks if string starts with brackers handled by bracketedexpressionparser
+        text = (new BracketedExpressionParser()).parse(text);
+        if ( text == null ) return null;
+        text = text.substring(1, text.length() - 1);
+        parsedLength = parsedLength + 2;
+        
+        text = whitespaceParser.cutWhitespace(text);
+        parsedLength = parsedLength + whitespaceParser.parsedLength;
+        return text;
     }
+
+    public int getParsedLength() { return parsedLength; }
+    public String toString() { return block.toString(); }
 }

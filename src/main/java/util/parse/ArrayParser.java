@@ -78,4 +78,5 @@ public class ArrayParser implements Parser<ParserArray> {
     }
 
     public int getParsedLength() { return parsedLength; }
+    public String toString() { return array.toString(); }
 }
