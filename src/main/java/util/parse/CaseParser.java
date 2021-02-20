@@ -20,71 +20,70 @@ public class CaseParser implements Parser<ParserObject> {
 		parsedText = "";
 		type = null;
 	}
-	public CaseParser(ParserObject.ObjectType type) {
+	
+    public CaseParser(ParserObject.ObjectType type) {
 		this();
 		this.type = type;
 	}
 
 	public ParserObject parse(String text) {
 		parsedLength = 0;
-    if ( type == null )
-			discernType(text);
+        type = type == null ? discernType(text) : type;
 		if ( type == null )
 			return null;
+
 		StringBuilder sb = new StringBuilder();
-    BracketedExpressionParser bracketParser = new BracketedExpressionParser();
+        BracketedExpressionParser bracketParser = new BracketedExpressionParser();
 		switch ( type ) {
 			case STRING:
 				parsedText = bracketParser.parse(text);
-        parsedLength = parsedLength + bracketParser.getParsedLength();
+                parsedLength = parsedLength + bracketParser.getParsedLength();
 				if ( parsedText == null || (parsedText.charAt(0) != '\'' && parsedText.charAt(0) != '"') ) {
-            parsedLength = 0;
-            return null;
-        }
-        else 
-            return new ParserString(parsedText.substring(1, parsedText.length() - 1));
+                    parsedLength = 0;
+                    return null;
+                }
+                else 
+                    return new ParserString(parsedText.substring(1, parsedText.length() - 1));
 			case INT:
 			case DOUBLE:
-        NumberParser numParser = new NumberParser();
-				ParserNumber parserNumber = numParser.parse(text);
-				if ( parserNumber == null ) return null;
-				parsedText = parserNumber.toJSON();
-        parsedLength = numParser.getParsedLength();
-				return parserNumber.getType() == type ? parserNumber : null;
+                NumberParser numParser = new NumberParser();
+			    ParserNumber parserNumber = numParser.parse(text);
+			    if ( parserNumber == null ) return null;
+			    parsedText = parserNumber.toJSON();
+                parsedLength = numParser.getParsedLength();
+			    return parserNumber.getType() == type ? parserNumber : null;
 			case ARRAY:
 				parsedText = bracketParser.parse(text);
-        parsedLength = bracketParser.getParsedLength();
+                parsedLength = bracketParser.getParsedLength();
 				return parsedText == null ? null : (new ArrayParser()).parse(parsedText);
 			case BLOCK:
 				parsedText = bracketParser.parse(text);
-        parsedLength = bracketParser.getParsedLength();
+                parsedLength = bracketParser.getParsedLength();
 				return parsedText == null ? null : (new BlockParser()).parse(parsedText);
 			default:
 				return null;
 		}
 	}
 
-	private void discernType(String text) {
+	private ParserObject.ObjectType discernType(String text) {
 		switch ( text.charAt(0) ) {
 			case '[':
-				type = ParserObject.ObjectType.ARRAY;
-				return;
+				return ParserObject.ObjectType.ARRAY;
 			case '{':
-				type = ParserObject.ObjectType.BLOCK;
-				return;
+				return ParserObject.ObjectType.BLOCK;
 			case '\"':
 			case '\'':
-				type = ParserObject.ObjectType.STRING;
-				return;
+				return ParserObject.ObjectType.STRING;
 			default:
 				ParserNumber number = (new NumberParser()).parse(text);
 				if ( number instanceof ParserInt )
-					type = ParserObject.ObjectType.INT;
+					return ParserObject.ObjectType.INT;
 				else if ( number instanceof ParserDouble )
-					type = ParserObject.ObjectType.DOUBLE;
+					return ParserObject.ObjectType.DOUBLE;
 		}
+        return null;
 	}
 
 	public String getParsedText() { return parsedText; }
-  public int getParsedLength() { return parsedLength; }
+    public int getParsedLength() { return parsedLength; }
 }
