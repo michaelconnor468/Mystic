@@ -20,12 +20,11 @@ public class ArrayParserTests {
 	@Test
 	void NonNesterArrayTest() {
 		String errormsg = "ArrayParser failed to parse non-nested array.";
-		assertAll(
-			() -> assertEquals("test1", ((ParserString) (new ArrayParser()).parse("['test1', 'test2']").getIndex(0)).getString(), errormsg),
-			() -> assertEquals("test2", ((ParserString) (new ArrayParser()).parse("['test1', 'test2']").getIndex(1)).getString(), errormsg),
-			() -> assertEquals(2, (new ArrayParser()).parse("['test1', 'test2']").getLength(), errormsg),
-			() -> assertEquals(0, (new ArrayParser()).parse("[]").getLength(), errormsg)
-		);
+		
+        assertEquals("test1", ((ParserString) (new ArrayParser()).parse("['test1', 'test2']").getIndex(0)).getString(), errormsg);
+        assertEquals("test2", ((ParserString) (new ArrayParser()).parse("['test1', 'test2']").getIndex(1)).getString(), errormsg);
+		assertEquals(2, (new ArrayParser()).parse("['test1', 'test2']").getLength(), errormsg);
+	    assertEquals(0, (new ArrayParser()).parse("[]").getLength(), errormsg);
 	}
 
 	@Test
