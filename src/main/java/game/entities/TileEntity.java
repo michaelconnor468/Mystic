@@ -19,14 +19,6 @@ public class TileEntity extends Entity {
     TileSpawnManager spawnManager;
 
     private TileEntity () {}
-    // TODO deprecate this in favor of static load method
-    public TileEntity(int size, int xPosition, int yPosition, int chunkRow, int chunkColumn, int type, int biome) {
-        super(size, size, xPosition, yPosition);
-        this.chunkRow = chunkRow;
-        this.chunkColumn = chunkColumn;
-        this.type = type;
-        assert xSize == ySize : "Tile Entities must have the same x and y size dimensions: " + this.toString();
-    }
 
     /**
      * Used instead of constructor due to a ton of possible variable arguments, some of which are super-duper private and final, never to
