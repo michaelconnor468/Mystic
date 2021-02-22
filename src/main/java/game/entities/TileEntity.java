@@ -32,7 +32,7 @@ public class TileEntity extends Entity {
      * Used instead of constructor due to a ton of possible variable arguments, some of which are super-duper private and final, never to
      * have are never to have any accessors while some are ok with defaults.
      */
-    public class Builder {
+    public static class Builder {
         private TileEntity entity;
         private boolean sizeSet = false;
         private boolean positionSet = false;
