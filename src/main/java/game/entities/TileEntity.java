@@ -18,6 +18,7 @@ public class TileEntity extends Entity {
     Biome biome;
     TileSpawnManager spawnManager;
 
+    private TileEntity () {}
     // TODO deprecate this in favor of static load method
     public TileEntity(int size, int xPosition, int yPosition, int chunkRow, int chunkColumn, int type, int biome) {
         super(size, size, xPosition, yPosition);
@@ -25,6 +26,31 @@ public class TileEntity extends Entity {
         this.chunkColumn = chunkColumn;
         this.type = type;
         assert xSize == ySize : "Tile Entities must have the same x and y size dimensions: " + this.toString();
+    }
+
+    /**
+     * Used instead of constructor due to a ton of possible variable arguments, some of which are super-duper private and final, never to
+     * have are never to have any accessors while some are ok with defaults.
+     */
+    public class Builder {
+        private TileEntity entity;
+        private boolean sizeSet = false;
+        private boolean positionSet = false;
+        private boolean chunkSet = false;
+
+        public Builder()                                                { entity = new TileEntity(); entity.setType(0); entity.setBiome(0); }
+        public Builder setSize(int size)                                { entity.xSize = size; entity.ySize = size; sizeSet = true; return this; }
+        public Builder setPosition(int xPosition, int yPosition)        { entity.xPosition = xPosition; entity.yPosition = yPosition; positionSet = true; return this; }
+        public Builder setChunkLocation(int chunkRow, int chunkColumn)  { entity.chunkRow = chunkRow; entity.chunkColumn = chunkColumn; chunkSet = true; return this; }
+        public Builder setType(int type)                                { entity.setType(type); return this; }
+        public Builder setBiome(int biome)                              { entity.setBiome(biome); return this; }
+
+        public TileEntity build() {
+            if ( sizeSet && positionSet && chunkSet )
+                return entity;
+            else
+                throw new IllegalArgumentException("TileEntity builder setup missing required fields for minimal functionality");
+        }
     }
 
     public void tick(X x) {
@@ -51,6 +77,11 @@ public class TileEntity extends Entity {
     
     public int getChunkRow() { return chunkRow; }
     public int getChunkColumn() { return chunkColumn; }
+
+    // TODO get instance of correct biome object
+    public TileEntity setBiome(int biome) {return this;}
+    // TODO properly setup type information based on integer argument
+    public TileEntity setType(int type) {return this;}
 
     public static ParserBlock save(TileEntity tile) {
         // TODO
