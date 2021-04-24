@@ -16,7 +16,7 @@ public class GameStateManager {
     }
     private State state;
     private HashMap<State, HashSet<State>> canTransitionTo;
-    // TODO populate with state change listeners
+    // TODO Change this to hold EventListeners and call them when state is changed
     private HashMap<State, HashMap<State, Object>> onTransitionTo;
 
     public GameStateManager() { 
