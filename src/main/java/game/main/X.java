@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class X {
     private Game game;
     private WindowManager windowManager;
-    private GameState gameState;
+    private GameStateManager gameStateManager;
     public int ticksPerSecond;
     public int tileSize;
     public int chunkSize;
@@ -31,9 +31,9 @@ public class X {
         if ( windowManager == null ) 
             windowManager = new WindowManager(stage);
     }
-    public GameState getGameState() {return gameState;}
-    public void createGameStateSingleton() {
-        if ( gameState == null )
-            gameState = new GameState();
+    public GameStateManager getGameState() {return gameStateManager;}
+    public void createGameStateManagerSingleton() {
+        if ( gameStateManager == null )
+            gameStateManager = new GameStateManager();
     }
 }

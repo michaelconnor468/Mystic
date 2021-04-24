@@ -3,7 +3,7 @@ package game.main;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class GameState {
+public class GameStateManager {
     public enum State {
         MainMenu,
         Loading,
@@ -12,8 +12,10 @@ public class GameState {
     }
     private State state;
     private HashMap<State, HashSet<State>> canTransitionTo;
+    // TODO populate with state change listeners
+    private HashMap<State, HashSet<Object>> onTransitionTo;
 
-    public GameState() { 
+    public GameStateManager() { 
         state = state.MainMenu;
         canTransitionTo = new HashMap<State, HashSet<State>>();
         for ( State s : State.values() )
