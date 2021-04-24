@@ -19,7 +19,6 @@ public class Game {
     public Game(X x, double ticksPerSecond) {
         this();
         this.x = x;
-        x.setGame(this);
         timingManager = new TimingManager(x, ticksPerSecond);
     }
 

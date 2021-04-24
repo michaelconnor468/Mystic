@@ -7,17 +7,15 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class WindowManager {
-    public WindowManager() {
-        Application.launch(App.class); 
-    }
+    Stage stage;
 
-    public static class App extends Application {
-        @Override
-        public void start(Stage stage) {
-            StackPane mainPane = new StackPane();
-            Scene scene = new Scene(mainPane, 500, 300);
-            stage.setScene(scene);
-            stage.show();
-        }
+    private WindowManager() {}
+    public WindowManager(Stage stage) {
+        this.stage = stage; 
+        
+        StackPane mainPane = new StackPane();
+        Scene scene = new Scene(mainPane, 500, 300);
+        stage.setScene(scene);
+        stage.show();
     }
 }
