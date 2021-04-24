@@ -3,6 +3,10 @@ package game.main;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * Stores and manages the current state of the game. Enforces game states to go through allowable transitions.
+ * Used to also register lambdas to be called upon transition from one state to another.
+ */
 public class GameStateManager {
     public enum State {
         MainMenu,
@@ -13,7 +17,7 @@ public class GameStateManager {
     private State state;
     private HashMap<State, HashSet<State>> canTransitionTo;
     // TODO populate with state change listeners
-    private HashMap<State, HashSet<Object>> onTransitionTo;
+    private HashMap<State, HashMap<State, Object>> onTransitionTo;
 
     public GameStateManager() { 
         state = state.MainMenu;

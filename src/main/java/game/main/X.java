@@ -3,8 +3,8 @@ package game.main;
 import game.entities.Entity;
 import javafx.stage.Stage;
 /**
- * Class represents the context of a game which holds global variables. Since the same one will be passed through the tree of all classes, care should be taken
- * whenever modifiying any variables and many should remain read-only.
+ * Class represents the context of a game which holds global variables. Since the same one will be passed through 
+ * the tree of all classes, care should be taken whenever modifiying any variables and many should remain read-only.
  */
 public class X {
     private Game game;
