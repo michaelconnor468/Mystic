@@ -21,7 +21,6 @@ public class Game {
         this.x = x;
         x.setGame(this);
         timingManager = new TimingManager(x, ticksPerSecond);
-        windowManager = new WindowManager();
     }
 
     public void start() {

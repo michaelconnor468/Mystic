@@ -10,6 +10,11 @@ public class X {
     public int ticksPerSecond;
     public int tileSize;
     public int chunkSize;
+    private WindowManager windowManager;
+
+    public X() {
+        windowManager = new WindowManager();
+    }
 
     public Game getGame() {return game;}
     public void setGame(Game game) {this.game = game;}
@@ -17,4 +22,6 @@ public class X {
     public void addEntity(Entity entity) {
         game.addEntity(entity);
     }
+
+    public WindowManager getWidnowManager() {return windowManager;}
 }
