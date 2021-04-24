@@ -26,8 +26,8 @@ public class X {
         game.addEntity(entity);
     }
 
-    public WindowManager getWidnowManager() {return windowManager;}
-    public void createWindnowManagerSingleton(Stage stage) { 
+    public WindowManager getWindowManager() {return windowManager;}
+    public void createWindowManagerSingleton(Stage stage) { 
         if ( windowManager == null ) 
             windowManager = new WindowManager(stage);
     }
