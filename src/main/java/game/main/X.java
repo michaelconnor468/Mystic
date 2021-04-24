@@ -29,11 +29,11 @@ public class X {
     public WindowManager getWindowManager() {return windowManager;}
     public void createWindowManagerSingleton(Stage stage) { 
         if ( windowManager == null ) 
-            windowManager = new WindowManager(stage);
+            windowManager = new WindowManager(this, stage);
     }
-    public GameStateManager getGameState() {return gameStateManager;}
+    public GameStateManager getGameStateManager() {return gameStateManager;}
     public void createGameStateManagerSingleton() {
         if ( gameStateManager == null )
-            gameStateManager = new GameStateManager();
+            gameStateManager = new GameStateManager(this);
     }
 }

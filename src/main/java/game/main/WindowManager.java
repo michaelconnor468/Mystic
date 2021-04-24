@@ -1,19 +1,34 @@
 package game.main;
 
+import views.*;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class WindowManager {
+public class WindowManager implements GameStateChangeListener {
     Stage stage;
+    MainMenuView mainMenuView;
+    X x;
 
     private WindowManager() {}
-    public WindowManager(Stage stage) {
+    public WindowManager(X x, Stage stage) {
         this.stage = stage; 
-        
-        StackPane mainPane = new StackPane();
-        Scene scene = new Scene(mainPane, 500, 300);
-        stage.setScene(scene);
-        stage.show();
+        this.mainMenuView = new MainMenuView(1980, 1080);
+        this.x = x;
+        x.getGameStateManager().addGameStateChangeListener(this);
+    }
+    
+    public void beforeStateTransition(GameStateManager.State from, GameStateManager.State to) {}
+    public void afterStateTransition(GameStateManager.State from, GameStateManager.State to) {
+        switch (to) {
+            case MainMenu:
+                stage.setScene(mainMenuView.deploy());
+                stage.show();
+                break;
+        }
+        switch (from) {
+            case MainMenu:
+                mainMenuView.recall();
+                break;
+        }
     }
 }
