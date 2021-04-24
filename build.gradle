@@ -11,7 +11,7 @@ repositories {
 }
 
 javafx {
-    modules = [ 'javafx.controls', 'javafx.fxml' ]
+    modules = [ 'javafx.base', 'javafx.graphics', 'javafx.controls' ]
 }
 
 dependencies {
@@ -22,6 +22,9 @@ dependencies {
 jar {
     manifest {
         attributes 'Main-Class': 'init.Initializer'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
 
