@@ -32,5 +32,8 @@ public class X {
             windowManager = new WindowManager(stage);
     }
     public GameState getGameState() {return gameState;}
-    public void setGameState(GameState gameState) {this.gameState = gameState;}
+    public void createGameStateSingleton() {
+        if ( gameState == null )
+            gameState = new GameState();
+    }
 }
