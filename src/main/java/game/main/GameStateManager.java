@@ -16,14 +16,15 @@ public class GameStateManager {
     }
     private State state;
     private HashMap<State, HashSet<State>> canTransitionTo;
-    // TODO Change this to hold EventListeners and call them when state is changed
-    private HashMap<State, HashMap<State, Object>> onTransitionTo;
+    private HashMap<State, HashMap<State, HashSet<GameStateChangeListener>>> onTransitionTo;
 
     public GameStateManager() { 
         state = state.MainMenu;
         canTransitionTo = new HashMap<State, HashSet<State>>();
-        for ( State s : State.values() )
+        for ( State s : State.values() ) {
             canTransitionTo.put(s, new HashSet<State>());
+            onTransitionTo.put(s, new HashMap<State, HashSet<GameStateChangeListener>>());
+        }
 
         canTransitionTo.get(state.MainMenu).add(state.Loading);
 
@@ -36,10 +37,23 @@ public class GameStateManager {
     public State getState() { return state; }
     public boolean setState(State state) {
         if ( canTransitionTo.get(this.state).contains(state) ) {
+            for( GameStateChangeListener listener : onTransitionTo.get(this.state).get(state) )
+                listener.beforeStateTransition(this.state, state);
+
             this.state = state;
+
+            for( GameStateChangeListener listener : onTransitionTo.get(this.state).get(state) )
+                listener.afterStateTransition(this.state, state);
             return true;
         }
         else
             return false;
+    }
+    public void addGameStateChangeListener(State from, State to, GameStateChangeListener listener) {
+        if ( canTransitionTo.get(from).contains(to) ) {
+            if ( onTransitionTo.get(from).get(to) == null )
+                onTransitionTo.get(from).put(to, new HashSet<GameStateChangeListener>());
+            onTransitionTo.get(from).get(to).add(listener);
+        }
     }
 }
