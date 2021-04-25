@@ -17,13 +17,15 @@ public class Initializer {
         Application.launch(App.class);
     }
 
+    public static void onExit() {
+        System.exit(0);
+    }
+
     public static class App extends Application {
         public void start(Stage stage) {
             x.createWindowManagerSingleton(stage);
             x.getGameStateManager().setState(GameStateManager.State.MainMenu);
         }
-        public void stop() {
-            System.exit(0);
-        }
+        public void stop() { onExit(); }
     }
 }
