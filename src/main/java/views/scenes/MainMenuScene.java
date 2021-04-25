@@ -1,6 +1,7 @@
 package views.scenes;
 
 import game.main.X;
+import game.main.GameStateManager;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -44,6 +45,8 @@ public class MainMenuScene {
         
         Button startButton = new Button("New Game");
         Button exitButton = new Button("Exit");
+        startButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.Loading) );
+        exitButton.setOnAction( e -> {try{x.getApplication().stop();} catch (Exception err) {System.exit(0);}} );
 
         vbox.getChildren().add(startButton);
         vbox.getChildren().add(exitButton);

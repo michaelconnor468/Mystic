@@ -25,10 +25,16 @@ public class WindowManager implements GameStateChangeListener {
                 stage.setScene(mainMenuView.deploy());
                 stage.show();
                 break;
+            case Loading:
+                System.out.println("Loading view not yet implemented");
+                break;
         }
         switch (from) {
             case MainMenu:
                 mainMenuView.recall();
+                break;
+            case Loading:    
+                System.out.println("Loading view not yet implemented");
                 break;
         }
     }

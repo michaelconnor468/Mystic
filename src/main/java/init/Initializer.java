@@ -24,6 +24,7 @@ public class Initializer {
     public static class App extends Application {
         public void start(Stage stage) {
             x.createWindowManagerSingleton(stage);
+            x.createApplicationSingleton(this);
             x.getGameStateManager().setState(GameStateManager.State.MainMenu);
         }
         public void stop() { onExit(); }
