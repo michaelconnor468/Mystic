@@ -14,6 +14,7 @@ public class WindowManager implements GameStateChangeListener {
         this.stage = stage; 
         this.mainMenuView = new MainMenuView(1980, 1080);
         this.x = x;
+        stage.setTitle("Mystic");
         x.getGameStateManager().addGameStateChangeListener(this);
     }
     

@@ -22,5 +22,8 @@ public class Initializer {
             x.createWindowManagerSingleton(stage);
             x.getGameStateManager().setState(GameStateManager.State.MainMenu);
         }
+        public void stop() {
+            System.exit(0);
+        }
     }
 }
