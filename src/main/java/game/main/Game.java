@@ -7,9 +7,10 @@ import game.entities.Entity;
  * this class should not do anymore than provide a lightweight interface with the managers of the app to alert them of any major changes in game state 
  * i.e. starting, pausing, saving, and loading.
  */
-public class Game {
+public class Game implements GameStateChangeListener {
     private TimingManager timingManager;
     private WindowManager windowManager;
+    private ChunkManager chunkManager;
     private X x;
 
     private Game() {
@@ -19,7 +20,9 @@ public class Game {
     public Game(X x, double ticksPerSecond) {
         this();
         this.x = x;
+        x.getGameStateManager().addGameStateChangeListener(this);
         timingManager = new TimingManager(x, ticksPerSecond);
+        chunkManager = new ChunkManager();
     }
 
     public void start() {
@@ -30,11 +33,18 @@ public class Game {
         timingManager.stopTiming();
     }
 
-    public X getX() {
-        return x;
-    }
-
     public void addEntity(Entity entity) {
         //TODO send to chunk manager
+    }
+
+    public void beforeStateTransition(GameStateManager.State from, GameStateManager.State to){
+
+    }
+
+    public void afterStateTransition(GameStateManager.State from, GameStateManager.State to) {
+        switch ( to ) {
+            case Loading:
+                chunkManager.loadGame();
+        }
     }
 }

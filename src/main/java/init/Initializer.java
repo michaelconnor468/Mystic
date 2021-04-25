@@ -12,8 +12,8 @@ public class Initializer {
 
     public static void main(String[] args) {
         x = new X();
-        x.createGameSingleton(120);
         x.createGameStateManagerSingleton();
+        x.createGameSingleton(120);
         Application.launch(App.class);
     }
 

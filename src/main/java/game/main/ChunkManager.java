@@ -6,5 +6,11 @@ package game.main;
  * Implements the part of the game's api which is used to manage entities within the game.
  */
 public class ChunkManager {
-    
+    public ChunkManager() {
+
+    }
+
+    public void loadGame() {
+        System.out.println("Loading game...");
+    }
 }
