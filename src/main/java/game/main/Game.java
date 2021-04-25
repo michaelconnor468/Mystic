@@ -1,6 +1,9 @@
 package game.main;
 
 import game.entities.Entity;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 /**
  * Main driver class of the game which is intended to hold meta information for interacing with the high level managers of the game that will relegate
  * all logic and render actions to their contained components (GUI Manager, Timing Manager, Loading Manager, e.x.). To acheive an extensible design, 
@@ -12,6 +15,7 @@ public class Game implements GameStateChangeListener {
     private WindowManager windowManager;
     private ChunkManager chunkManager;
     private X x;
+    private Path loadFilePath;
 
     private Game() {
        
@@ -22,6 +26,7 @@ public class Game implements GameStateChangeListener {
         this.x = x;
         x.getGameStateManager().addGameStateChangeListener(this);
         timingManager = new TimingManager(x, ticksPerSecond);
+        loadFilePath = Paths.get("src/main/config/worlds/default");
         chunkManager = new ChunkManager();
     }
 
@@ -44,7 +49,8 @@ public class Game implements GameStateChangeListener {
     public void afterStateTransition(GameStateManager.State from, GameStateManager.State to) {
         switch ( to ) {
             case Loading:
-                chunkManager.loadGame();
+                chunkManager.loadGame(loadFilePath);
+                break;
         }
     }
 }
