@@ -27,7 +27,7 @@ public class Game implements GameStateChangeListener {
         x.getGameStateManager().addGameStateChangeListener(this);
         timingManager = new TimingManager(x, ticksPerSecond);
         loadFilePath = Paths.get("src/main/config/worlds/default");
-        chunkManager = new ChunkManager();
+        chunkManager = new ChunkManager(x);
     }
 
     public void start() {
@@ -49,7 +49,7 @@ public class Game implements GameStateChangeListener {
     public void afterStateTransition(GameStateManager.State from, GameStateManager.State to) {
         switch ( to ) {
             case Loading:
-                chunkManager.loadGame(loadFilePath);
+                chunkManager.loadChunks(loadFilePath);
                 break;
         }
     }
