@@ -14,9 +14,12 @@ public class BlockParser implements Parser<ParserBlock> {
 
     public ParserBlock parse(String text) {
         parsedLength = 0;
-        text = prepareForParsing(text);
-        if ( text == null ) return null;
-
+        String prepText = prepareForParsing(text);
+        if ( prepText == null ) {
+            System.out.printf("\nFaile to prepare text for parsing in BLockParser. Started with: \n%s\n", startOf(text));
+            return null;
+        }
+        text = prepText;
         block = new ParserBlock();
 
         // Iterates through all remaining properties and parses them accordingly
@@ -25,6 +28,7 @@ public class BlockParser implements Parser<ParserBlock> {
             ParserProperty property = propertyParser.parse(text);
             if ( property == null ) {
                 parsedLength = 0;
+                System.out.printf("\nFailed to parse property in block starting with:\n%s\n", startOf(text));
                 return null;
             }
             block.addProperty(property);
@@ -36,6 +40,13 @@ public class BlockParser implements Parser<ParserBlock> {
             parsedLength = parsedLength + whitespaceParser.getParsedLength() + propertyParser.getParsedLength();
         }
         return block;
+    }
+
+    /**
+     * Gets start of string for error reporting.
+     */
+    private String startOf(String text) {
+        return text.substring(0, Math.min(text.length(), 200));
     }
 
     /**
