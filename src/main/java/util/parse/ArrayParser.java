@@ -18,16 +18,19 @@ class ArrayParser implements Parser<ParserArray> {
     public ParserArray parse(String text) {
         parsedLength = 0;
 
-        text = prepareToParse(text);
-        if ( text == null )
+        String prepText = prepareToParse(text);
+        if ( prepText == null ) {
+            System.err.printf("\nFailed to prepare text for parsing in ArrayParser. Started with:\n%s\n", startOf(text));
             return null;
+        }
 
-        text = cutWhitespace(text);
+        text = cutWhitespace(prepText);
         while ( !text.equals("") ) {
             CaseParser caseParser = new CaseParser(type);
             ParserObject parsedObject = caseParser.parse(text);
             if ( parsedObject == null ) {
                 parsedLength = 0;
+                System.err.printf("\nFailed to parse array element starting with:\n%s\n", startOf(text));
                 return null;
             }
             text = cutWhitespace(text.substring(caseParser.getParsedText().length()));
@@ -45,6 +48,13 @@ class ArrayParser implements Parser<ParserArray> {
         }
 
         return array;
+    }
+
+    /**
+     * Gets start of string for error reporting.
+     */
+    private String startOf(String text) {
+        return text.substring(0, Math.min(text.length(), 200));
     }
 
     /**
