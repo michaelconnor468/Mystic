@@ -1,0 +1,5 @@
+{
+    performance: {
+        renderDistance: 1
+    }
+}
