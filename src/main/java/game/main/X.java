@@ -1,7 +1,9 @@
 package game.main;
 
 import game.entities.Entity;
+import util.parse.obj.ParserBlock;
 
+import java.util.HashMap;
 import javafx.stage.Stage;
 import javafx.application.Application;
 /**
@@ -13,6 +15,7 @@ public class X {
     private WindowManager windowManager;
     private GameStateManager gameStateManager;
     private Application application;
+    public HashMap<String, ParserBlock> settings;
     public int ticksPerSecond;
     public int tileSize;
     public int chunkSize;

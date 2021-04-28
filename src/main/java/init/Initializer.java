@@ -4,6 +4,8 @@ import game.main.Game;
 import game.main.X;
 import game.main.GameStateManager;
 import game.main.WindowManager;
+import util.parse.FileParser;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -14,6 +16,8 @@ public class Initializer {
         x = new X();
         x.createGameStateManagerSingleton();
         x.createGameSingleton(120);
+        // TODO add settings to context hash map by iterating over the files and adding 
+        // them all with string value being the file name
         Application.launch(App.class);
     }
 
