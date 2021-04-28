@@ -1,8 +1,8 @@
 {
     world: {
         chunkSize: 32,
-        maxXChunk: 999,
-        maxYChunk: 999,
+        maxXChunk: 1,
+        maxYChunk: 1,
         tileSize: 64
     }
 }
