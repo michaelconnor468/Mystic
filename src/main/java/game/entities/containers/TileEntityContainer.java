@@ -1,6 +1,7 @@
 package game.entities.containers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.lang.Math;
 import game.entities.Chunk;
@@ -17,9 +18,7 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
     private int chunkRows;
     private int chunkColumns;
 
-    private TileEntityContainer() {
-        tileEntities = new ArrayList<ArrayList<TileEntity>>();
-    }
+    private TileEntityContainer() {}
 
     /**
      * Populates data structure with clones of default entity instead of a single one to allow future dynamic functionality between different ones to be implemented
@@ -29,18 +28,11 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
      * @param defaultEntity - entity to be cloned and used as a default where there is no other added
      */
     public TileEntityContainer( Chunk chunk ) {
-        this();
         this.chunkRows = chunk.getTileRowDimension();
         this.chunkColumns = chunk.getTileColumnDimension();
-
-        for ( int i = 0; i < chunkRows; i++ ) {
-            ArrayList<TileEntity> tileEntityRow = new ArrayList<TileEntity>();
-            for ( int j = 0; j < chunkColumns; j++ ) {
-                tileEntityRow.add(j, null);
-                entityCount++;
-            }
-            tileEntities.add(tileEntityRow);
-        }
+        
+        this.tileEntities = new ArrayList<ArrayList<TileEntity>>(Collections.nCopies(chunkRows, 
+            new ArrayList<TileEntity>(Collections.nCopies(chunkColumns, null))));
     }
 
     /**

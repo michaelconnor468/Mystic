@@ -27,8 +27,10 @@ public class ChunkManager {
     public ChunkManager(X x) {
         this.x = x;
         // TODO read numbers from config files
-        activeChunks = new ArrayList<ArrayList<Chunk>>(Collections.nCopies(3, new ArrayList<Chunk>(Collections.nCopies(3, null))));
-        chunks = new ArrayList<ArrayList<Chunk>>(Collections.nCopies(100, new ArrayList<Chunk>(Collections.nCopies(100, null))));
+        activeChunks = new ArrayList<ArrayList<Chunk>>(Collections.nCopies(3, 
+            new ArrayList<Chunk>(Collections.nCopies(3, null))));
+        chunks = new ArrayList<ArrayList<Chunk>>(Collections.nCopies(100, 
+            new ArrayList<Chunk>(Collections.nCopies(100, null))));
     }
 
     public void loadChunks(Path path) {
