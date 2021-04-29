@@ -60,7 +60,7 @@ public class Chunk implements TickObserver, Renderable {
         chunk.tileSize = x.tileSize;
         chunk.sizeInTiles = x.chunkSize;
 
-        HashMap<String, ParserObject> properties = block.getProperties();
+        HashMap<String, ParserObject> properties = ((ParserBlock) block.getProperties().get("chunk")).getProperties();
         chunk.xChunkPosition = ((ParserInt) properties.get("xLocation")).getNumber();
         chunk.yChunkPosition = ((ParserInt) properties.get("yLocation")).getNumber();
 
