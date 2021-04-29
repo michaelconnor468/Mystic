@@ -28,7 +28,6 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
      */
     public TileEntityContainer( Chunk chunk ) {
         this.chunkSize = chunk.getSizeInTiles();
-        System.out.println(chunkSize);
         this.tileEntities = new ArrayList<ArrayList<TileEntity>>(Collections.nCopies(chunkSize, 
             new ArrayList<TileEntity>(Collections.nCopies(chunkSize, null))));
     }

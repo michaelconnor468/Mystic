@@ -19,6 +19,7 @@ public class X {
     public int ticksPerSecond;
     public int tileSize;
     public int chunkSize;
+    public int chunkGridSize;
 
     public X() {
     }

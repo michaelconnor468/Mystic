@@ -1,6 +1,8 @@
 package game.main;
 
 import game.entities.Entity;
+import util.parse.obj.*;
+import util.parse.FileParser;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,7 +29,15 @@ public class Game implements GameStateChangeListener {
         x.getGameStateManager().addGameStateChangeListener(this);
         timingManager = new TimingManager(x, ticksPerSecond);
         loadFilePath = Paths.get("src/main/config/worlds/default");
+        setupWorldConfig((ParserBlock)FileParser.parse(loadFilePath.resolve(Paths.get("config/world.mcfg")))
+            .getProperties().get("world"));
         chunkManager = new ChunkManager(x);
+    }
+
+    private void setupWorldConfig(ParserBlock block) {
+        x.chunkSize = ((ParserInt) block.getProperties().get("chunkSize")).getNumber();
+        x.tileSize = ((ParserInt) block.getProperties().get("tileSize")).getNumber();
+        x.chunkGridSize = ((ParserInt) block.getProperties().get("chunkGridSize")).getNumber();
     }
 
     public void start() {
