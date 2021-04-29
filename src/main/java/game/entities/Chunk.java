@@ -52,8 +52,7 @@ public class Chunk implements TickObserver, Renderable {
     public int getXChunkPosition() { return xChunkPosition; }
     public int getYChunkPosition() { return yChunkPosition; }
     public int getTileSize() { return tileSize; }
-    public int getTileRowDimension() { return sizeInTiles; }
-    public int getTileColumnDimension() { return sizeInTiles; }
+    public int getSizeInTiles() { return sizeInTiles; }
     
     public static Chunk load(X x, ParserBlock block) {
         Chunk chunk = new Chunk();
@@ -72,7 +71,8 @@ public class Chunk implements TickObserver, Renderable {
                 ParserBlock tileBlock = (ParserBlock) tileColumn.getIndex(ii);
                 HashMap<String, ParserObject> tileProperties = tileBlock.getProperties();
                 TileEntity entity = (new TileEntity.Builder()).setSize(chunk.tileSize)
-                                        .setPosition((chunk.xChunkPosition*chunk.sizeInTiles + ii)*chunk.tileSize, (chunk.yChunkPosition*chunk.sizeInTiles + i)*chunk.tileSize)
+                                        .setPosition((chunk.xChunkPosition*chunk.sizeInTiles + ii)*chunk.tileSize, 
+                                            (chunk.yChunkPosition*chunk.sizeInTiles + i)*chunk.tileSize)
                                         .setChunkLocation(i, ii)
                                         .setType(((ParserInt) tileProperties.get("type")).getNumber())
                                         .setBiome(((ParserInt) tileProperties.get("biome")).getNumber())

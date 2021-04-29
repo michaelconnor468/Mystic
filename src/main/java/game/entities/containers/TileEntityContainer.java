@@ -15,9 +15,8 @@ import game.main.X;
  */
 public class TileEntityContainer extends EntityContainer<TileEntity> {
     ArrayList<ArrayList<TileEntity>> tileEntities;
-    private int chunkRows;
-    private int chunkColumns;
-
+    private int chunkSize;
+    
     private TileEntityContainer() {}
 
     /**
@@ -28,11 +27,10 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
      * @param defaultEntity - entity to be cloned and used as a default where there is no other added
      */
     public TileEntityContainer( Chunk chunk ) {
-        this.chunkRows = chunk.getTileRowDimension();
-        this.chunkColumns = chunk.getTileColumnDimension();
-        
-        this.tileEntities = new ArrayList<ArrayList<TileEntity>>(Collections.nCopies(chunkRows, 
-            new ArrayList<TileEntity>(Collections.nCopies(chunkColumns, null))));
+        this.chunkSize = chunk.getSizeInTiles();
+        System.out.println(chunkSize);
+        this.tileEntities = new ArrayList<ArrayList<TileEntity>>(Collections.nCopies(chunkSize, 
+            new ArrayList<TileEntity>(Collections.nCopies(chunkSize, null))));
     }
 
     /**
@@ -41,7 +39,7 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
      * @param entity - entity to replace currently stored one with
      */
     public void addEntity( TileEntity tileEntity ) {
-        assert tileEntity.getChunkRow() < chunkRows && tileEntity.getChunkColumn() < chunkColumns : "TileEntityContainer can only store TileEntities of its given dimenstions. TileEntityString: " + tileEntity.toString();
+        assert tileEntity.getChunkRow() < chunkSize && tileEntity.getChunkColumn() < chunkSize : "TileEntityContainer can only store TileEntities of its given dimenstions. TileEntityString: " + tileEntity.toString();
         tileEntities.get(tileEntity.getChunkRow()).add(tileEntity.getChunkColumn(), tileEntity);
     }
 
@@ -63,9 +61,9 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
      */
     public ArrayList<TileEntity> getEntitiesWithinRange( double minX, double maxX, double minY, double maxY ) {
         ArrayList<TileEntity> returnList = new ArrayList<>();
-        for ( int i = 0; i < chunkRows; i++ ) {
+        for ( int i = 0; i < chunkSize; i++ ) {
             if ( tileEntities.get(i).get(0).getyPosition() >= minY && tileEntities.get(i).get(0).getyPosition() <= maxY ) {
-                for ( int j = 0; j < chunkColumns; j++ ) {
+                for ( int j = 0; j < chunkSize; j++ ) {
                     if ( tileEntities.get(i).get(j).getxPosition() >= minX && tileEntities.get(i).get(j).getxPosition() <= maxX )
                         returnList.add( tileEntities.get(i).get(j) );
                 }
@@ -80,7 +78,7 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
      * @param entity - entity to replace with the set default
      */
     public void removeEntity( TileEntity tileEntity ) {
-        assert tileEntity.getChunkRow() < chunkRows && tileEntity.getChunkColumn() < chunkColumns : "TileEntityContainer can only store TileEntities of its given dimenstions" + tileEntity.toString();
+        assert tileEntity.getChunkRow() < chunkSize && tileEntity.getChunkColumn() < chunkSize : "TileEntityContainer can only store TileEntities of its given dimenstions" + tileEntity.toString();
         tileEntities.get(tileEntity.getChunkRow()).add(tileEntity.getChunkColumn(), null);
     }
 
