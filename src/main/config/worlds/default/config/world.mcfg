@@ -1,6 +1,6 @@
 {
     world: {
-        chunkSize: 32,
+        chunkSize: 64,
         chunkGridSize: 1,
         tileSize: 64
     }
