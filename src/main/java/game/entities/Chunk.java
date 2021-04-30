@@ -1,14 +1,15 @@
 package game.entities;
 
 import util.parse.obj.*;
-import java.util.LinkedList;
-import java.util.Iterator;
-import java.util.HashMap;
 import game.entities.containers.*;
 import game.main.timing.TickObserver;
 import game.main.render.Renderable;
 import game.main.render.Renderer;
 import game.main.X;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.HashMap;
 
 /**
  * Represents a logical storage unit that consists of a NxN box of tiles and the entities stored within. This is used to boost performance and
@@ -26,10 +27,10 @@ public class Chunk implements TickObserver, Renderable {
     private Chunk() {}
 
     // Linked list provides layering, with each succesive index to be atop the other
-    private LinkedList<TileEntityContainer> tileEntities;
-    private LinkedList<StaticEntityContainer> staticEntities;
-    private LinkedList<DynamicEntityContainer> dynamicEntities;
-    private LinkedList<Entity> collidableEntities;
+    private ArrayList<TileEntityContainer> tileEntities;
+    private ArrayList<StaticEntityContainer> staticEntities;
+    private ArrayList<DynamicEntityContainer> dynamicEntities;
+    private ArrayList<Entity> collidableEntities;
 
     public void tick(X x) {
         for ( TileEntityContainer container : tileEntities )
@@ -58,6 +59,7 @@ public class Chunk implements TickObserver, Renderable {
         Chunk chunk = new Chunk();
         chunk.tileSize = x.tileSize;
         chunk.sizeInTiles = x.chunkSize;
+        chunk.tileEntities = new ArrayList<TileEntityContainer>();
 
         HashMap<String, ParserObject> properties = ((ParserBlock) block.getProperties().get("chunk")).getProperties();
         chunk.xChunkPosition = ((ParserInt) properties.get("xLocation")).getNumber();
