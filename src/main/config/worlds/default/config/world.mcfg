@@ -2,6 +2,7 @@
     world: {
         chunkSize: 64,
         chunkGridSize: 1,
+        chunkLoadRadius: 2,
         tileSize: 64
     }
 }
