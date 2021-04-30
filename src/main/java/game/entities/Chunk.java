@@ -5,6 +5,7 @@ import game.entities.containers.*;
 import game.main.timing.TickObserver;
 import game.main.render.Renderable;
 import game.main.render.Renderer;
+import game.main.ChunkManager;
 import game.main.X;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class Chunk implements TickObserver, Renderable {
     private int xChunkPosition;
     private int yChunkPosition;
     private int tileSize;
+    private ChunkManager chunkManager;
 
     // Use load method to instantiate object
     private Chunk() {}
@@ -57,8 +59,9 @@ public class Chunk implements TickObserver, Renderable {
     
     public static Chunk load(X x, ParserBlock block) {
         Chunk chunk = new Chunk();
-        chunk.tileSize = x.tileSize;
-        chunk.sizeInTiles = x.chunkSize;
+        chunk.chunkManager = x.getChunkManager();
+        chunk.tileSize = chunk.chunkManager.getTileSize();
+        chunk.sizeInTiles = chunk.chunkManager.getChunkSize();
         chunk.tileEntities = new ArrayList<TileEntityContainer>();
 
         HashMap<String, ParserObject> properties = ((ParserBlock) block.getProperties().get("chunk")).getProperties();

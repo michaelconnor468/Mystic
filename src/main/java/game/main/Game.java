@@ -15,7 +15,6 @@ import java.nio.file.Paths;
 public class Game implements GameStateChangeListener {
     private TimingManager timingManager;
     private WindowManager windowManager;
-    private ChunkManager chunkManager;
     private X x;
     private Path loadFilePath;
 
@@ -26,19 +25,11 @@ public class Game implements GameStateChangeListener {
     public Game(X x, double ticksPerSecond) {
         this();
         this.x = x;
-        x.getGameStateManager().addGameStateChangeListener(this);
+        System.out.println("debug");
         timingManager = new TimingManager(x, ticksPerSecond);
         loadFilePath = Paths.get("src/main/config/worlds/default");
-        setupWorldConfig((ParserBlock)FileParser.parse(loadFilePath.resolve(Paths.get("config/world.mcfg")))
-            .getProperties().get("world"));
-        chunkManager = new ChunkManager(x);
-    }
-
-    private void setupWorldConfig(ParserBlock block) {
-        x.chunkSize = ((ParserInt) block.getProperties().get("chunkSize")).getNumber();
-        x.tileSize = ((ParserInt) block.getProperties().get("tileSize")).getNumber();
-        x.chunkGridSize = ((ParserInt) block.getProperties().get("chunkGridSize")).getNumber();
-        x.chunkLoadRadius = ((ParserInt) block.getProperties().get("chunkLoadRadius")).getNumber();
+        x.createChunkManagerSingleton(x, FileParser.parse(loadFilePath.resolve(Paths.get("config/world.mcfg"))));
+        x.getGameStateManager().addGameStateChangeListener(this);
     }
 
     public void start() {
@@ -60,7 +51,7 @@ public class Game implements GameStateChangeListener {
     public void afterStateTransition(GameStateManager.State from, GameStateManager.State to) {
         switch ( to ) {
             case Loading:
-                chunkManager.loadChunks(loadFilePath);
+                x.getChunkManager().loadChunks(loadFilePath);
                 break;
         }
     }

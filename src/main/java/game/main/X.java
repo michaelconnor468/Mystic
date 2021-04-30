@@ -14,13 +14,10 @@ public class X {
     private Game game;
     private WindowManager windowManager;
     private GameStateManager gameStateManager;
+    private ChunkManager chunkManager;
     private Application application;
     public HashMap<String, ParserBlock> settings;
     public int ticksPerSecond;
-    public int tileSize;
-    public int chunkSize;
-    public int chunkGridSize;
-    public int chunkLoadRadius;
 
     public X() {
     }
@@ -46,7 +43,12 @@ public class X {
     }
     public Application getApplication() { return application; }
     public void createApplicationSingleton(Application application) {
-        if ( this.application != null )
+        if ( this.application == null )
             this.application = application;
+    }
+    public ChunkManager getChunkManager() { return chunkManager; }
+    public void createChunkManagerSingleton(X x, ParserBlock block) {
+        if ( this.chunkManager == null )
+            this.chunkManager = new ChunkManager(x, block);
     }
 }
