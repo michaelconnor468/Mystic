@@ -38,6 +38,7 @@ public class Game implements GameStateChangeListener {
         x.chunkSize = ((ParserInt) block.getProperties().get("chunkSize")).getNumber();
         x.tileSize = ((ParserInt) block.getProperties().get("tileSize")).getNumber();
         x.chunkGridSize = ((ParserInt) block.getProperties().get("chunkGridSize")).getNumber();
+        x.chunkLoadRadius = ((ParserInt) block.getProperties().get("chunkLoadRadius")).getNumber();
     }
 
     public void start() {

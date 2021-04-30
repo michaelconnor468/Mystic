@@ -20,6 +20,7 @@ public class X {
     public int tileSize;
     public int chunkSize;
     public int chunkGridSize;
+    public int chunkLoadRadius;
 
     public X() {
     }
