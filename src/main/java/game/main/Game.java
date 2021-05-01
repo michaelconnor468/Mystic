@@ -40,10 +40,6 @@ public class Game implements GameStateChangeListener {
         timingManager.stopTiming();
     }
 
-    public void addEntity(Entity entity) {
-        //TODO send to chunk manager
-    }
-
     public void beforeStateTransition(GameStateManager.State from, GameStateManager.State to){
 
     }

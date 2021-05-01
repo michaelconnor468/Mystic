@@ -16,15 +16,8 @@ public class X {
     private GameStateManager gameStateManager;
     private ChunkManager chunkManager;
     private Application application;
-    public HashMap<String, ParserBlock> settings;
-    public int ticksPerSecond;
 
-    public X() {
-    }
-
-    public void addEntity(Entity entity) {
-        game.addEntity(entity);
-    }
+    public X() {}
 
     public Game getGame() {return game;}
     public void createGameSingleton(double ticksPerSecond) {
