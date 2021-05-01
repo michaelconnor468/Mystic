@@ -42,16 +42,20 @@ public class ChunkManager {
 
     public void loadChunks(Path path) {
         Pattern pattern = Pattern.compile("[0-9]{6}\\.msv");
+        int numLoaded = 0;
         try ( Stream<Path> paths = Files.walk(path.resolve(Paths.get("chunks"))) ) {
             paths.forEach(f -> {
                 Matcher matcher = pattern.matcher(f.toString());
                 if ( matcher.find() ) {
                     int column = Integer.parseInt(matcher.group().substring(0,3));
                     int row = Integer.parseInt(matcher.group().substring(3,6));
-                    System.out.println(chunks.size());
+                    if ( column > chunkGridSize*2 - 1 || row > chunkGridSize*2 - 1 )
+                        throw new IOException("Chunk file number greater than chunk grid size");
                     chunks.get(column).set(row, Chunk.load(x, FileParser.parse(f)));
                 }
             });
+            if ( numLoaded != ( chunkGridSize*2 - 1 ) * ( chunkGridSize*2 - 1 ) )
+                throw new IOException("Missing chunks when trying to load");
         } catch ( IOException e ) {System.err.println("Failed to read chunk files\n" + e);}
     }
 
