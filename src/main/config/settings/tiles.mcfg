@@ -1,0 +1,6 @@
+{
+    tiles: [
+        {id: 0, name: "grass", collidable: 0},
+        {id: 1, name: "stone", collidable: 1}
+    ]
+}

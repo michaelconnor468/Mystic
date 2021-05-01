@@ -4,7 +4,7 @@
         health: 100,
         xSize: 20,
         ySize: 60,
-        xPosition: 2048,
-        yPosition: 2048
+        xPosition: 6144,
+        yPosition: 6144
     }
 }
