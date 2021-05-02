@@ -1,9 +1,13 @@
 package game.main;
 
 import game.entities.Entity;
+import util.parse.FileParser;
 import util.parse.obj.ParserBlock;
 
 import java.util.HashMap;
+import java.nio.file.Paths;
+import java.nio.file.Path;
+
 import javafx.stage.Stage;
 import javafx.application.Application;
 /**
@@ -16,10 +20,11 @@ public class X {
     private GameStateManager gameStateManager;
     private ChunkManager chunkManager;
     private Application application;
+    private ParserBlock worldSettings;
 
     public X() {}
 
-    public Game getGame() {return game;}
+    public Game getGame() { return game; }
     public void createGameSingleton(double ticksPerSecond) {
         if ( game == null )
             game = new Game(this, ticksPerSecond);
@@ -40,8 +45,13 @@ public class X {
             this.application = application;
     }
     public ChunkManager getChunkManager() { return chunkManager; }
-    public void createChunkManagerSingleton(X x, ParserBlock block) {
+    public void createChunkManagerSingleton(ParserBlock block) {
         if ( this.chunkManager == null )
-            this.chunkManager = new ChunkManager(x, block);
+            this.chunkManager = new ChunkManager(this, block);
     }
+    public void createSettingsSingletons(Path path) {
+        if ( this.worldSettings == null )
+            this.worldSettings = FileParser.parse(path.resolve(Paths.get("worlds.mcfg")));
+    }
+    public ParserBlock getWorldSettings() { return worldSettings; }
 }

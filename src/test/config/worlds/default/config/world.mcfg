@@ -1,6 +1,5 @@
 {
     chunkSize: 64,
-    chunkGridSize: 2,
-    chunkLoadRadius: 2,
+    chunkGridSize: 3,
     tileSize: 64
 }

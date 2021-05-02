@@ -24,20 +24,20 @@ public class ChunkManager {
     private X x;
     private ArrayList<ArrayList<Chunk>> chunks;
     private ArrayList<ArrayList<Chunk>> activeChunks;
-    private int chunkSize, tileSize, chunkGridSize, chunkLoadRadius;
+    private int chunkSize, tileSize, chunkGridSize, chunkLoadDiameter;
 
     private ChunkManager() {}
 
-    public ChunkManager(X x, ParserBlock block) {
+    public ChunkManager(X x, ParserBlock worldSettings) {
         this.x = x;
-        this.activeChunks = new ArrayList<ArrayList<Chunk>>(Collections.nCopies(3, 
-            new ArrayList<Chunk>(Collections.nCopies(3, null))));
-        this.chunks = new ArrayList<ArrayList<Chunk>>(Collections.nCopies(100, 
-            new ArrayList<Chunk>(Collections.nCopies(100, null))));
-        this.chunkSize = ((ParserInt) block.getProperties().get("chunkSize")).getNumber();
-        this.tileSize = ((ParserInt) block.getProperties().get("tileSize")).getNumber();
-        this.chunkGridSize = ((ParserInt) block.getProperties().get("chunkGridSize")).getNumber();
-        this.chunkLoadRadius = ((ParserInt) block.getProperties().get("chunkLoadRadius")).getNumber();
+        this.chunkSize = ((ParserInt) worldSettings.getProperties().get("chunkSize")).getNumber();
+        this.tileSize = ((ParserInt) worldSettings.getProperties().get("tileSize")).getNumber();
+        this.chunkGridSize = ((ParserInt) worldSettings.getProperties().get("chunkGridSize")).getNumber();
+        this.chunkLoadDiameter = ((ParserInt) x.getWorldSettings().getProperties().get("chunkLoadDiameter")).getNumber(); 
+        this.activeChunks = new ArrayList<ArrayList<Chunk>>(Collections.nCopies(chunkLoadDiameter, 
+            new ArrayList<Chunk>(Collections.nCopies(chunkLoadDiameter, null))));
+        this.chunks = new ArrayList<ArrayList<Chunk>>(Collections.nCopies(chunkGridSize, 
+            new ArrayList<Chunk>(Collections.nCopies(chunkGridSize, null))));
     }
 
     public void loadChunks(Path path) {
@@ -60,5 +60,7 @@ public class ChunkManager {
     public int getChunkSize() { return chunkSize; }
     public int getTileSize() { return tileSize; }
     public int getChunkGridSize() { return chunkGridSize; }
-    public int getChunkLoadRadius() { return chunkLoadRadius; }
+    public int getChunkLoadDiameter() { return chunkLoadDiameter; }
+    public ArrayList<ArrayList<Chunk>> getChunks() { return chunks; }
+    public ArrayList<ArrayList<Chunk>> getActiveChunks() { return activeChunks; }
 }
