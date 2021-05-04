@@ -47,6 +47,7 @@ public class ChunkManager {
                 System.out.println(f);
                 Matcher matcher = pattern.matcher(f.toString());
                 if ( matcher.find() ) {
+                    assert matcher.group().length() == 10;
                     int column = Integer.parseInt(matcher.group().substring(0,3));
                     int row = Integer.parseInt(matcher.group().substring(3,6));
                     chunks.get(column).set(row, Chunk.load(x, FileParser.parse(f)));
