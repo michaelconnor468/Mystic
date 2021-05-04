@@ -32,9 +32,4 @@ public class ChunkManagerTests {
         assertEquals(3, x.getChunkManager().getChunks().size(), "Incorrect number of chunks in chunk collection");
         assertEquals(3, x.getChunkManager().getChunks().get(0).size(), "Incorrect number of chunks in chunk collection");
     }
-
-    @Test
-    public void chunkOrderTest() {
-        
-    }
 }
