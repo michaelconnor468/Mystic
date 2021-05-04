@@ -14,7 +14,7 @@ import game.main.X;
  * all tiles in a chunk must always be present, data structure is always full with defaults where needed and elements can only be replaced with others.
  */
 public class TileEntityContainer extends EntityContainer<TileEntity> {
-    ArrayList<ArrayList<TileEntity>> tileEntities;
+    private ArrayList<ArrayList<TileEntity>> tileEntities;
     private int chunkSize;
     
     private TileEntityContainer() {}
@@ -26,8 +26,8 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
      * 
      * @param defaultEntity - entity to be cloned and used as a default where there is no other added
      */
-    public TileEntityContainer( Chunk chunk ) {
-        this.chunkSize = chunk.getSizeInTiles();
+    public TileEntityContainer( X x ) {
+        this.chunkSize = x.getChunkManager().getChunkSize();
         this.tileEntities = new ArrayList<ArrayList<TileEntity>>(Collections.nCopies(chunkSize, 
             new ArrayList<TileEntity>(Collections.nCopies(chunkSize, null))));
     }
@@ -70,6 +70,8 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
         }
         return returnList;
     }
+
+    public TileEntity getEntityAt(int row, int column) { return tileEntities.get(row).get(column); }
 
     /**
      * Since there must always be a tile in the matrix for a chunk, method cannot actually remove it but replaces it with the default.

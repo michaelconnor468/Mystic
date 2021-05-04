@@ -68,10 +68,10 @@ public class Chunk implements TickObserver, Renderable {
         chunk.xChunkPosition = ((ParserInt) properties.get("xLocation")).getNumber();
         chunk.yChunkPosition = ((ParserInt) properties.get("yLocation")).getNumber();
 
+        TileEntityContainer tileEntityContainer = new TileEntityContainer(x);
         ParserArray tileRows = (ParserArray) properties.get("tileEntities");
         for ( int i = 0; i < tileRows.getLength(); i++ ) {
             ParserArray tileColumn = (ParserArray) tileRows.getIndex(i);
-            TileEntityContainer tileEntityContainer = new TileEntityContainer(chunk);
             for ( int ii = 0; ii < tileColumn.getLength(); ii++  ) {
                 ParserBlock tileBlock = (ParserBlock) tileColumn.getIndex(ii);
                 HashMap<String, ParserObject> tileProperties = tileBlock.getProperties();
@@ -84,8 +84,8 @@ public class Chunk implements TickObserver, Renderable {
                                         .build();
                 tileEntityContainer.addEntity(entity);
             }
-            chunk.tileEntities.add(tileEntityContainer);
         }
+        chunk.tileEntities.add(tileEntityContainer);
         return chunk;
     }
 
