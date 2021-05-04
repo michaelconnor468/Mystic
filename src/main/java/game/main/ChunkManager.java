@@ -44,6 +44,7 @@ public class ChunkManager {
         Pattern pattern = Pattern.compile("[0-9]{6}\\.msv");
         try ( Stream<Path> paths = Files.walk(path.resolve(Paths.get("chunks"))) ) {
             paths.forEach(f -> {
+                System.out.println(f);
                 Matcher matcher = pattern.matcher(f.toString());
                 if ( matcher.find() ) {
                     int column = Integer.parseInt(matcher.group().substring(0,3));
