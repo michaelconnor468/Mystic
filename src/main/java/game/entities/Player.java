@@ -6,6 +6,10 @@ import java.util.HashMap;
 import game.main.render.Renderer;
 import game.main.X;
 
+/**
+ * Main player class. Special entity as it will be used to dictate camera location and chunk loading. Will
+ * be loaded separately from all other entities and will not belong to a particular class.
+ */
 public class Player extends DynamicEntity implements DestructibleEntity {
     private int health;
     private int maxHealth;

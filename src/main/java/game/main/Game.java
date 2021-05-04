@@ -28,6 +28,7 @@ public class Game implements GameStateChangeListener {
         timingManager = new TimingManager(x, ticksPerSecond);
         loadFilePath = Paths.get("src/main/config/worlds/default");
         x.createChunkManagerSingleton(FileParser.parse(loadFilePath.resolve(Paths.get("config/world.mcfg"))));
+        x.createPlayerSingleton(loadFilePath);
         x.getGameStateManager().addGameStateChangeListener(this);
     }
 

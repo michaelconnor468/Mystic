@@ -1,6 +1,7 @@
 package game.main;
 
 import game.entities.Entity;
+import game.entities.Player;
 import util.parse.FileParser;
 import util.parse.obj.ParserBlock;
 
@@ -21,6 +22,7 @@ public class X {
     private ChunkManager chunkManager;
     private Application application;
     private ParserBlock worldSettings;
+    private Player player;
 
     public X() {}
 
@@ -46,12 +48,17 @@ public class X {
     }
     public ChunkManager getChunkManager() { return chunkManager; }
     public void createChunkManagerSingleton(ParserBlock block) {
-        if ( this.chunkManager == null )
-            this.chunkManager = new ChunkManager(this, block);
+        if ( chunkManager == null )
+            chunkManager = new ChunkManager(this, block);
     }
     public void createSettingsSingletons(Path path) {
-        if ( this.worldSettings == null )
-            this.worldSettings = FileParser.parse(path.resolve(Paths.get("worlds.mcfg")));
+        if ( worldSettings == null )
+            worldSettings = FileParser.parse(path.resolve(Paths.get("worlds.mcfg")));
     }
     public ParserBlock getWorldSettings() { return worldSettings; }
+    public void createPlayerSingleton(Path path) {
+        if ( player == null )
+            player = Player.load(this, FileParser.parse(path.resolve("entities/player.msv")));
+    }
+    public Player getPlayer() { return player; }
 }
