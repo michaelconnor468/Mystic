@@ -18,8 +18,8 @@ public class Initializer {
     public static void main(String[] args) {
         x = new X();
         x.createGameStateManagerSingleton();
-        x.createGameSingleton(120);
         x.createSettingsSingletons(Paths.get("src/main/config/settings"));
+        x.createGameSingleton(120);
         Application.launch(App.class);
     }
 
