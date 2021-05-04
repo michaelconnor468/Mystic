@@ -1,10 +1,8 @@
 {
-    player: {
-        maxHealth: 100,
-        health: 100,
-        xSize: 20,
-        ySize: 60,
-        xPosition: 6144,
-        yPosition: 6144
-    }
+    maxHealth: 100,
+    health: 100,
+    xSize: 20,
+    ySize: 60,
+    xPosition: 6144,
+    yPosition: 6144
 }

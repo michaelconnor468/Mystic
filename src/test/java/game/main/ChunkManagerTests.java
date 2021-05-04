@@ -18,7 +18,7 @@ public class ChunkManagerTests {
     public static void initialize() {
         x = new X();
         x.createSettingsSingletons(Paths.get("src/test/config/settings"));
-        x.createChunkManagerSingleton(FileParser.parse(Paths.get("src/test/config/worlds/default/config/world.mcfg")));
+        x.createChunkManagerSingleton(Paths.get("src/test/config/worlds/default"));
         x.getChunkManager().loadChunks(Paths.get("src/test/config/worlds/default"));
     }
 
