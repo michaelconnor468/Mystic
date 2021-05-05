@@ -28,14 +28,13 @@ public class MainMenuScene {
         } catch ( Exception e ) { System.err.println(e); } // Should never happen but will print if it nevertheless does
         setTitle(borderPane);
         setCenterButtons(borderPane);
-
         return scene;
     }
 
     private static void setTitle(BorderPane borderPane) {
         Text title = new Text("Mystic");
         title.setFill(Color.rgb(10, 143, 48));
-        title.setFont(Font.font("Serif", 128));
+        title.getStyleClass().add("title");
         borderPane.setTop(title);
         borderPane.setAlignment(title, Pos.CENTER);
     }
@@ -45,7 +44,7 @@ public class MainMenuScene {
         vbox.setSpacing(20);
         vbox.prefWidthProperty().bind(borderPane.widthProperty());
         vbox.setAlignment(Pos.CENTER);
-        vbox.getStyleClass().add("vbox");
+        vbox.getStyleClass().add("button-box");
         
         Button startButton = new Button("New Game");
         Button exitButton = new Button("Exit");
