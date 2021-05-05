@@ -3,6 +3,7 @@ package views.scenes;
 import game.main.X;
 import game.main.GameStateManager;
 
+import java.nio.file.Paths;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -19,10 +20,11 @@ public class MainMenuScene {
     public static Scene getScene(X context, int width, int height) {
         x = context;
         BorderPane borderPane = new BorderPane();
-        borderPane.setStyle("-fx-background-color: #E0E0E0;");
 
         Scene scene = new Scene(borderPane, width, height);
-
+        try { 
+            scene.getStylesheets().add(Paths.get("src/main/resources/styles/MainMenu.css").toUri().toURL().toExternalForm());
+        } catch ( Exception e ) { System.err.println(e); } // Should never happen but will print if it nevertheless does
         setTitle(borderPane);
         setCenterButtons(borderPane);
 
