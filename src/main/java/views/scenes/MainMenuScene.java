@@ -23,7 +23,8 @@ public class MainMenuScene {
 
         Scene scene = new Scene(borderPane, width, height);
         try { 
-            scene.getStylesheets().add(Paths.get("src/main/resources/styles/MainMenu.css").toUri().toURL().toExternalForm());
+            scene.getStylesheets().add(Paths.get("src/main/resources/styles/MainMenu.css")
+                .toUri().toURL().toExternalForm());
         } catch ( Exception e ) { System.err.println(e); } // Should never happen but will print if it nevertheless does
         setTitle(borderPane);
         setCenterButtons(borderPane);
@@ -44,6 +45,7 @@ public class MainMenuScene {
         vbox.setSpacing(20);
         vbox.prefWidthProperty().bind(borderPane.widthProperty());
         vbox.setAlignment(Pos.CENTER);
+        vbox.getStyleClass().add("vbox");
         
         Button startButton = new Button("New Game");
         Button exitButton = new Button("Exit");
