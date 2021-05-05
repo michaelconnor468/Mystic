@@ -46,12 +46,18 @@ public class MainMenuScene {
         vbox.setAlignment(Pos.CENTER);
         vbox.getStyleClass().add("button-box");
         
-        Button startButton = new Button("New Game");
+        Button newGameButton = new Button("New Game");
+        Button loadGameButton = new Button("Load Game");
+        Button settingsButton = new Button("Settings");
         Button exitButton = new Button("Exit");
-        startButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.Loading) );
+        // TODO loadGame functionality
+        // TODO settings functionality
+        newGameButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.Loading) );
         exitButton.setOnAction( e -> {try{x.getApplication().stop();} catch (Exception err) {System.exit(0);}} );
 
-        vbox.getChildren().add(startButton);
+        vbox.getChildren().add(newGameButton);
+        vbox.getChildren().add(loadGameButton);
+        vbox.getChildren().add(settingsButton);
         vbox.getChildren().add(exitButton);
         borderPane.setCenter(vbox);
         borderPane.setAlignment(vbox, Pos.CENTER);
