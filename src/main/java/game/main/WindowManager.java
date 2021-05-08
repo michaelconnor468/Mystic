@@ -7,12 +7,14 @@ import javafx.stage.Stage;
 public class WindowManager implements GameStateChangeListener {
     Stage stage;
     MainMenuView mainMenuView;
+    PlayingView playingView;
     X x;
 
     private WindowManager() {}
     public WindowManager(X x, Stage stage) {
         this.stage = stage; 
         this.mainMenuView = new MainMenuView(x);
+        this.playingView = new PlayingView(x);
         this.x = x;
         stage.setTitle("Mystic");
         x.getGameStateManager().addGameStateChangeListener(this);
@@ -26,7 +28,9 @@ public class WindowManager implements GameStateChangeListener {
                 stage.show();
                 break;
             case Loading:
-                System.out.println("Loading view not yet implemented");
+                break;
+            case Playing:
+                stage.setScene(playingView.deploy());
                 break;
         }
         switch (from) {
@@ -34,7 +38,9 @@ public class WindowManager implements GameStateChangeListener {
                 mainMenuView.recall();
                 break;
             case Loading:    
-                System.out.println("Loading view not yet implemented");
+                break;
+            case Playing:
+                playingView.recall();
                 break;
         }
     }

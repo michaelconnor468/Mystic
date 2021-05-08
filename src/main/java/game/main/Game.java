@@ -39,6 +39,7 @@ public class Game implements GameStateChangeListener {
         switch ( to ) {
             case Loading:
                 x.getChunkManager().loadChunks(loadFilePath);
+                x.getGameStateManager().setState(GameStateManager.State.Playing);
                 break;
         }
     }
