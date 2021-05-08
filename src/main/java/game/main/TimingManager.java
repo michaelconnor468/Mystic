@@ -45,5 +45,5 @@ public class TimingManager {
         tickObservers.forEach(obs -> obs.tick(x));
     }
 
-    private int getTicksPerSecond() { return ticksPerSecond; }
+    public int getTicksPerSecond() { return ticksPerSecond; }
 }
