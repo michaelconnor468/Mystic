@@ -1,21 +1,24 @@
 package game.main.render;
 
+import java.nio.file.Path;
+
 import game.main.X;
 import game.entities.Entity;
+import util.parse.obj.*;
 
 public class Animation {
-    private Entity entity;
     private int frame;
+    private Entity entity;
     private int ticksElapsed;
     private int ticksPerFrame;
     private int totalFrames;
 
     private Animation() {};
-    public Animation(Entity entity) {
+    public Animation(X x, Entity entity, Path path) {
         this.entity = entity;
         this.frame = 0;
         this.ticksElapsed = 0;
-        this.ticksPerFrame = 1;
+        this.ticksPerFrame = ((ParserInt) x.getMainSettings().getProperties().get("ticksPerFrame")).getNumber();
     }
 
     public void animate(Renderer r) {

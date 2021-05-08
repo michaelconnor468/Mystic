@@ -3,6 +3,9 @@ package game.entities;
 import util.parse.*;
 import util.parse.obj.*;
 import java.util.HashMap;
+import java.nio.file.Paths;
+
+import game.main.render.Animation;
 import game.main.render.Renderer;
 import game.main.X;
 
@@ -13,12 +16,19 @@ import game.main.X;
 public class Player extends DynamicEntity implements DestructibleEntity {
     private int health;
     private int maxHealth;
+
+    private Animation walkUpAnimation;
+    private Animation walkDownAnimation;
+    private Animation walkLeftAnimation;
+    private Animation walkRightAnimation;
  
     private Player() {}
 
     public void tick(X x) { }
 
-    public void render(Renderer renderer) {}
+    public void render(Renderer renderer) {
+        walkUpAnimation.animate(renderer);
+    }
 
     public void damage( int health ) {
         this.health -= health;
@@ -45,6 +55,10 @@ public class Player extends DynamicEntity implements DestructibleEntity {
         player.yPosition = ((ParserInt) map.get("yPosition")).getNumber();
         player.maxHealth = ((ParserInt) map.get("maxHealth")).getNumber();
         player.health = ((ParserInt) map.get("health")).getNumber();
+        player.walkUpAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_up.png"));
+        player.walkDownAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_down.png"));
+        player.walkLeftAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_left.png"));
+        player.walkRightAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_right.png"));
         return player;
     }
 
