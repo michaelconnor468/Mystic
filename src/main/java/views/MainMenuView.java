@@ -4,7 +4,6 @@ import views.scenes.MainMenuScene;
 import game.main.X;
 
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 
 /**
  * View for the main menu of the game which is the first thing to appear on startup. Allows user to edit configurations
