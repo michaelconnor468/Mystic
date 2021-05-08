@@ -13,31 +13,18 @@ import java.nio.file.Paths;
  * i.e. starting, pausing, saving, and loading.
  */
 public class Game implements GameStateChangeListener {
-    private TimingManager timingManager;
-    private WindowManager windowManager;
     private X x;
     private Path loadFilePath;
 
-    private Game() {
-       
-    }
+    private Game() {}
 
     public Game(X x, double ticksPerSecond) {
-        this();
         this.x = x;
-        timingManager = new TimingManager(x, ticksPerSecond);
         loadFilePath = Paths.get("src/main/config/worlds/default");
         x.createChunkManagerSingleton(loadFilePath);
         x.createPlayerSingleton(loadFilePath);
+        x.createTimingManagerSingleton();
         x.getGameStateManager().addGameStateChangeListener(this);
-    }
-
-    public void start() {
-        timingManager.startTiming();
-    }
-
-    public void pause() {
-        timingManager.stopTiming();
     }
 
     public void beforeStateTransition(GameStateManager.State from, GameStateManager.State to){

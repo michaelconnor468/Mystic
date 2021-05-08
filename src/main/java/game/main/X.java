@@ -24,6 +24,7 @@ public class X {
     private ParserBlock worldSettings;
     private ParserBlock mainSettings;
     private RenderManager renderManager;
+    private TimingManager timingManager;
     private Player player;
 
     public X() {}
@@ -71,4 +72,8 @@ public class X {
             renderManager = new RenderManager(this);
     }
     public RenderManager getRenderManager() { return renderManager; };
+    public void createTimingManagerSingleton() {
+        if ( timingManager == null )
+            timingManager = new TimingManager(this);
+    }
 }

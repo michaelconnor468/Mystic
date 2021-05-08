@@ -1,5 +1,7 @@
 package game.main;
 
+import util.parse.obj.*;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import game.main.timing.*;
@@ -9,19 +11,17 @@ import game.main.timing.*;
  * is left to the implementation as it is not the function of this class to know anything about which objects it is timing.
  */
 public class TimingManager {
-    private double ticksPerSecond;
+    private int ticksPerSecond;
     private TimedObjects timedObjects;
     private Timer timer;
     private X x;
 
-    private TimingManager() {
+    private TimingManager() {}
+
+    public TimingManager(X x) {
         this.timedObjects = new TimedObjects();
         this.timer = new Timer();
-    }
-
-    public TimingManager(X x, double ticksPerSecond) {
-        this();
-        this.ticksPerSecond = ticksPerSecond;
+        this.ticksPerSecond = ((ParserInt) x.getMainSettings().getProperties().get("ticksPerSecond")).getNumber();
         this.x = x;
     }
 
@@ -44,4 +44,6 @@ public class TimingManager {
     private void tick(X x) {
         timedObjects.tick(x);
     }
+
+    private int getTicksPerSecond() { return ticksPerSecond; }
 }
