@@ -1,19 +1,7 @@
-.root {
-    -fx-background-color: #E0E0E0;
-    -fx-font-family: "Arial Black";
-    -fx-font-size: 2em;
-}
-
 .title {
     -fx-font-size: 12em;
 }
 
 .button-box {
     -fx-spacing: 3em;
-}
-
-.button {
-    -fx-background-color: #BBBBBB;
-    -fx-pref-height: 4em;
-    -fx-pref-width: 20em;
 }
