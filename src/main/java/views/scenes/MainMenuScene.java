@@ -2,6 +2,7 @@ package views.scenes;
 
 import game.main.X;
 import game.main.GameStateManager;
+import util.parse.obj.*;
 
 import java.nio.file.Paths;
 import javafx.scene.Scene;
@@ -17,8 +18,10 @@ import javafx.geometry.Insets;
 public class MainMenuScene {
     private static X x;
 
-    public static Scene getScene(X context, int width, int height) {
+    public static Scene getScene(X context) {
         x = context;
+        int width = ((ParserInt) x.getMainSettings().getProperties().get("resolutionx")).getNumber();
+        int height = ((ParserInt) x.getMainSettings().getProperties().get("resolutiony")).getNumber();
         BorderPane borderPane = new BorderPane();
 
         Scene scene = new Scene(borderPane, width, height);

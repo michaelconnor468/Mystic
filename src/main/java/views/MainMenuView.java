@@ -10,17 +10,13 @@ import javafx.scene.Scene;
  * and start the main game.
  */
 public class MainMenuView implements View {
-    private int width;
-    private int height;
     private X x;
 
     private MainMenuView() {}
-    public MainMenuView(X x, int width, int height) {
+    public MainMenuView(X x) {
         this.x = x;
-        this.width = width;
-        this.height = height;
     }
 
-    public Scene deploy() { return MainMenuScene.getScene(x, width, height); }
+    public Scene deploy() { return MainMenuScene.getScene(x); }
     public void recall() {}
 }
