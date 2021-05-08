@@ -16,9 +16,9 @@ public class RenderManager {
     private Renderer renderer;
 
     private RenderManager() {}
-    public RenderManager(X x, ParserBlock settings) {
+    public RenderManager(X x) {
         this.x = x;
-        this.ticksPerRender = 2;
+        this.ticksPerRender = ((ParserInt) x.getMainSettings().getProperties().get("ticksPerRender")).getNumber();
         this.ticksElapsed = 0;
         this.toRender = new ArrayList<>();
     }
