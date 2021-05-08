@@ -38,7 +38,6 @@ public class MainMenuScene {
 
     private static void setTitle(BorderPane borderPane) {
         Text title = new Text("Mystic");
-        title.setFill(Color.rgb(10, 143, 48));
         title.getStyleClass().add("title");
         borderPane.setTop(title);
         borderPane.setAlignment(title, Pos.CENTER);
