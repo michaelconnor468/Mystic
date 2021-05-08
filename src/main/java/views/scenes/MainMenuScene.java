@@ -30,7 +30,7 @@ public class MainMenuScene {
                 .toUri().toURL().toExternalForm());
             scene.getStylesheets().add(Paths.get("src/main/resources/styles/MainMenu.css")
                 .toUri().toURL().toExternalForm());
-        } catch ( Exception e ) { System.err.println(e); } // Should never happen but will print if it nevertheless does
+        } catch ( Exception e ) { System.err.println(e); } 
         setTitle(borderPane);
         setCenterButtons(borderPane);
         return scene;
