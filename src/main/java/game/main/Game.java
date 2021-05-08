@@ -20,11 +20,15 @@ public class Game implements GameStateChangeListener {
 
     public Game(X x, double ticksPerSecond) {
         this.x = x;
-        loadFilePath = Paths.get("src/main/config/worlds/default");
-        x.createChunkManagerSingleton(loadFilePath);
-        x.createPlayerSingleton(loadFilePath);
-        x.createTimingManagerSingleton();
+        this.loadFilePath = Paths.get("src/main/config/worlds/default");
+        load();
         x.getGameStateManager().addGameStateChangeListener(this);
+    }
+
+    public void load() {
+        x.createChunkManager(loadFilePath);
+        x.createPlayer(loadFilePath);
+        x.createTimingManager();
     }
 
     public void beforeStateTransition(GameStateManager.State from, GameStateManager.State to){

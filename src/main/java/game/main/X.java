@@ -34,12 +34,12 @@ public class X {
         if ( game == null )
             game = new Game(this, ticksPerSecond);
     }
-    public WindowManager getWindowManager() {return windowManager;}
+    public WindowManager getWindowManager() { return windowManager; }
     public void createWindowManagerSingleton(Stage stage) { 
         if ( windowManager == null ) 
             windowManager = new WindowManager(this, stage);
     }
-    public GameStateManager getGameStateManager() {return gameStateManager;}
+    public GameStateManager getGameStateManager() { return gameStateManager; }
     public void createGameStateManagerSingleton() {
         if ( gameStateManager == null )
             gameStateManager = new GameStateManager(this);
@@ -50,10 +50,7 @@ public class X {
             this.application = application;
     }
     public ChunkManager getChunkManager() { return chunkManager; }
-    public void createChunkManagerSingleton(Path path) {
-        if ( chunkManager == null )
-            chunkManager = new ChunkManager(this, FileParser.parse(path.resolve(Paths.get("config/world.mcfg"))));
-    }
+    public void createChunkManager(Path path) { chunkManager = new ChunkManager(this, FileParser.parse(path.resolve(Paths.get("config/world.mcfg")))); }
     public void createSettingsSingletons(Path path) {
         if ( worldSettings == null )
             worldSettings = FileParser.parse(path.resolve(Paths.get("worlds.mcfg")));
@@ -61,19 +58,10 @@ public class X {
             mainSettings = FileParser.parse(path.resolve(Paths.get("main.mcfg")));
     }
     public ParserBlock getWorldSettings() { return worldSettings; }
-    public ParserBlock getMainSettings() {return mainSettings; }
-    public void createPlayerSingleton(Path path) {
-        if ( player == null )
-            player = Player.load(this, FileParser.parse(path.resolve("entities/player.msv")));
-    }
+    public ParserBlock getMainSettings() { return mainSettings; }
+    public void createPlayer(Path path) { player = Player.load(this, FileParser.parse(path.resolve("entities/player.msv"))); }
     public Player getPlayer() { return player; }
-    public void createRenderManagerSingleton() {
-        if ( renderManager == null )
-            renderManager = new RenderManager(this);
-    }
+    public void createRenderManager() { renderManager = new RenderManager(this); }
     public RenderManager getRenderManager() { return renderManager; };
-    public void createTimingManagerSingleton() {
-        if ( timingManager == null )
-            timingManager = new TimingManager(this);
-    }
+    public void createTimingManager() { timingManager = new TimingManager(this); }
 }
