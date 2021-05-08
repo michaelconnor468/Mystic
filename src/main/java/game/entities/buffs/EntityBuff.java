@@ -1,6 +1,6 @@
 package game.entities.buffs;
 
-import game.main.timing.TickObserver;
+import game.main.TickObserver;
 import game.main.X;
 
 /**

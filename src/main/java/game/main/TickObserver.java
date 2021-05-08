@@ -1,4 +1,4 @@
-package game.main.timing;
+package game.main;
 
 import game.main.X;
 /**

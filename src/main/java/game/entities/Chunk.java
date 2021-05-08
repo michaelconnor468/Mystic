@@ -2,7 +2,7 @@ package game.entities;
 
 import util.parse.obj.*;
 import game.entities.containers.*;
-import game.main.timing.TickObserver;
+import game.main.TickObserver;
 import game.main.render.Renderable;
 import game.main.render.Renderer;
 import game.main.ChunkManager;

@@ -1,6 +1,6 @@
 package game.entities;
 
-import game.main.timing.TickObserver;
+import game.main.TickObserver;
 import game.main.render.Renderable;
 import game.main.render.Renderer;
 import java.util.ArrayList;

@@ -4,7 +4,7 @@ import util.parse.obj.*;
 import game.main.render.Renderer;
 import game.main.X;
 import java.util.ArrayList;
-import game.main.timing.TickObserver;
+import game.main.TickObserver;
 
 
 /**

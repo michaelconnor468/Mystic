@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import game.entities.Entity;
 import game.main.render.Renderable;
 import game.main.render.Renderer;
-import game.main.timing.TickObserver;
+import game.main.TickObserver;
 import game.main.X;
 
 /**

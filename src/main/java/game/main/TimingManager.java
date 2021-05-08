@@ -2,9 +2,9 @@ package game.main;
 
 import util.parse.obj.*;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-import game.main.timing.*;
 
 /**
  * Made solely to handle managing and dispatching to synchronizing ticks to the timed objects of the program. The decision of which objects these will be dispatched to
@@ -12,14 +12,14 @@ import game.main.timing.*;
  */
 public class TimingManager {
     private int ticksPerSecond;
-    private TimedObjects timedObjects;
+    private ArrayList<TickObserver> tickObservers;
     private Timer timer;
     private X x;
 
     private TimingManager() {}
 
     public TimingManager(X x) {
-        this.timedObjects = new TimedObjects();
+        this.tickObservers = new ArrayList<>();
         this.timer = new Timer();
         this.ticksPerSecond = ((ParserInt) x.getMainSettings().getProperties().get("ticksPerSecond")).getNumber();
         this.x = x;
@@ -33,16 +33,16 @@ public class TimingManager {
         timer.cancel();
     }
 
-    public void addTimedObject(TickObserver o) {
-        timedObjects.add(o);
+    public void register(TickObserver o) {
+        tickObservers.add(o);
     }
 
-    public void removeTimedObject(TickObserver o) {
-        timedObjects.add(o);
+    public void unregister(TickObserver o) {
+        tickObservers.remove(o);
     }
 
     private void tick(X x) {
-        timedObjects.tick(x);
+        tickObservers.forEach(obs -> obs.tick(x));
     }
 
     private int getTicksPerSecond() { return ticksPerSecond; }
