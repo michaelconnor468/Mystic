@@ -34,7 +34,7 @@ public class Animation {
             PixelReader reader = loadedImage.getPixelReader();
             for ( int i = 0; i < imgWidth/entity.getxSize(); i++ ) 
                 frames.add(new WritableImage(reader, i*imgWidth, 0, imgWidth, imgHeight));
-        } catch ( Exception e ) { System.out.println(e); }
+        } catch ( Exception e ) { e.printStackTrace(new java.io.PrintStream(System.err)); System.exit(0); }
     }
 
     public void tick(X x) {

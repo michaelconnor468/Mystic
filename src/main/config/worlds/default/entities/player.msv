@@ -1,8 +1,8 @@
 {
     maxHealth: 100,
     health: 100,
-    xSize: 20,
-    ySize: 60,
+    xSize: 64,
+    ySize: 128,
     xPosition: 6144,
     yPosition: 6144
 }
