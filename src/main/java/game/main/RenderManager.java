@@ -4,6 +4,7 @@ import util.parse.obj.*;
 import game.main.render.*;
 
 import java.util.ArrayList;
+import javafx.scene.canvas.GraphicsContext;
 
 /**
  * Manages rendering within the game through an object interface Renderer that is passed to objects that must be rendered. Decouples rendering implementations
@@ -22,6 +23,8 @@ public class RenderManager {
         this.ticksElapsed = 0;
         this.toRender = new ArrayList<>();
     }
+
+    public void updateGraphicsContext(GraphicsContext gc) { this.renderer = new Renderer(x, gc); }
 
     public void tick(X x) {
         if ( ticksPerRender == ticksElapsed++ )
