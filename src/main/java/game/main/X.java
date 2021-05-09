@@ -21,7 +21,6 @@ public class X {
     private GameStateManager gameStateManager;
     private ChunkManager chunkManager;
     private Application application;
-    private ParserBlock worldSettings;
     private ParserBlock mainSettings;
     private RenderManager renderManager;
     private TimingManager timingManager;
@@ -52,12 +51,9 @@ public class X {
     public ChunkManager getChunkManager() { return chunkManager; }
     public void createChunkManager(Path path) { chunkManager = new ChunkManager(this, FileParser.parse(path.resolve(Paths.get("config/world.mcfg")))); }
     public void createSettingsSingletons(Path path) {
-        if ( worldSettings == null )
-            worldSettings = FileParser.parse(path.resolve(Paths.get("worlds.mcfg")));
         if ( mainSettings == null )
             mainSettings = FileParser.parse(path.resolve(Paths.get("main.mcfg")));
     }
-    public ParserBlock getWorldSettings() { return worldSettings; }
     public ParserBlock getMainSettings() { return mainSettings; }
     public void createPlayer(Path path) { player = Player.load(this, FileParser.parse(path.resolve("entities/player.msv"))); }
     public Player getPlayer() { return player; }

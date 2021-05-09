@@ -27,7 +27,7 @@ public class ChunkManagerTests {
         assertEquals(64, x.getChunkManager().getChunkSize(), "Incorrect chunk size setting loaded");
         assertEquals(64, x.getChunkManager().getTileSize(), "Incorrect tile size setting loaded");
         assertEquals(3, x.getChunkManager().getChunkGridSize(), "Incorrect chunk grid size setting loaded");
-        assertEquals(1, x.getChunkManager().getChunkLoadDiameter(), "Incorrect chunk load diameter setting loaded");
+        assertEquals(3, x.getChunkManager().getChunkLoadDiameter(), "Incorrect chunk load diameter setting loaded");
         
         assertEquals(3, x.getChunkManager().getChunks().size(), "Incorrect number of chunks in chunk collection");
         assertEquals(3, x.getChunkManager().getChunks().get(0).size(), "Incorrect number of chunks in chunk collection");

@@ -33,7 +33,7 @@ public class ChunkManager {
         this.chunkSize = ((ParserInt) worldSettings.getProperties().get("chunkSize")).getNumber();
         this.tileSize = ((ParserInt) worldSettings.getProperties().get("tileSize")).getNumber();
         this.chunkGridSize = ((ParserInt) worldSettings.getProperties().get("chunkGridSize")).getNumber();
-        this.chunkLoadDiameter = ((ParserInt) x.getWorldSettings().getProperties().get("chunkLoadDiameter")).getNumber(); 
+        this.chunkLoadDiameter = ((ParserInt) x.getMainSettings().getProperties().get("chunkLoadDiameter")).getNumber(); 
         this.activeChunks = new ArrayList<ArrayList<Chunk>>(Collections.nCopies(chunkLoadDiameter, 
             new ArrayList<Chunk>(Collections.nCopies(chunkLoadDiameter, null))));
         this.chunks = new ArrayList<ArrayList<Chunk>>(Collections.nCopies(chunkGridSize, 

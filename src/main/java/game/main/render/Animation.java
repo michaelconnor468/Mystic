@@ -10,7 +10,7 @@ public class Animation {
     private int frame;
     private Entity entity;
     private int ticksElapsed;
-    private int ticksPerFrame;
+    private int ticksPerRender;
     private int totalFrames;
 
     private Animation() {};
@@ -18,7 +18,7 @@ public class Animation {
         this.entity = entity;
         this.frame = 0;
         this.ticksElapsed = 0;
-        this.ticksPerFrame = ((ParserInt) x.getMainSettings().getProperties().get("ticksPerFrame")).getNumber();
+        this.ticksPerRender = ((ParserInt) x.getMainSettings().getProperties().get("ticksPerRender")).getNumber();
     }
 
     public void animate(Renderer r) {
@@ -26,10 +26,10 @@ public class Animation {
     }
 
     public void tick(X x) {
-        ticksElapsed = ticksElapsed == ticksPerFrame - 1 ? 0 : ticksElapsed + 1;
+        ticksElapsed = ticksElapsed == ticksPerRender - 1 ? 0 : ticksElapsed + 1;
         if ( ticksElapsed == 0 )
             frame = frame == totalFrames - 1 ? 0 : frame + 1;
     }
 
-    public void setTicksPerFrame(int ticksPerFrame) { this.ticksPerFrame = ticksPerFrame; }
+    public void setTicksPerFrame(int ticksPerRender) { this.ticksPerRender = ticksPerRender; }
 }
