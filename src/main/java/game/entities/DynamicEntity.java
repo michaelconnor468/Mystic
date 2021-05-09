@@ -1,24 +1,21 @@
 package game.entities; 
 
 import game.main.X;
-import game.main.render.Renderer;
+import game.main.render.Animation;
+import game.main.render.Renderable;
 import java.lang.Math;
 
 /**
  * Entities that are able to move. Movement conversion biases favor higher movement speed to prevent any edge cases where very slow entities stagnate. Movement
  * comprises of setting properties which are used to calculate moves per tick in order to simplify logic and keep movement functionality contained to class.
  */
-public class DynamicEntity extends Entity {
+public abstract class DynamicEntity extends Entity {
     private int speed; // In pixels per tick
     private double speedModifier;
     private double movementAngle;
 
     public void tick(X x) {
         move();
-    }
-
-    public void render(Renderer renderer) {
-
     }
 
     private void move() {

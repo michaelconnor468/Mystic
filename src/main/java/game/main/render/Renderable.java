@@ -7,5 +7,5 @@ import game.main.X;
  * object passed to render method as this is a more decoupled approach than having each method interact with a canvas/ other implementation object directly
  */
 public interface Renderable {
-    public void render(Renderer renderer);
+    public void render(Renderer r); 
 }

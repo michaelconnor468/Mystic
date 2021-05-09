@@ -26,9 +26,7 @@ public class Player extends DynamicEntity implements DestructibleEntity {
 
     public void tick(X x) { }
 
-    public void render(Renderer renderer) {
-        walkUpAnimation.animate(renderer);
-    }
+    public void render(Renderer r) { r.render(walkUpAnimation); }
 
     public void damage( int health ) {
         this.health -= health;

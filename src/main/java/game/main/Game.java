@@ -27,10 +27,7 @@ public class Game implements GameStateChangeListener {
         x.createRenderManager();
     }
 
-    public void beforeStateTransition(GameStateManager.State from, GameStateManager.State to){
-
-    }
-
+    public void beforeStateTransition(GameStateManager.State from, GameStateManager.State to) {}
     public void afterStateTransition(GameStateManager.State from, GameStateManager.State to) {
         switch ( to ) {
             case Loading:

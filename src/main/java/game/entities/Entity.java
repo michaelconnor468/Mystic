@@ -12,10 +12,8 @@ import game.entities.buffs.EntityBuff;
  * Abstract class for entity within the game. To allow easy addition of future features, everything in the game is considered an entity allowing it to
  * be synchronized by the tick and render timers so that any logic and animation of arbitrary features may be easily added in the future without changing 
  * the front end drivers.
- * 
- * @implNote - xyPosition is the center of entity instead of any corners as that would introduce a bias in querying entities in a given area
  */
-abstract public class Entity implements TickObserver, Renderable {
+public abstract class Entity implements TickObserver, Renderable {
     // Size is not necessarily the same as the collision box dimensions
     protected int xSize, ySize;
     protected int xPosition, yPosition;
@@ -26,12 +24,11 @@ abstract public class Entity implements TickObserver, Renderable {
     public Entity(int xSize, int ySize, int xPosition, int yPosition) {
         this.xSize = xSize;
         this.ySize = ySize;
-        this.xPosition = xPosition;
+        this.xPosition = xPosition; // Position should refer to top-left corner
         this.yPosition = yPosition;
     }
 
     abstract public void tick(X x);
-    abstract public void render(Renderer renderer);
 
     public void addCollisionBox(CollisionBox collisionBox) {collisionBoxes.add(collisionBox);}
     public void removeCollisionBox(CollisionBox collisionBox) {collisionBoxes.remove(collisionBox);}
@@ -58,12 +55,12 @@ abstract public class Entity implements TickObserver, Renderable {
 
     public void addEntityBuff(EntityBuff entityBuff) { entityBuffs.add(entityBuff); }
 
-    public double getxPosition() {return xPosition;}
-    public double getyPosition() {return yPosition;}
-    public double getxSize() {return xSize;} 
-    public double getySize() {return ySize;}  
-    public double getActionButtonXLocation() {return xPosition;}
-    public double getActionButtonYLocation() {return yPosition;}
+    public int getxPosition() {return xPosition;}
+    public int getyPosition() {return yPosition;}
+    public int getxSize() {return xSize;} 
+    public int getySize() {return ySize;}  
+    public int getActionButtonXLocation() {return xPosition;}
+    public int getActionButtonYLocation() {return yPosition;}
     public ArrayList<CollisionBox> getCollisionBoxes() {return this.collisionBoxes;}
 
     /**

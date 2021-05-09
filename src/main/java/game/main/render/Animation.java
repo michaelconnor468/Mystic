@@ -1,14 +1,19 @@
 package game.main.render;
 
-import java.nio.file.Path;
-
 import game.main.X;
 import game.entities.Entity;
 import util.parse.obj.*;
 
+import java.nio.file.Path;
+import java.util.ArrayList;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
+import javafx.scene.image.PixelReader;
+
 public class Animation {
     private int frame;
     private Entity entity;
+    private ArrayList<Image> frames;
     private int ticksElapsed;
     private int ticksPerRender;
     private int totalFrames;
@@ -19,10 +24,17 @@ public class Animation {
         this.frame = 0;
         this.ticksElapsed = 0;
         this.ticksPerRender = ((ParserInt) x.getMainSettings().getProperties().get("ticksPerRender")).getNumber();
-    }
-
-    public void animate(Renderer r) {
-        // Do stuff
+        this.frames = new ArrayList<>();
+        try {
+            Image loadedImage = new Image(path.toUri().toURL().toString());
+            int imgWidth = (int) loadedImage.getWidth();
+            int imgHeight = (int) loadedImage.getHeight();
+            assert imgHeight == entity.getySize() : "image height incompatible with entity height";
+            assert imgWidth % entity.getxSize() == 0 : "image width not divisible by entity width";
+            PixelReader reader = loadedImage.getPixelReader();
+            for ( int i = 0; i < imgWidth/entity.getxSize(); i++ ) 
+                frames.add(new WritableImage(reader, i*imgWidth, 0, imgWidth, imgHeight));
+        } catch ( Exception e ) { System.out.println(e); }
     }
 
     public void tick(X x) {
@@ -32,4 +44,7 @@ public class Animation {
     }
 
     public void setTicksPerFrame(int ticksPerRender) { this.ticksPerRender = ticksPerRender; }
+
+    public Entity getEntity() { return this.entity; }
+    public Image getImage() { return frames.get(frame); }
 }
