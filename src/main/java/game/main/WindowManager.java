@@ -1,18 +1,25 @@
 package game.main;
 
+import util.parse.obj.*;
 import views.*;
+
 import javafx.scene.Scene;
+import javafx.scene.canvas.*;
 import javafx.stage.Stage;
 
 public class WindowManager implements GameStateChangeListener {
-    Stage stage;
-    MainMenuView mainMenuView;
-    PlayingView playingView;
-    X x;
+    private Stage stage;
+    private MainMenuView mainMenuView;
+    private PlayingView playingView;
+    // Do not use. Javafx does some initialization at canvas creation time for some reason so this is created.
+    private Canvas _canvas; 
+    private X x;
 
     private WindowManager() {}
     public WindowManager(X x, Stage stage) {
         this.stage = stage; 
+        this._canvas = new Canvas(((ParserInt) x.getMainSettings().getProperties().get("resolutionx")).getNumber(),
+            ((ParserInt) x.getMainSettings().getProperties().get("resolutiony")).getNumber());
         this.mainMenuView = new MainMenuView(x);
         this.playingView = new PlayingView(x);
         this.x = x;

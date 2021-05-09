@@ -17,9 +17,8 @@ public class Initializer {
 
     public static void main(String[] args) {
         x = new X();
-        x.createGameStateManagerSingleton();
         x.createSettingsSingletons(Paths.get("src/main/config/settings"));
-        x.createGameSingleton(120);
+        x.createGameStateManagerSingleton();
         Application.launch(App.class);
     }
 
@@ -30,6 +29,7 @@ public class Initializer {
     public static class App extends Application {
         public void start(Stage stage) {
             x.createWindowManagerSingleton(stage);
+            x.createGameSingleton(120);
             x.createApplicationSingleton(this);
             x.getGameStateManager().setState(GameStateManager.State.MainMenu);
         }
