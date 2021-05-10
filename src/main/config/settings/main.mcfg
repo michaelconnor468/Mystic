@@ -1,6 +1,6 @@
 {
-    resolutionx: 1080,
-    resolutiony: 1920,
+    resolutionx: 1920,
+    resolutiony: 1080,
     playerSizey: 64,
     playerSizex: 128,
     ticksPerSecond: 2,

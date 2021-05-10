@@ -29,19 +29,35 @@ public class TileEntity extends Entity {
         private boolean sizeSet = false;
         private boolean positionSet = false;
         private boolean chunkSet = false;
+        private Animation animation;
 
-        public Builder()                                                { entity = new TileEntity(); entity.setType(0); entity.setBiome(0); }
-        public Builder setSize(int size)                                { entity.xSize = size; entity.ySize = size; sizeSet = true; return this; }
-        public Builder setPosition(int xPosition, int yPosition)        { entity.xPosition = xPosition; entity.yPosition = yPosition; positionSet = true; return this; }
-        public Builder setChunkLocation(int chunkRow, int chunkColumn)  { entity.chunkRow = chunkRow; entity.chunkColumn = chunkColumn; chunkSet = true; return this; }
-        public Builder setType(int type)                                { entity.setType(type); return this; }
-        public Builder setBiome(int biome)                              { entity.setBiome(biome); return this; }
+        public Builder() { entity = new TileEntity(); entity.setType(0); entity.setBiome(0); }
+        public Builder setSize(int size) { 
+            entity.xSize = size; 
+            entity.ySize = size; 
+            sizeSet = true; 
+            return this; 
+        }
+        public Builder setPosition(int xPosition, int yPosition) { 
+            entity.xPosition = xPosition; 
+            entity.yPosition = yPosition; 
+            positionSet = true; 
+            return this; 
+        }
+        public Builder setChunkLocation(int chunkRow, int chunkColumn)  { 
+            entity.chunkRow = chunkRow; 
+            entity.chunkColumn = chunkColumn; 
+            chunkSet = true; 
+            return this; 
+        }
+        public Builder setType(int type) { entity.setType(type); return this; }
+        public Builder setBiome(int biome) { entity.setBiome(biome); return this; }
 
         public TileEntity build() {
             if ( sizeSet && positionSet && chunkSet )
                 return entity;
-            else
-                throw new IllegalArgumentException("TileEntity builder setup missing required fields for minimal functionality");
+            throw 
+                new IllegalArgumentException("TileEntity builder setup missing required fields for minimal functionality");
         }
     }
 
@@ -69,11 +85,6 @@ public class TileEntity extends Entity {
     
     public int getChunkRow() { return chunkRow; }
     public int getChunkColumn() { return chunkColumn; }
-
-    // TODO get instance of correct biome object
-    public TileEntity setBiome(int biome) {return this;}
-    // TODO properly setup type information based on integer argument
-    public TileEntity setType(int type) {return this;}
 
     public static ParserBlock save(TileEntity tile) {
         // TODO
