@@ -28,8 +28,10 @@ public class RenderManager implements TickObserver {
     public void updateGraphicsContext(GraphicsContext gc) { this.renderer = new Renderer(x, gc); }
 
     public void tick(X x) {
-        if ( ticksPerRender == ticksElapsed++ )
+        if ( ticksPerRender == ticksElapsed++ ) {
             render();
+            ticksElapsed = 0;
+        }
     }
 
     public void register(Renderable obj) {
