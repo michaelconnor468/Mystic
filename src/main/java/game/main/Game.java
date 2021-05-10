@@ -22,18 +22,23 @@ public class Game implements GameStateChangeListener {
 
     public void load() {
         x.createChunkManager(loadFilePath);
-        x.createPlayer(loadFilePath);
-        x.createTimingManager();
         x.createRenderManager();
+        x.createPlayer(loadFilePath);
     }
 
-    public void beforeStateTransition(GameStateManager.State from, GameStateManager.State to) {}
+    public void beforeStateTransition(GameStateManager.State from, GameStateManager.State to) {
+        switch ( from ) {
+            case Playing:
+                x.getTimingManager().stopTiming();
+                break;
+        }
+    }
     public void afterStateTransition(GameStateManager.State from, GameStateManager.State to) {
         switch ( to ) {
             case Loading:
                 x.getChunkManager().loadChunks(loadFilePath);
-            
                 x.getGameStateManager().setState(GameStateManager.State.Playing);
+                x.getTimingManager().startTiming();
                 break;
         }
     }

@@ -28,6 +28,7 @@ public class Initializer {
 
     public static class App extends Application {
         public void start(Stage stage) {
+            x.createTimingManager();
             x.createWindowManagerSingleton(stage);
             x.createGameSingleton(120);
             x.createApplicationSingleton(this);

@@ -26,7 +26,10 @@ public class TimingManager {
     }
 
     public void startTiming() {
-        timer.schedule(new TimerTask(){public void run(){TimingManager.this.tick(x);}}, (long)(1000/ticksPerSecond), (long)(1000/ticksPerSecond));
+        timer.schedule(new TimerTask()
+            { public void run() { TimingManager.this.tick(x); } }, 
+            (long) (1000/ticksPerSecond), 
+            (long) (1000/ticksPerSecond));
     }
 
     public void stopTiming() {
@@ -34,7 +37,8 @@ public class TimingManager {
     }
 
     public void register(TickObserver o) {
-        tickObservers.add(o);
+        if ( !tickObservers.contains(o) )
+            tickObservers.add(o);
     }
 
     public void unregister(TickObserver o) {

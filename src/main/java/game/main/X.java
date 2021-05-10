@@ -55,9 +55,12 @@ public class X {
             mainSettings = FileParser.parse(path.resolve(Paths.get("main.mcfg")));
     }
     public ParserBlock getMainSettings() { return mainSettings; }
-    public void createPlayer(Path path) { player = Player.load(this, FileParser.parse(path.resolve("entities/player.msv"))); }
+    public void createPlayer(Path path) { 
+        player = Player.load(this, FileParser.parse(path.resolve("entities/player.msv"))); 
+    }
     public Player getPlayer() { return player; }
     public void createRenderManager() { renderManager = new RenderManager(this); }
     public RenderManager getRenderManager() { return renderManager; };
     public void createTimingManager() { timingManager = new TimingManager(this); }
+    public TimingManager getTimingManager() { return timingManager; }
 }
