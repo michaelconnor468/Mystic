@@ -27,5 +27,6 @@ public class Renderer {
             (((ParserInt) x.getMainSettings().getProperties().get("resolutiony")).getNumber()/2);
         int xRenderLocation = animation.getEntity().getxPosition() - xCorner; 
         int yRenderLocation = animation.getEntity().getyPosition() - yCorner; 
+        gc.drawImage(animation.getImage(), xRenderLocation, yRenderLocation);
     }
 }

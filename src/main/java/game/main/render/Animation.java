@@ -2,6 +2,7 @@ package game.main.render;
 
 import game.main.X;
 import game.entities.Entity;
+import game.main.TickObserver;
 import util.parse.obj.*;
 
 import java.nio.file.Path;
@@ -10,10 +11,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.image.PixelReader;
 
-public class Animation {
+public class Animation implements TickObserver {
     private int frame;
     private Entity entity;
     private ArrayList<Image> frames;
+    private boolean still;
     private int ticksElapsed;
     private int ticksPerRender;
     private int totalFrames;
@@ -21,6 +23,7 @@ public class Animation {
     private Animation() {};
     public Animation(X x, Entity entity, Path path) {
         this.entity = entity;
+        this.still = false;
         this.frame = 0;
         this.ticksElapsed = 0;
         this.ticksPerRender = ((ParserInt) x.getMainSettings().getProperties().get("ticksPerRender")).getNumber();
@@ -46,5 +49,13 @@ public class Animation {
     public void setTicksPerFrame(int ticksPerRender) { this.ticksPerRender = ticksPerRender; }
 
     public Entity getEntity() { return this.entity; }
-    public Image getImage() { return frames.get(frame); }
+    public Image getImage() { 
+        if ( still )
+            return frames.get(0);
+        return frames.get(frame); 
+    }
+    public void setStill(boolean still) {
+        ticksElapsed = 0;
+        this.still = still;
+    }
 }
