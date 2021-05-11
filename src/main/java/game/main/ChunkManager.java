@@ -50,7 +50,7 @@ public class ChunkManager {
                     assert matcher.group().length() == 10;
                     int column = Integer.parseInt(matcher.group().substring(0,3));
                     int row = Integer.parseInt(matcher.group().substring(3,6));
-                    chunks.get(column).set(row, Chunk.load(x, FileParser.parse(f)));
+                    chunks.get(column).set(row, Chunk.load(x, FileParser.parse(f), column, row));
                 }
             });
         } catch ( Exception e ) { 

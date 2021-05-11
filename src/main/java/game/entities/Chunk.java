@@ -57,7 +57,7 @@ public class Chunk implements TickObserver, Renderable {
     public int getTileSize() { return tileSize; }
     public int getSizeInTiles() { return sizeInTiles; }
     
-    public static Chunk load(X x, ParserBlock block) {
+    public static Chunk load(X x, ParserBlock block, int xPosition, int yPosition) {
         Chunk chunk = new Chunk();
         chunk.chunkManager = x.getChunkManager();
         chunk.tileSize = chunk.chunkManager.getTileSize();
@@ -65,8 +65,8 @@ public class Chunk implements TickObserver, Renderable {
         chunk.tileEntities = new ArrayList<TileEntityContainer>();
 
         HashMap<String, ParserObject> properties = ((ParserBlock) block.getProperties().get("chunk")).getProperties();
-        chunk.xChunkPosition = ((ParserInt) properties.get("xLocation")).getNumber();
-        chunk.yChunkPosition = ((ParserInt) properties.get("yLocation")).getNumber();
+        chunk.xChunkPosition = xPosition; 
+        chunk.yChunkPosition = yPosition;
 
         TileEntityContainer tileEntityContainer = new TileEntityContainer(x);
         ParserArray tileRows = (ParserArray) properties.get("tileEntities");
