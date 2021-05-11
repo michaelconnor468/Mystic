@@ -1,11 +1,11 @@
 package game.entities;
 
-import util.parse.obj.*;
 import game.main.render.Renderer;
 import game.main.X;
-import java.util.ArrayList;
 import game.main.TickObserver;
+import util.parse.obj.*;
 
+import java.util.ArrayList;
 
 /**
  * Separate entity to represent the tiles that make up the floor. This is a special entity due to the fact that its position is static and discrete within a chunk
@@ -15,91 +15,42 @@ public class TileEntity extends Entity {
     private int type;
     private int chunkRow;
     private int chunkColumn;
-    Biome biome;
     TileSpawnManager spawnManager;
 
     private TileEntity () {}
-
-    /**
-     * Used instead of constructor due to a ton of possible variable arguments, some of which are super-duper private and final, never to
-     * have are never to have any accessors while some are ok with defaults.
-     */
-    public static class Builder {
-        private TileEntity entity;
-        private boolean sizeSet = false;
-        private boolean positionSet = false;
-        private boolean chunkSet = false;
-        private Animation animation;
-
-        public Builder() { entity = new TileEntity(); entity.setType(0); entity.setBiome(0); }
-        public Builder setSize(int size) { 
-            entity.xSize = size; 
-            entity.ySize = size; 
-            sizeSet = true; 
-            return this; 
-        }
-        public Builder setPosition(int xPosition, int yPosition) { 
-            entity.xPosition = xPosition; 
-            entity.yPosition = yPosition; 
-            positionSet = true; 
-            return this; 
-        }
-        public Builder setChunkLocation(int chunkRow, int chunkColumn)  { 
-            entity.chunkRow = chunkRow; 
-            entity.chunkColumn = chunkColumn; 
-            chunkSet = true; 
-            return this; 
-        }
-        public Builder setType(int type) { entity.setType(type); return this; }
-        public Builder setBiome(int biome) { entity.setBiome(biome); return this; }
-
-        public TileEntity build() {
-            if ( sizeSet && positionSet && chunkSet )
-                return entity;
-            throw 
-                new IllegalArgumentException("TileEntity builder setup missing required fields for minimal functionality");
-        }
+    
+    public static TileEntity load(X x, ParserBlock block, Chunk chunk, int chunkRow, int chunkColumn) {
+        TileEntity entity = new TileEntity();
+        entity.xSize = chunk.getTileSize();
+        entity.ySize = chunk.getTileSize();
+        entity.xPosition = (chunk.getXChunkPosition()*chunk.getSizeInTiles() + chunkRow)*entity.xSize;
+        entity.yPosition = (chunk.getYChunkPosition()*chunk.getSizeInTiles() + chunkColumn)*entity.xSize;
+        entity.chunkRow = chunkRow;
+        entity.chunkColumn = chunkColumn;
+        entity.type = ((ParserInt) block.getProperties().get("type")).getNumber();
+        return entity;
     }
 
-    public void tick(X x) {
-        return;
-    }
+    public void tick(X x) {}
 
-    public void render(Renderer renderer) {
+    public void render(Renderer renderer) {}
 
-    }
-
-    public void addSpawnableEntity(Entity entity, double probability, int ticksUntilNextSpawn) {
-        //TODO
-    }
-    public void addSpawnOnStartupEntity(Entity entity, double probability) {
-        //TODO
-    }
-
-    public void removeSpawnableEntity(Entity entity) {
-        //TODO
-    }
-    public void removeSpawnOnStartupEntity(Entity entity) {
-        //TODO
-    }
+    public void addSpawnableEntity(Entity entity, double probability, int ticksUntilNextSpawn) {}
+    public void addSpawnOnStartupEntity(Entity entity, double probability) {}
+    public void removeSpawnableEntity(Entity entity) {}
+    public void removeSpawnOnStartupEntity(Entity entity) {}
     
     public int getChunkRow() { return chunkRow; }
     public int getChunkColumn() { return chunkColumn; }
 
     public static ParserBlock save(TileEntity tile) {
-        // TODO
         ParserBlock block = new ParserBlock();
         return block;
     }
 
-    public static TileEntity load(X x, ParserBlock block) {
-        //TODO
-        return null;
-    }
 
     /**
-     * Decides whether any entities should be created in a location within this tile on each tick. Uses the api call to add an entity provided with the context object
-     * in order to separate any entity management implementation from the act of spawning.
+     * Decides whether any entities should be created in a location within this tile on each tick. 
      */
     private class TileSpawnManager implements TickObserver {
         private ArrayList<Entity> spawnableEntities;
