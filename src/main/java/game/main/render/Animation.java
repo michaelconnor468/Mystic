@@ -43,7 +43,7 @@ public class Animation implements TickObserver {
     public void tick(X x) {
         ticksElapsed = ticksElapsed == ticksPerRender - 1 ? 0 : ticksElapsed + 1;
         if ( ticksElapsed == 0 )
-            frame = frame == totalFrames - 1 ? 0 : frame + 1;
+            frame = frame >= totalFrames - 1 ? 0 : frame + 1;
     }
 
     public void setTicksPerFrame(int ticksPerRender) { this.ticksPerRender = ticksPerRender; }
