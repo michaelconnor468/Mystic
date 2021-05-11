@@ -16,9 +16,9 @@ public class Game implements GameStateChangeListener {
     public Game(X x, double ticksPerSecond) {
         this.x = x;
         this.loadFilePath = Paths.get("src/main/config/worlds/default");
-        load();
         x.getGameStateManager().addGameStateChangeListener(this);
         x.createRenderManager();
+        load();
     }
 
     public void load() {
