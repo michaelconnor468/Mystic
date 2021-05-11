@@ -2,6 +2,7 @@ package game.main;
 
 import util.parse.obj.*;
 import game.main.render.*;
+import game.entities.Player;
 
 import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
@@ -13,8 +14,9 @@ import javafx.scene.canvas.GraphicsContext;
 public class RenderManager implements TickObserver {
     private X x;
     private int ticksPerRender, ticksElapsed;
-    private ArrayList<Renderable> toRender;
+    private ArrayList<Renderable> toRender, toRenderAbove;
     private Renderer renderer;
+    private Player player;
 
     private RenderManager() {}
     public RenderManager(X x) {
@@ -22,6 +24,7 @@ public class RenderManager implements TickObserver {
         this.ticksPerRender = ((ParserInt) x.getMainSettings().getProperties().get("ticksPerRender")).getNumber();
         this.ticksElapsed = 0;
         this.toRender = new ArrayList<>();
+        this.toRenderAbove = new ArrayList<>();
         x.getTimingManager().register(this);
     }
 
@@ -39,12 +42,23 @@ public class RenderManager implements TickObserver {
             toRender.add(obj);
     }
 
+    public void registerAbovePlayer(Renderable obj) {
+        if ( !toRenderAbove.contains(obj) )
+            toRenderAbove.add(obj);    
+    }
+
     public void unregister(Renderable obj) {
-        toRender.remove(obj);
+        if ( toRender.contains(obj) ) 
+            toRender.remove(obj);
+        else if ( toRenderAbove.contains(obj) )
+            toRenderAbove.remove(obj);
     }
 
     private void render() {
         for ( Renderable r : toRender )
+            r.render(renderer);
+        x.getPlayer().render(renderer);
+        for ( Renderable r : toRenderAbove )
             r.render(renderer);
     }
 }
