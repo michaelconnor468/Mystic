@@ -1,11 +1,13 @@
 package game.entities;
 
 import game.main.render.Renderer;
+import game.main.render.Animation;
 import game.main.X;
 import game.main.TickObserver;
 import util.parse.obj.*;
 
 import java.util.ArrayList;
+import java.nio.file.Paths;
 
 /**
  * Separate entity to represent the tiles that make up the floor. This is a special entity due to the fact that its position is static and discrete within a chunk
@@ -15,7 +17,8 @@ public class TileEntity extends Entity {
     private int type;
     private int chunkRow;
     private int chunkColumn;
-    TileSpawnManager spawnManager;
+    private Animation animation;
+    private TileSpawnManager spawnManager;
 
     private TileEntity () {}
     
@@ -28,12 +31,17 @@ public class TileEntity extends Entity {
         entity.chunkRow = chunkRow;
         entity.chunkColumn = chunkColumn;
         entity.type = ((ParserInt) block.getProperties().get("type")).getNumber();
+        entity.animation = new Animation(x, entity, Paths.get("src/main/resources/tiles/" + entity.type + ".png"));
         return entity;
     }
 
-    public void tick(X x) {}
+    public void tick(X x) {
+        animation.tick(x);
+    }
 
-    public void render(Renderer renderer) {}
+    public void render(Renderer renderer) {
+        renderer.render(animation);
+    }
 
     public void addSpawnableEntity(Entity entity, double probability, int ticksUntilNextSpawn) {}
     public void addSpawnOnStartupEntity(Entity entity, double probability) {}

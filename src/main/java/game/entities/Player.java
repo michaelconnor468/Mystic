@@ -17,6 +17,7 @@ public class Player extends DynamicEntity implements DestructibleEntity {
     private int health;
     private int maxHealth;
 
+    private Animation currentAnimation;
     private Animation walkUpAnimation;
     private Animation walkDownAnimation;
     private Animation walkLeftAnimation;
@@ -24,9 +25,11 @@ public class Player extends DynamicEntity implements DestructibleEntity {
  
     private Player() {}
 
-    public void tick(X x) { }
+    public void tick(X x) { 
+        currentAnimation.tick(x); 
+    }
 
-    public void render(Renderer r) { r.render(walkUpAnimation); }
+    public void render(Renderer r) { r.render(currentAnimation); }
 
     public void damage( int health ) {
         this.health -= health;
@@ -57,6 +60,8 @@ public class Player extends DynamicEntity implements DestructibleEntity {
         player.walkDownAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_down.png"));
         player.walkLeftAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_left.png"));
         player.walkRightAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_right.png"));
+        player.currentAnimation = player.walkUpAnimation;
+        x.getTimingManager().register(player);
         x.getRenderManager().register(player);
         return player;
     }
