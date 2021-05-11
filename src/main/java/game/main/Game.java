@@ -18,11 +18,11 @@ public class Game implements GameStateChangeListener {
         this.loadFilePath = Paths.get("src/main/config/worlds/default");
         load();
         x.getGameStateManager().addGameStateChangeListener(this);
+        x.createRenderManager();
     }
 
     public void load() {
         x.createChunkManager(loadFilePath);
-        x.createRenderManager();
         x.createPlayer(loadFilePath);
     }
 

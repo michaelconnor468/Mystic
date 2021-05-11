@@ -19,24 +19,14 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
     
     private TileEntityContainer() {}
 
-    /**
-     * Populates data structure with clones of default entity instead of a single one to allow future dynamic functionality between different ones to be implemented
-     * which requires them to be distinguishable. Passing in an object as opposed to a class to create from allows for any pre-initialization of the default
-     * object to be implemented outside the container.
-     * 
-     * @param defaultEntity - entity to be cloned and used as a default where there is no other added
-     */
     public TileEntityContainer( X x ) {
         this.chunkSize = x.getChunkManager().getChunkSize();
         this.tileEntities = new ArrayList<ArrayList<TileEntity>>(Collections.nCopies(chunkSize, 
             new ArrayList<TileEntity>(Collections.nCopies(chunkSize, null))));
+        x.getTimingManager().register(this);
+        x.getRenderManager().register(this);
     }
 
-    /**
-     * Since tile matrix always has its slots filled with default or otherwise, this does not add to it, but merely replaces the tile entity in its place.
-     * 
-     * @param entity - entity to replace currently stored one with
-     */
     public void addEntity( TileEntity tileEntity ) {
         assert tileEntity.getChunkRow() < chunkSize && tileEntity.getChunkColumn() < chunkSize : "TileEntityContainer can only store TileEntities of its given dimenstions. TileEntityString: " + tileEntity.toString();
         tileEntities.get(tileEntity.getChunkRow()).add(tileEntity.getChunkColumn(), tileEntity);
