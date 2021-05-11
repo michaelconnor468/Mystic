@@ -16,19 +16,19 @@ import game.main.X;
 public class TileEntityContainer extends EntityContainer<TileEntity> {
     private ArrayList<ArrayList<TileEntity>> tileEntities;
     private int chunkSize;
-    
     private TileEntityContainer() {}
 
     public TileEntityContainer( X x ) {
         this.chunkSize = x.getChunkManager().getChunkSize();
-        this.tileEntities = new ArrayList<ArrayList<TileEntity>>(Collections.nCopies(chunkSize, 
-            new ArrayList<TileEntity>(Collections.nCopies(chunkSize, null))));
+        this.tileEntities = new ArrayList<ArrayList<TileEntity>>();
+        for ( int i = 0; i < chunkSize; i++ )
+            this.tileEntities.add(new ArrayList<TileEntity>());
         x.getTimingManager().register(this);
         x.getRenderManager().register(this);
     }
 
     public void addEntity( TileEntity tileEntity ) {
-        assert tileEntity.getChunkRow() < chunkSize && tileEntity.getChunkColumn() < chunkSize : "TileEntityContainer can only store TileEntities of its given dimenstions. TileEntityString: " + tileEntity.toString();
+        assert tileEntity.getChunkRow() < chunkSize && tileEntity.getChunkColumn() < chunkSize; 
         tileEntities.get(tileEntity.getChunkRow()).add(tileEntity.getChunkColumn(), tileEntity);
     }
 
@@ -69,7 +69,7 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
      * @param entity - entity to replace with the set default
      */
     public void removeEntity( TileEntity tileEntity ) {
-        assert tileEntity.getChunkRow() < chunkSize && tileEntity.getChunkColumn() < chunkSize : "TileEntityContainer can only store TileEntities of its given dimenstions" + tileEntity.toString();
+        assert tileEntity.getChunkRow() < chunkSize && tileEntity.getChunkColumn() < chunkSize; 
         tileEntities.get(tileEntity.getChunkRow()).add(tileEntity.getChunkColumn(), null);
     }
 
