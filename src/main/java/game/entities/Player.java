@@ -76,6 +76,7 @@ public class Player extends DynamicEntity implements DestructibleEntity {
         player.walkLeftAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_left.png"));
         player.walkRightAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_right.png"));
         player.currentAnimation = player.walkUpAnimation;
+        player.speed = ((ParserInt) map.get("speed")).getNumber();
         x.getTimingManager().register(player);
         return player;
     }

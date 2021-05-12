@@ -1,6 +1,7 @@
 {
     maxHealth: 100,
     health: 100,
+    speed: 1,
     xSize: 64,
     ySize: 128,
     xPosition: 6144,
