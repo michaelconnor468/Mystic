@@ -1,6 +1,8 @@
 package views.scenes;
 
 import game.main.X;
+import game.entities.Player;
+import game.entities.DynamicEntity;
 import util.parse.obj.*;
 
 import java.nio.file.Paths;
@@ -22,6 +24,7 @@ public class PlayingScene {
         Scene scene = new Scene(root, width, height);
         root.getChildren().add(canvas);
         x.getRenderManager().updateGraphicsContext(canvas.getGraphicsContext2D());
+        setupKeystrokes(scene);
 
         try { 
             scene.getStylesheets().add(Paths.get("src/main/resources/styles/Common.css")
@@ -31,5 +34,11 @@ public class PlayingScene {
         } catch ( Exception e ) { System.err.println(e); } 
 
         return scene; 
+    }
+
+    private static void setupKeystrokes(Scene scene) {
+        scene.setOnKeyPressed( e -> {
+            System.out.println("Key Pressed"); 
+        });
     }
 }

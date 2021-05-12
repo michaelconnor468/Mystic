@@ -10,9 +10,9 @@ import java.lang.Math;
  * comprises of setting properties which are used to calculate moves per tick in order to simplify logic and keep movement functionality contained to class.
  */
 public abstract class DynamicEntity extends Entity {
-    private double speed; // In pixels per second
-    private double speedModifier;
-    private MovementDirection direction;
+    protected double speed; // In pixels per second
+    protected double speedModifier;
+    protected MovementDirection direction;
     public enum MovementDirection {
         north,
         south,
