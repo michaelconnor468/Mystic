@@ -16,7 +16,7 @@ import game.entities.buffs.EntityBuff;
 public abstract class Entity implements TickObserver, Renderable {
     // Size is not necessarily the same as the collision box dimensions
     protected int xSize, ySize;
-    protected int xPosition, yPosition;
+    protected double xPosition, yPosition;
     protected ArrayList<CollisionBox> collisionBoxes;
     protected ArrayList<EntityBuff> entityBuffs; 
 
@@ -55,12 +55,10 @@ public abstract class Entity implements TickObserver, Renderable {
 
     public void addEntityBuff(EntityBuff entityBuff) { entityBuffs.add(entityBuff); }
 
-    public int getxPosition() {return xPosition;}
-    public int getyPosition() {return yPosition;}
+    public int getxPosition() {return (int) xPosition;}
+    public int getyPosition() {return (int) yPosition;}
     public int getxSize() {return xSize;} 
     public int getySize() {return ySize;}  
-    public int getActionButtonXLocation() {return xPosition;}
-    public int getActionButtonYLocation() {return yPosition;}
     public ArrayList<CollisionBox> getCollisionBoxes() {return this.collisionBoxes;}
 
     /**

@@ -22,7 +22,7 @@ public class Player extends DynamicEntity implements DestructibleEntity {
     private Animation walkDownAnimation;
     private Animation walkLeftAnimation;
     private Animation walkRightAnimation;
- 
+
     private Player() {}
 
     public void tick(X x) { 
@@ -43,9 +43,24 @@ public class Player extends DynamicEntity implements DestructibleEntity {
             this.health = maxHealth;
     }
 
-    public void onDestroy() {
-
+    public void setMovementDirection(MovementDirection direction) {
+        super.setMovementDirection(direction);
+        currentAnimation.setStill(false);
+        switch ( direction ) {
+            case north:
+                currentAnimation = walkUpAnimation; 
+            case south:
+                currentAnimation = walkDownAnimation;
+            case east:
+                currentAnimation = walkRightAnimation;
+            case west:
+                currentAnimation = walkLeftAnimation;
+            case still:
+                currentAnimation.setStill(true);
+        }
     }
+
+    public void onDestroy() {}
 
     public static Player load(X x, ParserBlock block) {
         Player player = new Player();
