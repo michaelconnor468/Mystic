@@ -40,11 +40,19 @@ public class PlayingScene {
         scene.setOnKeyPressed( e -> {
             switch ( e.getCode() ) {
                 case W:
+                    if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.west )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.northwest);
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.east )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.northeast);
                     if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.still )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.north);
                     break;
                 case S:
-                    if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.still )
+                    if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.west )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.southwest);
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.east )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.southeast);
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.still )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.south);
                     break;
                 case A:
