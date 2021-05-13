@@ -63,5 +63,38 @@ public class PlayingScene {
                     break;
             }
         });
+        scene.setOnKeyReleased( e -> {
+            switch ( e.getCode() ) {
+                case W:
+                    if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.northwest )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.west);
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.northeast )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.east);
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.north )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.still);
+                case S:
+                    if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.southwest )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.west);
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.southeast )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.east);
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.south )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.still);
+                case A:
+                    if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.northwest )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.north);
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.southwest )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.south);
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.west )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.still);
+                case D:
+                    if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.northeast )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.north);
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.southeast )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.south);
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.east )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.still);
+
+            }
+        });
     }
 }
