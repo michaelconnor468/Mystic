@@ -47,20 +47,20 @@ public abstract class DynamicEntity extends Entity {
                 dx = -1;
                 break;
             case northeast:
-                dy = -Math.sqrt(2);
-                dx = Math.sqrt(2);
+                dy = -0.707;
+                dx = 0.707;
                 break;
             case northwest:
-                dy = -Math.sqrt(2);
-                dx = -Math.sqrt(2);
+                dy = -0.707;
+                dx = -0.707;
                 break;
             case southeast:
-                dy = Math.sqrt(2);
-                dx = Math.sqrt(2);
+                dy = 0.707;
+                dx = 0.707;
                 break;
             case southwest:
-                dy = Math.sqrt(2);
-                dx = -Math.sqrt(2);
+                dy = 0.707;
+                dx = -0.707;
                 break;
         }
         
