@@ -29,7 +29,7 @@ public abstract class DynamicEntity extends Entity {
         move(); 
     }
 
-    private void move() {
+    protected void move() {
         double dx = 0;
         double dy = 0;
         
@@ -60,7 +60,9 @@ public abstract class DynamicEntity extends Entity {
         yPosition += dy*speed*speedModifier;
     }
 
+
     public void setSpeed(int speed) { this.speed = speed; }
     public void setSpeedModifier(double speedModifier) { this.speedModifier = speedModifier; }
     public void setMovementDirection(MovementDirection direction) { this.direction = direction; }
+    public MovementDirection getMovementDirection() { return this.direction; }
 }

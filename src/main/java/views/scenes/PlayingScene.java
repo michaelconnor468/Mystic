@@ -38,7 +38,30 @@ public class PlayingScene {
 
     private static void setupKeystrokes(Scene scene) {
         scene.setOnKeyPressed( e -> {
-            System.out.println("Key Pressed"); 
+            switch ( e.getCode() ) {
+                case W:
+                    x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.north);
+                    break;
+                case S:
+                    x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.south);
+                    break;
+                case A:
+                    if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.north )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.northwest);
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.south )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.southwest);
+                    else
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.west);
+                    break;
+                case D:
+                    if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.north )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.northeast);
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.south )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.southeast);
+                    else
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.east);
+                    break;
+            }
         });
     }
 }
