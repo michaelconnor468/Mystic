@@ -36,24 +36,32 @@ public abstract class DynamicEntity extends Entity {
         switch ( direction ) {
             case north:
                 dy = -1;
+                break;
             case south:
                 dy = 1;
+                break;
             case east:
                 dx = 1;
+                break;
             case west:
                 dx = -1;
+                break;
             case northeast:
                 dy = -Math.sqrt(2);
                 dx = Math.sqrt(2);
+                break;
             case northwest:
                 dy = -Math.sqrt(2);
                 dx = -Math.sqrt(2);
+                break;
             case southeast:
                 dy = Math.sqrt(2);
                 dx = Math.sqrt(2);
+                break;
             case southwest:
                 dy = Math.sqrt(2);
                 dx = -Math.sqrt(2);
+                break;
         }
         
         xPosition += dx*speed*speedModifier;
