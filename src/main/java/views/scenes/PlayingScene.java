@@ -40,17 +40,19 @@ public class PlayingScene {
         scene.setOnKeyPressed( e -> {
             switch ( e.getCode() ) {
                 case W:
-                    x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.north);
+                    if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.still )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.north);
                     break;
                 case S:
-                    x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.south);
+                    if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.still )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.south);
                     break;
                 case A:
                     if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.north )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.northwest);
                     else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.south )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.southwest);
-                    else
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.still )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.west);
                     break;
                 case D:
@@ -58,7 +60,7 @@ public class PlayingScene {
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.northeast);
                     else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.south )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.southeast);
-                    else
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.still )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.east);
                     break;
             }
