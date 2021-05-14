@@ -30,7 +30,7 @@ public class Player extends DynamicEntity implements DestructibleEntity {
         move();
         currentAnimation.tick(x); 
     }
-
+    
     public void render(Renderer r) { r.render(currentAnimation); }
 
     public void damage( int health ) {

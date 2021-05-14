@@ -30,6 +30,7 @@ public class Game implements GameStateChangeListener {
         switch ( from ) {
             case Playing:
                 x.getTimingManager().stopTiming();
+                x.getRenderManager().stop();
                 break;
         }
     }
@@ -39,6 +40,7 @@ public class Game implements GameStateChangeListener {
                 x.getChunkManager().loadChunks(loadFilePath);
                 x.getGameStateManager().setState(GameStateManager.State.Playing);
                 x.getTimingManager().startTiming();
+                x.getRenderManager().start();
                 break;
         }
     }

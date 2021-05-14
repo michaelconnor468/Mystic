@@ -17,7 +17,7 @@ public class Animation implements TickObserver {
     private ArrayList<Image> frames;
     private boolean still;
     private int ticksElapsed;
-    private int ticksPerRender;
+    private int framesPerSecond, ticksPerSecond;
     private int totalFrames;
 
     private Animation() {};
@@ -26,7 +26,8 @@ public class Animation implements TickObserver {
         this.still = false;
         this.frame = 0;
         this.ticksElapsed = 0;
-        this.ticksPerRender = ((ParserInt) x.getMainSettings().getProperties().get("ticksPerRender")).getNumber();
+        this.ticksPerSecond = ((ParserInt) x.getMainSettings().getProperties().get("ticksPerSecond")).getNumber();
+        this.framesPerSecond = 60; 
         this.frames = new ArrayList<>();
         try {
             Image loadedImage = new Image(path.toUri().toURL().toString());
@@ -41,12 +42,10 @@ public class Animation implements TickObserver {
     }
 
     public void tick(X x) {
-        ticksElapsed = ticksElapsed == ticksPerRender - 1 ? 0 : ticksElapsed + 1;
+        ticksElapsed = ticksElapsed/ticksPerSecond >= 1/framesPerSecond ? 0 : ticksElapsed + 1;
         if ( ticksElapsed == 0 )
             frame = frame >= totalFrames - 1 ? 0 : frame + 1;
     }
-
-    public void setTicksPerFrame(int ticksPerRender) { this.ticksPerRender = ticksPerRender; }
 
     public Entity getEntity() { return this.entity; }
     public Image getImage() { 

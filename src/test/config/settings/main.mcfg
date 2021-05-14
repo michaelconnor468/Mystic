@@ -5,5 +5,5 @@
     playerSizex: 128,
     ticksPerSecond: 2,
     chunkLoadDiameter: 3,
-    ticksPerRender: 2
+    framesPerSecond: 60 
 }

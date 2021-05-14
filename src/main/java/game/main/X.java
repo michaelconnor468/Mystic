@@ -49,7 +49,9 @@ public class X {
             this.application = application;
     }
     public ChunkManager getChunkManager() { return chunkManager; }
-    public void createChunkManager(Path path) { chunkManager = new ChunkManager(this, FileParser.parse(path.resolve(Paths.get("config/world.mcfg")))); }
+    public void createChunkManager(Path path) { 
+        chunkManager = new ChunkManager(this, FileParser.parse(path.resolve(Paths.get("config/world.mcfg")))); 
+    }
     public void createSettingsSingletons(Path path) {
         if ( mainSettings == null )
             mainSettings = FileParser.parse(path.resolve(Paths.get("main.mcfg")));
