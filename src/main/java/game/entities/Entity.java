@@ -3,10 +3,12 @@ package game.entities;
 import game.main.TickObserver;
 import game.main.render.Renderable;
 import game.main.render.Renderer;
-import java.util.ArrayList;
-import java.util.Iterator;
 import game.main.X;
 import game.entities.buffs.EntityBuff;
+import util.parse.obj.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Abstract class for entity within the game. To allow easy addition of future features, everything in the game is considered an entity allowing it to
@@ -62,6 +64,20 @@ public abstract class Entity implements TickObserver, Renderable {
     public ArrayList<CollisionBox> getCollisionBoxes() {return this.collisionBoxes;}
 
     /**
+     * Exists instead of a static loader because non-static inner classes in java do not play well with static methods.
+     */
+    public void addCollisionBox(X x, ParserBlock block) {
+        CollisionBox box = new CollisionBox();
+        box.xMin = ((ParserInt) block.getProperties().get("xMin")).getNumber();
+        box.yMin = ((ParserInt) block.getProperties().get("yMin")).getNumber();
+        box.xMax = ((ParserInt) block.getProperties().get("xMax")).getNumber();
+        box.yMax = ((ParserInt) block.getProperties().get("yMax")).getNumber();
+        if ( this.collisionBoxes == null )
+            this.collisionBoxes = new ArrayList<>();
+        this.collisionBoxes.add(box);
+    }
+
+    /**
      * Represents the collision box for the entity. This data structure allows for storage in an array giving the ability to define multiple separate collision boxes for
      * an entity for more fine-grained collision control
      */
@@ -75,15 +91,7 @@ public abstract class Entity implements TickObserver, Renderable {
         double getRealyMax() {return Entity.this.getyPosition() + yMax;}
 
         private CollisionBox() {}
-
-        public CollisionBox(double xMin, double xMax, double yMin, double yMax) {
-            this();
-            this.xMin = xMin;
-            this.xMax = xMax;
-            this.yMin = yMin;
-            this.yMax = yMax;
-        }
-
+        
         public boolean collidesWith(CollisionBox collisionBox) {
             return !(
                 (this.getRealxMax() < collisionBox.getRealxMin()) || 

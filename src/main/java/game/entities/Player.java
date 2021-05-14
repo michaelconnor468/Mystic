@@ -1,13 +1,14 @@
 package game.entities;
 
-import util.parse.*;
-import util.parse.obj.*;
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.nio.file.Paths;
 
 import game.main.render.Animation;
 import game.main.render.Renderer;
 import game.main.X;
+import util.parse.*;
+import util.parse.obj.*;
 
 /**
  * Main player class. Special entity as it will be used to dictate camera location and chunk loading. Will
@@ -79,7 +80,8 @@ public class Player extends DynamicEntity implements DestructibleEntity {
         player.currentAnimation = player.walkUpAnimation;
         player.direction = MovementDirection.still;
         player.speed = ((ParserInt) map.get("speed")).getNumber();
-        player.speedModifier = ((ParserInt) map.get("speedModifier")).getNumber();;
+        player.speedModifier = ((ParserInt) map.get("speedModifier")).getNumber();
+        player.addCollisionBox(x, (ParserBlock) map.get("collisionBox"));
         x.getTimingManager().register(player);
         return player;
     }
