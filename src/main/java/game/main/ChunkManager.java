@@ -77,8 +77,8 @@ public class ChunkManager {
         int middleyChunk = (int) entity.getyPosition()/(chunkSize*tileSize);
         for ( int i = -1; i < 2; i++ ) {
             for ( int j = -1; j < 2; j++ ) {
-                if ( middlexChunk + i < chunks.size() ) {
-                    if ( middleyChunk + j < chunks.get(middlexChunk + i).size() )
+                if ( middlexChunk + i >= 0 && middlexChunk + i < chunks.size() ) {
+                    if ( middleyChunk + j >= 0 && middleyChunk + j < chunks.get(middlexChunk + i).size() )
                         ret.add(chunks.get(middlexChunk + i).get(middleyChunk + j));
                 }
             }
