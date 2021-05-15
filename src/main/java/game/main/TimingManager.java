@@ -44,6 +44,7 @@ public class TimingManager {
     public void unregister(TickObserver o) {
         tickObservers.remove(o);
     }
+
     private void tick(X x) {
         tickObservers.forEach(obs -> obs.tick(x));
     }

@@ -1,6 +1,7 @@
 package game.main;
 
 import game.entities.Chunk;
+import game.entities.Entity;
 import util.parse.FileParser;
 import util.parse.obj.ParserBlock;
 import util.parse.obj.ParserInt;
@@ -23,7 +24,6 @@ import java.util.regex.Pattern;
 public class ChunkManager {
     private X x;
     private ArrayList<ArrayList<Chunk>> chunks;
-    private ArrayList<ArrayList<Chunk>> activeChunks;
     private int chunkSize, tileSize, chunkGridSize, chunkLoadDiameter;
 
     private ChunkManager() {}
@@ -34,9 +34,9 @@ public class ChunkManager {
         this.tileSize = ((ParserInt) worldSettings.getProperties().get("tileSize")).getNumber();
         this.chunkGridSize = ((ParserInt) worldSettings.getProperties().get("chunkGridSize")).getNumber();
         this.chunkLoadDiameter = ((ParserInt) x.getMainSettings().getProperties().get("chunkLoadDiameter")).getNumber(); 
-        this.activeChunks = new ArrayList<ArrayList<Chunk>>();
+        this.chunks = new ArrayList<ArrayList<Chunk>>();
         for ( int i = 0; i < this.chunkGridSize; i++ )
-            this.activeChunks.add(new ArrayList<Chunk>());
+            this.chunks.add(new ArrayList<Chunk>());
         this.chunks = new ArrayList<ArrayList<Chunk>>(Collections.nCopies(chunkGridSize, 
             new ArrayList<Chunk>(Collections.nCopies(chunkGridSize, null))));
     }
@@ -60,9 +60,27 @@ public class ChunkManager {
     }
 
     public int getChunkSize() { return chunkSize; }
+    public Chunk getChunkInsideOf( Entity entity ) {
+        int chunkSizePX = chunkSize*tileSize;
+        return chunks.get((int) entity.getxPosition()/chunkSizePX).get((int) entity.getyPosition()/chunkSizePX);
+    }
+    public ArrayList<Chunk> getChunksAround( Entity entity ) {
+        ArrayList<Chunk> ret = new ArrayList<>();
+        int middlexChunk = (int) entity.getxPosition()/(chunkSize*tileSize);
+        int middleyChunk = (int) entity.getyPosition()/(chunkSize*tileSize);
+        for ( int i = -1; i < 2; i++ ) {
+            for ( int j = -1; j < 2; j++ ) {
+                if ( middlexChunk + i < chunks.size() ) {
+                    if ( middleyChunk + j < chunks.get(middlexChunk + i).size() )
+                        ret.add(chunks.get(middlexChunk + i).get(middleyChunk + j));
+                }
+            }
+        }
+        return ret;
+    }
     public int getTileSize() { return tileSize; }
     public int getChunkGridSize() { return chunkGridSize; }
     public int getChunkLoadDiameter() { return chunkLoadDiameter; }
     public ArrayList<ArrayList<Chunk>> getChunks() { return chunks; }
-    public ArrayList<ArrayList<Chunk>> getActiveChunks() { return activeChunks; }
+    public ArrayList<ArrayList<Chunk>> getActiveChunks() { return chunks; }
 }
