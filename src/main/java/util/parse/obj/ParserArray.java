@@ -6,7 +6,7 @@ import java.util.Iterator;
 /**
  * Object used by API to represent a parsed JSON array of a single type so as to keep logic simple
  */
-public class ParserArray implements ParserObject {
+public class ParserArray implements ParserObject, Iterable<ParserObject> {
     private ObjectType arrayType;
     private ArrayList<ParserObject> array;
     private int length;
@@ -23,7 +23,7 @@ public class ParserArray implements ParserObject {
         array.add(obj);
     }
 
-    public Iterator     getIterator()       { return array.iterator();}
+    public Iterator     iterator()       { return array.iterator();}
     public int          getLength()         { return length; }
     public ObjectType   getElementType()    { return arrayType;}
     public ParserObject getIndex(int index) { return index > length - 1 ? null : array.get(index);}
