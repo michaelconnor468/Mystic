@@ -57,7 +57,10 @@ public class Chunk implements TickObserver, Renderable {
     public int getTileSize() { return tileSize; }
     public int getSizeInTiles() { return sizeInTiles; }
 
-    public boolean isColliding( Entity entity ) {
+    public boolean isColliding(Entity entity) {
+        for ( TileEntityContainer container : tileEntities ) 
+            if ( container.isColliding(entity) ) return true;
+            
         return false;
     }
     

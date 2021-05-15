@@ -77,8 +77,17 @@ public abstract class Entity implements TickObserver, Renderable {
         this.collisionBoxes.add(box);
     }
 
+    public boolean isColliding(Entity entity) {
+        for ( CollisionBox box : collisionBoxes ) {
+            for ( CollisionBox box2 : entity.getCollisionBoxes() )
+                if ( box.collidesWith(box2) ) return true;
+        }
+        return false; 
+    }
+
     /**
-     * Represents the collision box for the entity. This data structure allows for storage in an array giving the ability to define multiple separate collision boxes for
+     * Represents the collision box for the entity. This data structure allows for storage in an array giving the 
+     * ability to define multiple separate collision boxes for
      * an entity for more fine-grained collision control
      */
     public class CollisionBox {
