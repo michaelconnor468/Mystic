@@ -67,6 +67,7 @@ public class Player extends DynamicEntity implements DestructibleEntity {
     public static Player load(X x, ParserBlock block) {
         Player player = new Player();
         HashMap<String, ParserObject> map = block.getProperties();
+        player.x = x;
         player.xSize = ((ParserInt) map.get("xSize")).getNumber();
         player.ySize = ((ParserInt) map.get("ySize")).getNumber();
         player.xPosition = ((ParserInt) map.get("xPosition")).getNumber();

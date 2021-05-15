@@ -66,6 +66,10 @@ public abstract class DynamicEntity extends Entity {
         
         xPosition += dx*speed*speedModifier;
         yPosition += dy*speed*speedModifier;
+        if ( x.getChunkManager().isColliding(this) ) {
+            xPosition -= dx*speed*speedModifier;
+            yPosition -= dy*speed*speedModifier;
+        }
     }
 
 
