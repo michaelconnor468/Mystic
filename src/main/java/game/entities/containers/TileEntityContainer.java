@@ -56,11 +56,11 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
     public ArrayList<TileEntity> getEntitiesWithinRange( double minX, double maxX, double minY, double maxY ) {
         ArrayList<TileEntity> returnList = new ArrayList<>();
         for ( int i = 0; i < chunkSize; i++ ) {
-            if ( tileEntities.get(i).get(0).getxPosition() >= minX && tileEntities.get(i).get(0).getxPosition() <= maxX )
+            if ( tileEntities.get(i).get(0).getyPosition() >= minY && tileEntities.get(i).get(0).getyPosition() <= maxY )
             {
                 for ( int j = 0; j < chunkSize; j++ ) {
-                    if ( tileEntities.get(i).get(j).getyPosition() >= minY 
-                        && tileEntities.get(i).get(j).getyPosition() <= maxY ) 
+                    if ( tileEntities.get(i).get(j).getxPosition() >= minX 
+                        && tileEntities.get(i).get(j).getxPosition() <= maxX ) 
                         returnList.add( tileEntities.get(i).get(j) );
                 }
             }

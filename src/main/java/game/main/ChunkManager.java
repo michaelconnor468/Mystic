@@ -36,9 +36,7 @@ public class ChunkManager {
         this.chunkLoadDiameter = ((ParserInt) x.getMainSettings().getProperties().get("chunkLoadDiameter")).getNumber(); 
         this.chunks = new ArrayList<ArrayList<Chunk>>();
         for ( int i = 0; i < this.chunkGridSize; i++ )
-            this.chunks.add(new ArrayList<Chunk>());
-        this.chunks = new ArrayList<ArrayList<Chunk>>(Collections.nCopies(chunkGridSize, 
-            new ArrayList<Chunk>(Collections.nCopies(chunkGridSize, null))));
+            this.chunks.add(new ArrayList<Chunk>(Collections.nCopies(chunkGridSize, null)));
     }
 
     public void loadChunks(Path path) {

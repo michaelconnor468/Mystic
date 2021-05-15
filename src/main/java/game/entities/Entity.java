@@ -59,11 +59,11 @@ public abstract class Entity implements TickObserver, Renderable {
 
     public void addEntityBuff(EntityBuff entityBuff) { entityBuffs.add(entityBuff); }
 
-    public int getxPosition() {return (int) xPosition;}
-    public int getyPosition() {return (int) yPosition;}
-    public int getxSize() {return xSize;} 
-    public int getySize() {return ySize;}  
-    public ArrayList<CollisionBox> getCollisionBoxes() {return this.collisionBoxes;}
+    public int getxPosition() { return (int) xPosition; }
+    public int getyPosition() { return (int) yPosition; }
+    public int getxSize() { return xSize; } 
+    public int getySize() { return ySize; }  
+    public ArrayList<CollisionBox> getCollisionBoxes() { return this.collisionBoxes; }
 
     /**
      * Exists instead of a static loader because non-static inner classes in java do not play well with static methods.
