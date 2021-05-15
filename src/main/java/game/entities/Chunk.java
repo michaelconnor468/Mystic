@@ -77,22 +77,19 @@ public class Chunk implements TickObserver, Renderable {
 
         TileEntityContainer tileEntityContainer = new TileEntityContainer(x);
         ParserArray tileRows = (ParserArray) properties.get("tileEntities");
+
         for ( int i = 0; i < tileRows.getLength(); i++ ) {
             ParserArray tileColumn = (ParserArray) tileRows.getIndex(i);
             for ( int ii = 0; ii < tileColumn.getLength(); ii++ ) { 
                 ParserBlock entityBlock = (ParserBlock) tileColumn.getIndex(ii);
                 TileEntity entity = TileEntity.load(x, entityBlock, chunk, i, ii);
-                if ( entityBlock.getProperties().containsKey("collisionBoxes") ) {
-                    for (ParserObject obj : ((ParserArray) entityBlock.getProperties().get("collisionBoxes"))) {
+                if ( entityBlock.getProperties().containsKey("collisionBoxes") ) 
+                    for (ParserObject obj : ((ParserArray) entityBlock.getProperties().get("collisionBoxes"))) 
                         entity.addCollisionBox(x, (ParserBlock) obj); 
-                    }
-                }
-
                 tileEntityContainer.addEntity(entity);
             }
         }
         chunk.tileEntities.add(tileEntityContainer);
-
         return chunk;
     }
 

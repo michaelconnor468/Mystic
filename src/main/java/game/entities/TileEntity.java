@@ -26,8 +26,8 @@ public class TileEntity extends Entity {
         TileEntity entity = new TileEntity();
         entity.xSize = chunk.getTileSize();
         entity.ySize = chunk.getTileSize();
-        entity.xPosition = (chunk.getXChunkPosition()*chunk.getSizeInTiles() + chunkRow)*entity.xSize;
-        entity.yPosition = (chunk.getYChunkPosition()*chunk.getSizeInTiles() + chunkColumn)*entity.xSize;
+        entity.xPosition = (chunk.getXChunkPosition()*chunk.getSizeInTiles() + chunkColumn)*entity.xSize;
+        entity.yPosition = (chunk.getYChunkPosition()*chunk.getSizeInTiles() + chunkRow)*entity.xSize;
         entity.chunkRow = chunkRow;
         entity.chunkColumn = chunkColumn;
         entity.type = ((ParserInt) block.getProperties().get("type")).getNumber();

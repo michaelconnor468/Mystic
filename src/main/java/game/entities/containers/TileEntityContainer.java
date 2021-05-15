@@ -56,10 +56,11 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
     public ArrayList<TileEntity> getEntitiesWithinRange( double minX, double maxX, double minY, double maxY ) {
         ArrayList<TileEntity> returnList = new ArrayList<>();
         for ( int i = 0; i < chunkSize; i++ ) {
-            if ( tileEntities.get(i).get(0).getyPosition() >= minY && tileEntities.get(i).get(0).getyPosition() <= maxY ) {
+            if ( tileEntities.get(i).get(0).getxPosition() >= minX && tileEntities.get(i).get(0).getxPosition() <= maxX )
+            {
                 for ( int j = 0; j < chunkSize; j++ ) {
-                    if ( tileEntities.get(i).get(j).getxPosition() >= minX 
-                        && tileEntities.get(i).get(j).getxPosition() <= maxX )
+                    if ( tileEntities.get(i).get(j).getyPosition() >= minY 
+                        && tileEntities.get(i).get(j).getyPosition() <= maxY ) 
                         returnList.add( tileEntities.get(i).get(j) );
                 }
             }
@@ -82,8 +83,8 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
 
     public boolean isColliding(Entity entity) {
         int minx = entity.getxPosition() - tileSize*2;
-        int miny = entity.getxPosition() - tileSize*2;
-        int maxx = entity.getyPosition() + entity.getxSize() + tileSize*2;
+        int miny = entity.getyPosition() - tileSize*2;
+        int maxx = entity.getxPosition() + entity.getxSize() + tileSize*2;
         int maxy = entity.getyPosition() + entity.getySize() + tileSize*2;
         for ( TileEntity e : getEntitiesWithinRange(minx, maxx, miny, maxy) )
             if ( e.isColliding(entity) ) return true;
