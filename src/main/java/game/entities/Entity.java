@@ -80,6 +80,8 @@ public abstract class Entity implements TickObserver, Renderable {
     }
 
     public boolean isColliding(Entity entity) {
+        if ( entity.getCollisionBoxes() == null || collisionBoxes == null )
+            return false;
         for ( CollisionBox box : collisionBoxes ) {
             for ( CollisionBox box2 : entity.getCollisionBoxes() )
                 if ( box.collidesWith(box2) ) return true;
