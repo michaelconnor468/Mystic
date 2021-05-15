@@ -59,7 +59,14 @@ public class ChunkManager {
         }
     }
 
-    public int getChunkSize() { return chunkSize; }
+    public boolean isColliding( Entity entity ) {
+        for ( Chunk chunk : getChunksAround(entity) ) {
+            if ( chunk.isColliding(entity) )
+                return true;
+        }
+        return false;
+    }
+
     public Chunk getChunkInsideOf( Entity entity ) {
         int chunkSizePX = chunkSize*tileSize;
         return chunks.get((int) entity.getxPosition()/chunkSizePX).get((int) entity.getyPosition()/chunkSizePX);
@@ -78,6 +85,8 @@ public class ChunkManager {
         }
         return ret;
     }
+    
+    public int getChunkSize() { return chunkSize; }
     public int getTileSize() { return tileSize; }
     public int getChunkGridSize() { return chunkGridSize; }
     public int getChunkLoadDiameter() { return chunkLoadDiameter; }

@@ -56,6 +56,10 @@ public class Chunk implements TickObserver, Renderable {
     public int getYChunkPosition() { return yChunkPosition; }
     public int getTileSize() { return tileSize; }
     public int getSizeInTiles() { return sizeInTiles; }
+
+    public boolean isColliding( Entity entity ) {
+        return false;
+    }
     
     public static Chunk load(X x, ParserBlock block, int xPosition, int yPosition) {
         Chunk chunk = new Chunk();
