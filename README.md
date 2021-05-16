@@ -5,6 +5,36 @@
 
 The game is built and tested using gradle and it's directory structure matches the standard structure emplyed by gradle. A lot of the java files themselves contain some documentaion in the form of javadoc which the reader is free to reference. Some higher level details will be provided below as well.
 
+### Entities and Chunks
+
+Entities such as tiles, trees, and the player can move, be rendered and interact with each other. They are all stored within their respective chunks which are loaded and unloaded on demand due to the infinite nature of the map requiring a way to acheive stable performace on all map sizes. Entities such as floor tiles are fully customizable and stored in plain JSON for easy addition and modding. This allows the player to mould their map to an infinite array of combinations as the whole world is made to be fully modifiable.
+
+#### Entities
+
+Entities are each assosiated with a chunk, with the player being a special external entity. They are free to move around and collide with each other through the use of the CollisionBox inner class. An entity can have more than one collision box for fine grained control. Upon moving, entities query other entities within a optimized radius and then tests for collisions. Entities are stored within specialized storage containers within each chunk to allow optimizer querying and storage for the particular type of entity.
+
+#### Chunks
+
+Chunks are the highest level of storage container which store a given square area of entities. It is chunks that dispatch timing ticks and render requests to their contained entities and which save and load themselves and their related entities. Entities may freely move across chunks which are managed by the Chunk Manager. The Chunk Manager both loads and unloads chunks and their respective entities based on the position of the player. This allows maps to be infinite in size while still using the same number of resources.
+
+### Storage
+
+All entities and settings are saved in JSON. This allows for ease of reading and modification of game files. Additionally the game uses its own proprietary JSON parser with a smoother syntax. There is not much reason for this other than me thinking of a cool parser design I was dying to implement.
+
+#### Parsing
+
+Parsing is performed through object-oriented parsers which produce parse object wrappers ranging from primitive values to arrays to blocks. JSON is passed into parsers which output such parser objects. Parsers can also contain helper information such as the number of lines parsed which is why they are instantiated as individual objects.
+
+```java
+ParserBlock block = (new BlockParser()).parse("{ nums: [1, 3], num2: 6 }");
+int num2 = ((ParserInt) block.getProperties().get("num2")).getNumber();
+Iterator<ParserObject> nums = ((ParserArray) block.getProperties().get("nums")).iterator();
+```
+
+#### Saving and Loading
+
+Entities can be saved and loaded through their own unique implementation of static save and load methods. This is done through the input and output of JSON that is used to save and load an entity. All entities except the player are saved and loaded from the chunk file corresponding to the chunk they are currently inside of.
+
 ### Serivces and Context
 
 Services and global variables are grouped together in a context object named X. This is generally passed around through dependancy injection and can be used by any class to access a global variable or service such as to register itself with a timing manager or look into the game's settings.
