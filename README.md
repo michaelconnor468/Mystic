@@ -13,7 +13,7 @@ The game is built and tested using gradle and it's directory structure matches t
 
 Entities such as tiles, trees, and the player can move, be rendered and interact with each other. They are all stored within their respective chunks which are loaded and unloaded on demand due to the infinite nature of the map requiring a way to acheive stable performace on all map sizes. Entities such as floor tiles are fully customizable and stored in plain JSON for easy addition and modding. This allows the player to mould their map to an infinite array of combinations as the whole world is made to be fully modifiable. A sample save file, chunk001002.msv, the second chunk to the right and third down, is given below.
 
-```json
+```javascript
 {
     tileEntities: [
         {
