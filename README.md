@@ -7,7 +7,7 @@ The game is built and tested using gradle and it's directory structure matches t
 
 ### Rendering
 
-Rendering consists of drawing animations to the screen at timed intervals.
+Rendering consists of drawing animations to the screen at timed intervals. Only entities may animate themselves though the render implementation does not enforce it. This is used over a RenderableEntity derived class to keep inheritance chains short.
 
 #### Animation
 
@@ -20,3 +20,23 @@ The renderer is an object entities can use to register an animation for drawing 
 #### Render Manager
 
 The render manager handles timing related to the renderer and calls entities that register with it to supply an animation for render in a given cycle. Once all such animations are collected, the render manager lets the renderer know it is time to draw onto the screen in order to ensure all animations are registered for render before drawing begins so that the renderer may order and pre-process entities accordingly.
+
+#### Example
+
+An entity that wants to render animations to the screen must implement the Renderable.java interface and register itself with the game's render manager. It is then called to provide an animation on each render cycle. An animation is created using the path of the image containing subimages to animate and the entity which it is animating.
+
+```java
+class MyEntity extends Entity implements Renderable {
+    Animation animation;
+
+    public MyEntity(X x, Path animationPath) {
+        x.getRenderManager().register(this);
+        animation = new Animation(x, this, animationPath);
+    }
+
+    public void render(Renderer r) {
+        r.render(animation);
+    }
+}
+
+```
