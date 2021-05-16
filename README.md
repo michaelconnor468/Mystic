@@ -1,5 +1,5 @@
 # Mystic
-2D Open World Java Game. To run, simply execute the shell script entitiled run in this folder which will build and execute the current version of the game.
+Mystic is a 2D Open World Java Game. To run, simply execute the shell script entitiled run in this folder which will build and execute the current version of the game. Or if you know gradle you can always use that directly.
 
 ## Gameplay
 
@@ -11,7 +11,24 @@ The game is built and tested using gradle and it's directory structure matches t
 
 ### Entities and Chunks
 
-Entities such as tiles, trees, and the player can move, be rendered and interact with each other. They are all stored within their respective chunks which are loaded and unloaded on demand due to the infinite nature of the map requiring a way to acheive stable performace on all map sizes. Entities such as floor tiles are fully customizable and stored in plain JSON for easy addition and modding. This allows the player to mould their map to an infinite array of combinations as the whole world is made to be fully modifiable.
+Entities such as tiles, trees, and the player can move, be rendered and interact with each other. They are all stored within their respective chunks which are loaded and unloaded on demand due to the infinite nature of the map requiring a way to acheive stable performace on all map sizes. Entities such as floor tiles are fully customizable and stored in plain JSON for easy addition and modding. This allows the player to mould their map to an infinite array of combinations as the whole world is made to be fully modifiable. A sample save file, chunk001002.msv, the second chunk to the right and third down, is given below.
+
+```json
+{
+    tileEntities: [
+        {
+            type: 1, 
+            biome: 0, 
+            collisionBoxes: 
+            [{xMin: 0, xMax: 64, ...}, ...]
+        }, ...
+    ],
+    dynamicEntities: [
+        ...
+    ],
+    ...
+}
+```
 
 #### Entities
 
@@ -33,6 +50,8 @@ Parsing is performed through object-oriented parsers which produce parse object 
 ParserBlock block = (new BlockParser()).parse("{ nums: [1, 3], num2: 6 }");
 int num2 = ((ParserInt) block.getProperties().get("num2")).getNumber();
 Iterator<ParserObject> nums = ((ParserArray) block.getProperties().get("nums")).iterator();
+
+ParserBlock blockFromFile = FileParser.parse(Paths.get("path/to/file"));
 ```
 
 #### Saving and Loading
