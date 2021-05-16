@@ -1,6 +1,10 @@
 # Mystic
 2D Open World Java Game. To run, simply execute the shell script entitiled run in this folder which will build and execute the current version of the game.
 
+## Gameplay
+
+The game takes place in a voxel-based, fully customizable and infinite world. In this world the player and other entities are permitted to move around and interact with the world in any way they wish. There is no set goal with the game focussing on providing a sandbox experience allowing the player to play as they wish.
+
 ## Technical Details
 
 The game is built and tested using gradle and it's directory structure matches the standard structure emplyed by gradle. A lot of the java files themselves contain some documentaion in the form of javadoc which the reader is free to reference. Some higher level details will be provided below as well.
