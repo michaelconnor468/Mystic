@@ -57,6 +57,7 @@ public class RenderManager {
         x.getPlayer().render(renderer);
         for ( Renderable r : toRenderAbove )
             r.render(renderer);
+        renderer.draw();
     }
 
     private class RenderTimer extends AnimationTimer {
