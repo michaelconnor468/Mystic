@@ -7,8 +7,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Made solely to handle managing and dispatching to synchronizing ticks to the timed objects of the program. The decision of which objects these will be dispatched to
- * is left to the implementation as it is not the function of this class to know anything about which objects it is timing.
+ * Forms the backbone of the game's asynchronous runtime. On any given pulse of a timer, registered game components are
+ * notified and given a context object in order to execute their logic. Components should generally normalize their
+ * timing using the ticksPerSecond setting to acheive consistancy in case of timing changes. This is user over a
+ * synchronous game loop to help with easier multithreading as ticks may be sent in separate threads for thread safe
+ * components.
  */
 public class TimingManager {
     private int ticksPerSecond;

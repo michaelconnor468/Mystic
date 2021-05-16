@@ -11,7 +11,7 @@ Services and global variables are grouped together in a context object named X. 
 
 ### Timing
 
-The game makes heavy use of asynchronous logic over a synchronous main loop. Timing managers are used to create ticks for various logical components to receive at given intervals and perform actions during. In general, frequency of timing is normalized against ticks per second to keep behaviour of components consistant and unnafected by timing changes.
+The game makes heavy use of asynchronous logic over a synchronous main loop. Timing managers are used to create ticks for various logical components to receive at given intervals and perform actions during. In general, frequency of timing is normalized against ticks per second to keep behaviour of components consistant and unnafected by timing changes. Additionally, timing ticks may be split into separate threads for safe components to enable easy multi-threading within the application. 
 
 #### Timing Manager
 
