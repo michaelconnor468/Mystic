@@ -104,3 +104,15 @@ class MyEntity extends Entity implements Renderable {
 }
 
 ```
+
+### Views
+
+Views are implemented to be swapped in and out of the Window Manager depending on the current state of the game. The game has many states such as Main Menu, Loading, Playing, Paused upon which on change of state event listeners can be called to modify game functionality.
+
+#### States
+
+Game states can be freely modified through the game state manager but can only transfer from certain states to other certain states. In the game state manager, Game State Change Listeners may register to be notified upon before the transition to a new state and afterwords.
+
+#### Window Manager
+
+The window manager holds the current view the user may interact with. It makes use of the game state manager to swap views in and out on changes of state. The views are implemented with javaFX and styled using css stored in the resources directory. The design of the views tries to remain consistant by having similar styling for things such as buttons shared by all views.
