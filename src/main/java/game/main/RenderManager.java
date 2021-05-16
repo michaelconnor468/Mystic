@@ -9,8 +9,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.animation.AnimationTimer;
 
 /**
- * Manages rendering within the game through an object interface Renderer that is passed to objects that must be rendered. Decouples rendering implementations
- * from actual interfaces that objects use. Synchronises the rendering of objects allowing rendering to differ from in game ticks for different refresh rates and performance.
+ * Manages timing of rendering and creation of renderer for use in dependancy injection for entities to register
+ * animations to render. Allows entities with the renderer interfact to be called to provide an animation at
+ * render time in order to decouple timing from render logici and provide an interface to easily start and stop
+ * rendering based on game state changes.
  */
 public class RenderManager {
     private X x;
@@ -29,6 +31,10 @@ public class RenderManager {
         this.renderTimer = new RenderTimer();
     }
 
+    /**
+     * Allows any arbitrary GUI element to render the game by simply registering it's graphics context with the class
+     * in order to provide flexibility to implement the gui and draw anywhere with ease.
+     */
     public void updateGraphicsContext(GraphicsContext gc) { this.renderer = new Renderer(x, gc); }
 
     public void start() { renderTimer.start(); }
@@ -38,12 +44,7 @@ public class RenderManager {
         if ( !toRender.contains(obj) )
             toRender.add(obj);
     }
-
-    public void registerAbovePlayer(Renderable obj) {
-        if ( !toRenderAbove.contains(obj) )
-            toRenderAbove.add(obj);    
-    }
-
+    
     public void unregister(Renderable obj) {
         if ( toRender.contains(obj) ) 
             toRender.remove(obj);
@@ -51,12 +52,14 @@ public class RenderManager {
             toRenderAbove.remove(obj);
     }
     
+    /**
+     * Ensures all entities register first before drawing within any given render cycle in order for the renderer to
+     * properly order them for rendering so that correct depth is acheived.
+     */
     private void render() {
         for ( Renderable r : toRender )
             r.render(renderer);
         x.getPlayer().render(renderer);
-        for ( Renderable r : toRenderAbove )
-            r.render(renderer);
         renderer.draw();
     }
 

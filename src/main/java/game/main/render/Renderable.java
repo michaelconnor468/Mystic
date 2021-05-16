@@ -3,8 +3,10 @@ package game.main.render;
 import game.main.X;
 
 /**
- * Renderable classes can be timed at a different frequency thawn the regular game ticks to improve performance allow implementations of frame rate caps. Renderer
- * object passed to render method as this is a more decoupled approach than having each method interact with a canvas/ other implementation object directly
+ * Interface used to identify and manage entities that can be rendered. Interface called when it is time to render and
+ * provides the entity with a renderer which it can register an animation to render at the time or not. Decouples
+ * actual render logic from entities due to considerations such as render order and position on the screen relative
+ * to the player that actual rendering is based upon.
  */
 public interface Renderable {
     public void render(Renderer r); 

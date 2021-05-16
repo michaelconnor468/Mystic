@@ -10,8 +10,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 /**
- * Provides an interface decoupled from actual rendering logic that can be passed down the chain of objects that need to be rendered to 
- * allow communication with rendering logic.
+ * Buffers entities for rendering and then renders them in the order of their bottom y coordinates to create a layered
+ * depth effect. Decouples all the logic from the entities themselves which need only register an animation for drawing.
  */
 public class Renderer {
     private X x;
@@ -37,6 +37,10 @@ public class Renderer {
             entities.add(animation);
     }
 
+    /**
+     * Clears render queues and draws out entities. Made to call as a separate function to ensure entity queues
+     * are fully populated before each render with the desired entities.
+     */
     public void draw() {
         for ( Animation a : tileEntities )
             drawAnimation(a);
@@ -50,6 +54,10 @@ public class Renderer {
         entities = new ArrayList<>();
     }
 
+    /**
+     * Performs calculations to only render what is visible based off of the location of the player in order to ensure
+     * centering of the camera on them at all times and that off-screen entities do not cause issues during rendering.
+     */
     private void drawAnimation(Animation animation) {
         int xCorner = x.getPlayer().getxPosition() + x.getPlayer().getxSize()/2 - (resolutionx/2);
         int xRenderLocation = animation.getEntity().getxPosition() - xCorner; 
