@@ -32,6 +32,8 @@ public class TileEntity extends Entity {
         entity.chunkRow = chunkRow;
         entity.chunkColumn = chunkColumn;
         entity.type = ((ParserInt) block.getProperties().get("type")).getNumber();
+        entity.liquid = block.getProperties().containsKey("liquid") ? 
+            ((ParserInt) block.getProperties().get("liquid")).getNumber() == 1 : false;
         entity.animation = new Animation(x, entity, Paths.get("src/main/resources/tiles/" + entity.type + ".png"));
         return entity;
     }
