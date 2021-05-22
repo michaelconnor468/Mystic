@@ -25,6 +25,10 @@ public abstract class DynamicEntity extends Entity {
         still
     }
 
+    protected DynamicEntity() {
+        super();
+    }
+
     public void tick(X x) {
         move(); 
     }

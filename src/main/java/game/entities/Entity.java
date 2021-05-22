@@ -23,13 +23,9 @@ public abstract class Entity implements TickObserver, Renderable {
     protected ArrayList<CollisionBox> collisionBoxes;
     protected ArrayList<Buff> buffs; 
 
-    protected Entity() {}
-    public Entity(X x, int xSize, int ySize, int xPosition, int yPosition) {
-        this.x = x;
-        this.xSize = xSize;
-        this.ySize = ySize;
-        this.xPosition = xPosition; // Position should refer to top-left corner
-        this.yPosition = yPosition;
+    protected Entity() { 
+        this.collisionBoxes = new ArrayList<>();
+        this.buffs = new ArrayList<>();
     }
 
     abstract public void tick(X x);

@@ -28,7 +28,9 @@ public class Player extends DynamicEntity implements DestructibleEntity {
     private Animation walkWestAnimation;
     private Animation walkEastAnimation;
 
-    private Player() {}
+    private Player() {
+        super();
+    }
 
     public void tick(X x) { 
         move();
@@ -96,11 +98,16 @@ public class Player extends DynamicEntity implements DestructibleEntity {
         player.maxHealth = ((ParserInt) map.get("maxHealth")).getNumber();
         player.health = ((ParserInt) map.get("health")).getNumber();
         player.walkNorthAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_north.png"));
-        player.walkNorthWestAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_northwest.png"));
-        player.walkNorthEastAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_northeast.png"));
-        player.walkSouthAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_south.png"));
-        player.walkSouthWestAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_southwest.png"));
-        player.walkSouthEastAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_southeast.png"));
+        player.walkNorthWestAnimation = 
+            new Animation(x, player, Paths.get("src/main/resources/player/walk_northwest.png"));
+        player.walkNorthEastAnimation = 
+            new Animation(x, player, Paths.get("src/main/resources/player/walk_northeast.png"));
+        player.walkSouthAnimation = 
+            new Animation(x, player, Paths.get("src/main/resources/player/walk_south.png"));
+        player.walkSouthWestAnimation = 
+            new Animation(x, player, Paths.get("src/main/resources/player/walk_southwest.png"));
+        player.walkSouthEastAnimation = 
+            new Animation(x, player, Paths.get("src/main/resources/player/walk_southeast.png"));
         player.walkWestAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_west.png"));
         player.walkEastAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_east.png"));
         player.currentAnimation = player.walkSouthEastAnimation;
