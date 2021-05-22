@@ -1,5 +1,6 @@
 {
     swimming: {
+        name: "swimming"
         speedModifier: 0.3
     }
 }

@@ -16,7 +16,6 @@ import java.util.Iterator;
  * the front end drivers.
  */
 public abstract class Entity implements TickObserver, Renderable {
-    // Size is not necessarily the same as the collision box dimensions
     protected X x;
     protected int xSize, ySize;
     protected double xPosition, yPosition;
@@ -53,7 +52,12 @@ public abstract class Entity implements TickObserver, Renderable {
         }
     }
 
-    public void addBuff(Buff buff) { buffs.add(buff); }
+    public void addBuff(Buff buff) { 
+        for ( Buff currentBuff : buffs )
+            if ( currentBuff.getName() == buff.getName() ) return;
+        buffs.add(buff); 
+    }
+    public void removeBuff(Buff buff) { buffs.remove(buff); }
 
     public int getxPosition() { return (int) xPosition; }
     public int getyPosition() { return (int) yPosition; }
