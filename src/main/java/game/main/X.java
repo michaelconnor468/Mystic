@@ -26,6 +26,7 @@ public class X {
     private ParserBlock mainSettings;
     private RenderManager renderManager;
     private TimingManager timingManager;
+    private ParserBlock buffs;
     private Player player;
 
     public X() {}
@@ -57,11 +58,14 @@ public class X {
     public void createSettingsSingletons(Path path) {
         if ( mainSettings == null )
             mainSettings = FileParser.parse(path.resolve(Paths.get("main.mcfg")));
+        if ( buffs == null )
+            buffs = FileParser.parse(path.resolve(Paths.get("buffs.mcfg")));
     }
     public ParserBlock getMainSettings() { return mainSettings; }
     public void createPlayer(Path path) { 
         player = Player.load(this, FileParser.parse(path.resolve("entities/player.msv"))); 
     }
+    public ParserBlock getBuffSettings() { return buffs; }
     public Player getPlayer() { return player; }
     public void createRenderManager() { renderManager = new RenderManager(this); }
     public RenderManager getRenderManager() { return renderManager; };
