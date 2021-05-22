@@ -1,0 +1,5 @@
+{
+    swimming: {
+        speedModifier: 0.3
+    }
+}
