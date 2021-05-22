@@ -19,10 +19,14 @@ public class Player extends DynamicEntity implements DestructibleEntity {
     private int maxHealth;
 
     private Animation currentAnimation;
-    private Animation walkUpAnimation;
-    private Animation walkDownAnimation;
-    private Animation walkLeftAnimation;
-    private Animation walkRightAnimation;
+    private Animation walkNorthAnimation;
+    private Animation walkNorthWestAnimation;
+    private Animation walkNorthEastAnimation;
+    private Animation walkSouthAnimation;
+    private Animation walkSouthWestAnimation;
+    private Animation walkSouthEastAnimation;
+    private Animation walkWestAnimation;
+    private Animation walkEastAnimation;
 
     private Player() {}
 
@@ -50,15 +54,32 @@ public class Player extends DynamicEntity implements DestructibleEntity {
         currentAnimation.setStill(false);
         switch ( direction ) {
             case north:
-                currentAnimation = walkUpAnimation; 
+                currentAnimation = walkNorthAnimation; 
+                break;
+            case northwest:
+                currentAnimation = walkNorthWestAnimation;
+                break;
+            case northeast:
+                currentAnimation = walkNorthEastAnimation;
+                break;
             case south:
-                currentAnimation = walkDownAnimation;
+                currentAnimation = walkSouthAnimation;
+                break;
+            case southwest:
+                currentAnimation = walkSouthWestAnimation;
+                break;
+            case southeast:
+                currentAnimation = walkSouthEastAnimation;
+                break;
             case east:
-                currentAnimation = walkRightAnimation;
+                currentAnimation = walkEastAnimation;
+                break;
             case west:
-                currentAnimation = walkLeftAnimation;
+                currentAnimation = walkWestAnimation;
+                break;
             case still:
                 currentAnimation.setStill(true);
+                break;
         }
     }
 
@@ -74,11 +95,15 @@ public class Player extends DynamicEntity implements DestructibleEntity {
         player.yPosition = ((ParserInt) map.get("yPosition")).getNumber();
         player.maxHealth = ((ParserInt) map.get("maxHealth")).getNumber();
         player.health = ((ParserInt) map.get("health")).getNumber();
-        player.walkUpAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_up.png"));
-        player.walkDownAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_down.png"));
-        player.walkLeftAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_left.png"));
-        player.walkRightAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_right.png"));
-        player.currentAnimation = player.walkUpAnimation;
+        player.walkNorthAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_north.png"));
+        player.walkNorthWestAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_northwest.png"));
+        player.walkNorthEastAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_northeast.png"));
+        player.walkSouthAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_south.png"));
+        player.walkSouthWestAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_southwest.png"));
+        player.walkSouthEastAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_southeast.png"));
+        player.walkWestAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_west.png"));
+        player.walkEastAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_east.png"));
+        player.currentAnimation = player.walkSouthEastAnimation;
         player.direction = MovementDirection.still;
         player.speed = ((ParserInt) map.get("speed")).getNumber();
         player.speedModifier = ((ParserInt) map.get("speedModifier")).getNumber();
