@@ -72,7 +72,7 @@ public class Renderer {
         if ( yRenderLocation > resolutiony || yRenderLocation + e.getySize() < 0 )
             return;
         Image image = animation.getImage();
-        if ( e instanceof DynamicEntity && e.hasBuff("swimming") ) 
+        if ( e instanceof DynamicEntity && ((DynamicEntity) e).isSwimming() ) 
             image = new WritableImage(image.getPixelReader(), 0, 0, e.getxSize(), (int) (e.getySize()*0.28));
         gc.drawImage(image, xRenderLocation, yRenderLocation);
     }
