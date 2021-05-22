@@ -8,6 +8,8 @@ import game.entities.buffs.Buff;
 import util.parse.obj.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 import java.util.Iterator;
 
 /**
@@ -24,10 +26,18 @@ public abstract class Entity implements TickObserver, Renderable {
 
     protected Entity() { 
         this.collisionBoxes = new ArrayList<>();
-        this.buffs = new ArrayList<>();
+        this.buffs = new ArrayList<>(); 
     }
 
-    abstract public void tick(X x);
+    public synchronized void tick(X x) { 
+        ArrayList<Buff> newBuffs = new ArrayList<>();
+        for ( Buff buff : buffs ) {
+            buff.tick(x);
+            if ( buff.getTicksToLive() > 0 )
+                newBuffs.add(buff);
+        }
+        buffs = newBuffs;
+    }
 
     public void addCollisionBox(CollisionBox collisionBox) {collisionBoxes.add(collisionBox);}
     public void removeCollisionBox(CollisionBox collisionBox) {collisionBoxes.remove(collisionBox);}
@@ -52,12 +62,16 @@ public abstract class Entity implements TickObserver, Renderable {
         }
     }
 
-    public void addBuff(Buff buff) { 
+    public synchronized void addBuff(Buff buff) { 
         for ( Buff currentBuff : buffs )
-            if ( currentBuff.getName() == buff.getName() ) return;
+            if ( currentBuff.getName().equals(buff.getName()) ) return;
         buffs.add(buff); 
     }
-    public void removeBuff(Buff buff) { buffs.remove(buff); }
+    public boolean hasBuff(String str) {
+        for ( Buff buff : buffs )
+            if ( buff.getName().equals(str) ) return true;
+        return false;
+    }
 
     public int getxPosition() { return (int) xPosition; }
     public int getyPosition() { return (int) yPosition; }

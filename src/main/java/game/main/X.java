@@ -65,7 +65,7 @@ public class X {
     public void createPlayer(Path path) { 
         player = Player.load(this, FileParser.parse(path.resolve("entities/player.msv"))); 
     }
-    public ParserBlock getBuffSettings() { return buffs; }
+    public ParserBlock getBuffs() { return buffs; }
     public Player getPlayer() { return player; }
     public void createRenderManager() { renderManager = new RenderManager(this); }
     public RenderManager getRenderManager() { return renderManager; };

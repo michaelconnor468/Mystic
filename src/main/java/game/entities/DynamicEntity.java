@@ -3,6 +3,7 @@ package game.entities;
 import game.main.X;
 import game.main.render.Animation;
 import game.main.render.Renderable;
+import game.entities.buffs.Buff;
 import java.lang.Math;
 
 /**
@@ -10,8 +11,7 @@ import java.lang.Math;
  * comprises of setting properties which are used to calculate moves per tick in order to simplify logic and keep movement functionality contained to class.
  */
 public abstract class DynamicEntity extends Entity {
-    protected double speed; // In pixels per second
-    protected double speedModifier;
+    protected double speed; 
     protected MovementDirection direction;
     public enum MovementDirection {
         north,
@@ -30,6 +30,7 @@ public abstract class DynamicEntity extends Entity {
     }
 
     public void tick(X x) {
+        super.tick(x);
         move(); 
     }
 
@@ -68,9 +69,12 @@ public abstract class DynamicEntity extends Entity {
                 break;
         }
 
-        double finalSpeedModifier = speedModifier;
         if ( isSwimming() )
-            finalSpeedModifier *= 0.33;
+            addBuff(Buff.load(x, this, "swimming"));
+        
+        double finalSpeedModifier = 1;
+        for ( Buff buff : buffs )
+            finalSpeedModifier *= buff.getSpeedModifier(); 
 
         xPosition += dx*speed*finalSpeedModifier;
         yPosition += dy*speed*finalSpeedModifier;
@@ -87,7 +91,6 @@ public abstract class DynamicEntity extends Entity {
     }
 
     public void setSpeed(int speed) { this.speed = speed; }
-    public void setSpeedModifier(double speedModifier) { this.speedModifier = speedModifier; }
     public void setMovementDirection(MovementDirection direction) { this.direction = direction; }
     public MovementDirection getMovementDirection() { return this.direction; }
 }

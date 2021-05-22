@@ -21,11 +21,12 @@ public class Buff implements TickObserver {
     public double getMaxHealthModifier() { return this.maxHealthModifier; }
     public double getHealthModifier() { return this.healthModifier; }
     public double getSpeedModifier() { return this.speedModifier; } 
+    public int getTicksToLive() { return this.ticksToLive; }
     public String getName() { return this.name; }
 
-    public static Buff load(X x, Entity entity, String name, ParserBlock block) {
+    public static Buff load(X x, Entity entity, String name) {
         Buff buff = new Buff();
-        HashMap<String, ParserObject> props = block.getProperties();
+        HashMap<String, ParserObject> props = ((ParserBlock) x.getBuffs().getProperties().get(name)).getProperties();
 
         buff.x = x;
         buff.entity = entity;
@@ -43,9 +44,6 @@ public class Buff implements TickObserver {
 
         return buff;
     }
-
-    public void tick(X x) {
-        if ( --ticksToLive < 1 )
-            entity.removeBuff(this);
-    }
+    
+    public void tick(X x) { ticksToLive--; }
 }

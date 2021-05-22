@@ -33,7 +33,7 @@ public class Player extends DynamicEntity implements DestructibleEntity {
     }
 
     public void tick(X x) { 
-        move();
+        super.tick(x); 
         currentAnimation.tick(x); 
     }
     
@@ -113,7 +113,6 @@ public class Player extends DynamicEntity implements DestructibleEntity {
         player.currentAnimation = player.walkSouthEastAnimation;
         player.direction = MovementDirection.still;
         player.speed = ((ParserInt) map.get("speed")).getNumber();
-        player.speedModifier = ((ParserInt) map.get("speedModifier")).getNumber();
         player.addCollisionBox(x, (ParserBlock) map.get("collisionBox"));
         x.getTimingManager().register(player);
         return player;
