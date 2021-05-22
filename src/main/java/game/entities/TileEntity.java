@@ -17,6 +17,7 @@ public class TileEntity extends Entity {
     private int type;
     private int chunkRow;
     private int chunkColumn;
+    private boolean liquid;
     private Animation animation;
     private TileSpawnManager spawnManager;
 
@@ -50,6 +51,7 @@ public class TileEntity extends Entity {
     
     public int getChunkRow() { return chunkRow; }
     public int getChunkColumn() { return chunkColumn; }
+    public boolean isLiquid() { return liquid; }
 
     public static ParserBlock save(TileEntity tile) {
         ParserBlock block = new ParserBlock();

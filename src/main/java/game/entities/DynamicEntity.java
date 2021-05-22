@@ -74,7 +74,9 @@ public abstract class DynamicEntity extends Entity {
     }
 
     public boolean isSwimming() {
-        return false;
+        for ( TileEntity entity : x.getChunkManager().getTilesAround(this) )
+            if ( !entity.isLiquid() ) return false;
+        return true;
     }
 
     public void setSpeed(int speed) { this.speed = speed; }
