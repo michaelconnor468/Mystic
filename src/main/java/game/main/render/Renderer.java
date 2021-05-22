@@ -1,13 +1,16 @@
 package game.main.render;
 
 import game.main.X;
+import game.entities.Entity;
 import game.entities.TileEntity;
+import game.entities.DynamicEntity;
 import util.parse.obj.*;
 
 import static java.util.Comparator.comparing;
 import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 
 /**
  * Buffers entities for rendering and then renders them in the order of their bottom y coordinates to create a layered
@@ -59,14 +62,18 @@ public class Renderer {
      * centering of the camera on them at all times and that off-screen entities do not cause issues during rendering.
      */
     private void drawAnimation(Animation animation) {
+        Entity e = animation.getEntity();
         int xCorner = x.getPlayer().getxPosition() + x.getPlayer().getxSize()/2 - (resolutionx/2);
-        int xRenderLocation = animation.getEntity().getxPosition() - xCorner; 
-        if ( xRenderLocation > resolutionx || xRenderLocation + animation.getEntity().getxSize() < 0 )
+        int xRenderLocation = e.getxPosition() - xCorner; 
+        if ( xRenderLocation > resolutionx || xRenderLocation + e.getxSize() < 0 )
             return;
         int yCorner = x.getPlayer().getyPosition() + x.getPlayer().getySize()/2 - (resolutiony/2);
-        int yRenderLocation = animation.getEntity().getyPosition() - yCorner; 
-        if ( yRenderLocation > resolutiony || yRenderLocation + animation.getEntity().getySize() < 0 )
+        int yRenderLocation = e.getyPosition() - yCorner; 
+        if ( yRenderLocation > resolutiony || yRenderLocation + e.getySize() < 0 )
             return;
-        gc.drawImage(animation.getImage(), xRenderLocation, yRenderLocation);
+        Image image = animation.getImage();
+        if ( e instanceof DynamicEntity && ((DynamicEntity) e).isSwimming() ) 
+            image = new WritableImage(image.getPixelReader(), 0, 0, e.getxSize(), (int) (e.getySize()*0.24));
+        gc.drawImage(image, xRenderLocation, yRenderLocation);
     }
 }

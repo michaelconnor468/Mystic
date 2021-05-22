@@ -12,6 +12,7 @@ import java.lang.Math;
 public abstract class DynamicEntity extends Entity {
     protected double speed; // In pixels per second
     protected double speedModifier;
+    protected boolean swimming;
     protected MovementDirection direction;
     public enum MovementDirection {
         north,
@@ -72,6 +73,9 @@ public abstract class DynamicEntity extends Entity {
         }
     }
 
+    public boolean isSwimming() {
+        return false;
+    }
 
     public void setSpeed(int speed) { this.speed = speed; }
     public void setSpeedModifier(double speedModifier) { this.speedModifier = speedModifier; }
