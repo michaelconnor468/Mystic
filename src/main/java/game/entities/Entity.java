@@ -72,6 +72,10 @@ public abstract class Entity implements TickObserver, Renderable {
             if ( buff.getName().equals(str) ) return true;
         return false;
     }
+    public synchronized void removeBuff(String str) {
+        for ( Buff buff : buffs )
+            if ( buff.getName().equals(str) ) buff.setTicksToLive(0);
+    }
 
     public int getxPosition() { return (int) xPosition; }
     public int getyPosition() { return (int) yPosition; }

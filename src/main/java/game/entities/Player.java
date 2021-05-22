@@ -14,10 +14,7 @@ import util.parse.obj.*;
  * Main player class. Special entity as it will be used to dictate camera location and chunk loading. Will
  * be loaded separately from all other entities and will not belong to a particular class.
  */
-public class Player extends DynamicEntity implements DestructibleEntity {
-    private int health;
-    private int maxHealth;
-
+public class Player extends DynamicEntity {
     private Animation currentAnimation;
     private Animation walkNorthAnimation;
     private Animation walkNorthWestAnimation;
@@ -39,13 +36,13 @@ public class Player extends DynamicEntity implements DestructibleEntity {
     
     public void render(Renderer r) { r.render(currentAnimation); }
 
-    public void damage( int health ) {
+    public void damage( double health ) {
         this.health -= health;
         if ( this.health <= 0 )
             onDestroy();
     }
 
-    public void heal( int health ) {
+    public void heal( double health ) {
         this.health += health;
         if ( this.health > maxHealth )
             this.health = maxHealth;
@@ -97,6 +94,8 @@ public class Player extends DynamicEntity implements DestructibleEntity {
         player.yPosition = ((ParserInt) map.get("yPosition")).getNumber();
         player.maxHealth = ((ParserInt) map.get("maxHealth")).getNumber();
         player.health = ((ParserInt) map.get("health")).getNumber();
+        player.stamina = ((ParserInt) map.get("stamina")).getNumber();
+        player.maxStamina = ((ParserInt) map.get("maxStamina")).getNumber();
         player.walkNorthAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_north.png"));
         player.walkNorthWestAnimation = 
             new Animation(x, player, Paths.get("src/main/resources/player/walk_northwest.png"));
@@ -119,12 +118,6 @@ public class Player extends DynamicEntity implements DestructibleEntity {
     }
 
     public static ParserBlock save(Player player) {
-        ParserBlock block = new ParserBlock();
-        block.addProperty((new ParserProperty("maxHealth", new ParserInt(player.getMaxHealth()))));
-        block.addProperty((new ParserProperty("health", new ParserInt(player.getHealth()))));
-        return block;
+        return null;
     }
-
-    public int getHealth() { return health; }
-    public int getMaxHealth() { return maxHealth; }
 }

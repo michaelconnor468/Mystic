@@ -22,6 +22,7 @@ public class Buff implements TickObserver {
     public double getHealthModifier() { return this.healthModifier; }
     public double getSpeedModifier() { return this.speedModifier; } 
     public int getTicksToLive() { return this.ticksToLive; }
+    public void setTicksToLive(int ticksToLive) { this.ticksToLive = ticksToLive; }
     public String getName() { return this.name; }
 
     public static Buff load(X x, Entity entity, String name) {
@@ -31,7 +32,7 @@ public class Buff implements TickObserver {
         buff.x = x;
         buff.entity = entity;
         
-        buff.name = ((ParserString) props.get("name")).getString();
+        buff.name = name;
         buff.maxHealthModifier = props.containsKey("maxHealthModifier") ? 
             ((ParserDouble) props.get("maxHealthModifier")).getNumber() : 1;
         buff.healthModifier = props.containsKey("healthModifier") ? 

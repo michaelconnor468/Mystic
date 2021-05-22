@@ -1,6 +1,12 @@
 {
     swimming: {
-        name: "swimming"
-        speedModifier: 0.3
+        speedModifier: 0.3,
+        seconds: 0.5
+    }
+
+    running: {
+        speedModifier: 2.0,
+        staminaDrain: 1.0,
+        seconds: 1000000.0
     }
 }

@@ -3,6 +3,7 @@ package views.scenes;
 import game.main.X;
 import game.entities.Player;
 import game.entities.DynamicEntity;
+import game.entities.buffs.Buff;
 import util.parse.obj.*;
 
 import java.nio.file.Paths;
@@ -71,6 +72,8 @@ public class PlayingScene {
                     else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.still )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.east);
                     break;
+                case SHIFT:
+                    x.getPlayer().addBuff(Buff.load(x, x.getPlayer(), "running"));
             }
         });
         scene.setOnKeyReleased( e -> {
@@ -107,6 +110,8 @@ public class PlayingScene {
                     else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.east )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.still);
                     break;
+                case SHIFT:
+                    x.getPlayer().removeBuff("running");
             }
         });
     }
