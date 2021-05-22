@@ -63,6 +63,16 @@ public class Chunk implements TickObserver, Renderable {
             
         return false;
     }
+
+    public ArrayList<TileEntity> getTilesAround( Entity entity ) {
+        ArrayList<TileEntity> ret = new ArrayList<>();
+        for ( TileEntityContainer container : tileEntities )
+            for ( TileEntity tileEntity : container.getEntitiesWithinRange( 
+                entity.getxPosition(), entity.getxPosition() + entity.getxSize(), 
+                    entity.getyPosition(), entity.getyPosition() + entity.getySize() ) )
+                ret.add(tileEntity);
+        return ret;
+    }
     
     public static Chunk load(X x, ParserBlock block, int xPosition, int yPosition) {
         Chunk chunk = new Chunk();

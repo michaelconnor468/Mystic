@@ -2,6 +2,7 @@ package game.main;
 
 import game.entities.Chunk;
 import game.entities.Entity;
+import game.entities.TileEntity;
 import util.parse.FileParser;
 import util.parse.obj.ParserBlock;
 import util.parse.obj.ParserInt;
@@ -69,6 +70,7 @@ public class ChunkManager {
         int chunkSizePX = chunkSize*tileSize;
         return chunks.get((int) entity.getxPosition()/chunkSizePX).get((int) entity.getyPosition()/chunkSizePX);
     }
+
     public ArrayList<Chunk> getChunksAround( Entity entity ) {
         ArrayList<Chunk> ret = new ArrayList<>();
         int middlexChunk = (int) entity.getxPosition()/(chunkSize*tileSize);
@@ -81,6 +83,14 @@ public class ChunkManager {
                 }
             }
         }
+        return ret;
+    }
+
+    public ArrayList<TileEntity> getTilesAround( Entity entity ) {
+        ArrayList<TileEntity> ret = new ArrayList<>();
+        for ( Chunk chunk : getChunksAround(entity) ) 
+            for ( TileEntity tileEntity : chunk.getTilesAround(entity) )
+                ret.add(tileEntity);
         return ret;
     }
     
