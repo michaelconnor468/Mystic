@@ -4,7 +4,7 @@ import game.main.TickObserver;
 import game.main.render.Renderable;
 import game.main.render.Renderer;
 import game.main.X;
-import game.entities.buffs.EntityBuff;
+import game.entities.buffs.Buff;
 import util.parse.obj.*;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public abstract class Entity implements TickObserver, Renderable {
     protected int xSize, ySize;
     protected double xPosition, yPosition;
     protected ArrayList<CollisionBox> collisionBoxes;
-    protected ArrayList<EntityBuff> entityBuffs; 
+    protected ArrayList<Buff> buffs; 
 
     protected Entity() {}
     public Entity(X x, int xSize, int ySize, int xPosition, int yPosition) {
@@ -57,7 +57,7 @@ public abstract class Entity implements TickObserver, Renderable {
         }
     }
 
-    public void addEntityBuff(EntityBuff entityBuff) { entityBuffs.add(entityBuff); }
+    public void addBuff(Buff buff) { buffs.add(buff); }
 
     public int getxPosition() { return (int) xPosition; }
     public int getyPosition() { return (int) yPosition; }
