@@ -12,7 +12,6 @@ import java.lang.Math;
 public abstract class DynamicEntity extends Entity {
     protected double speed; // In pixels per second
     protected double speedModifier;
-    protected boolean swimming;
     protected MovementDirection direction;
     public enum MovementDirection {
         north,
@@ -64,12 +63,16 @@ public abstract class DynamicEntity extends Entity {
                 dx = -0.707;
                 break;
         }
-        
-        xPosition += dx*speed*speedModifier;
-        yPosition += dy*speed*speedModifier;
+
+        double finalSpeedModifier = speedModifier;
+        if ( isSwimming() )
+            finalSpeedModifier *= 0.33;
+
+        xPosition += dx*speed*finalSpeedModifier;
+        yPosition += dy*speed*finalSpeedModifier;
         if ( x.getChunkManager().isColliding(this) ) {
-            xPosition -= dx*speed*speedModifier;
-            yPosition -= dy*speed*speedModifier;
+            xPosition -= dx*speed*finalSpeedModifier;
+            yPosition -= dy*speed*finalSpeedModifier;
         }
     }
 
