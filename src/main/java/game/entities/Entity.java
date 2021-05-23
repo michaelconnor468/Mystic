@@ -59,7 +59,7 @@ public abstract class Entity implements TickObserver, Renderable {
     }
 
     public void onDestroy() {
-        // TODO remove entity from chunk
+        x.getChunkManager().getChunkInsideOf(this).removeEntity(this);
     }
 
     public void addCollisionBox(CollisionBox collisionBox) {collisionBoxes.add(collisionBox);}
