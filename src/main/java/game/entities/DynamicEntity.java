@@ -14,8 +14,6 @@ public abstract class DynamicEntity extends Entity {
     protected double speed; 
     protected double stamina;
     protected double maxStamina;
-    protected double health;
-    protected double maxHealth;
     protected MovementDirection direction;
     public enum MovementDirection {
         north,
@@ -101,8 +99,6 @@ public abstract class DynamicEntity extends Entity {
 
     public void setSpeed(int speed) { this.speed = speed; }
     public void setMovementDirection(MovementDirection direction) { this.direction = direction; }
-    public double getHealth() { return this.health; }
-    public double getMaxHealth() { return this.maxHealth; }
     public double getStamina() { return this.stamina; }
     public double getMaxStamina() { return this.maxStamina; }
     public MovementDirection getMovementDirection() { return this.direction; }

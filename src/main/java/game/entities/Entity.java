@@ -20,6 +20,9 @@ import java.util.Iterator;
 public abstract class Entity implements TickObserver, Renderable {
     protected X x;
     protected int xSize, ySize;
+    protected int health;
+    protected int maxHealth;
+    protected boolean damageable;
     protected double xPosition, yPosition;
     protected ArrayList<CollisionBox> collisionBoxes;
     protected ArrayList<Buff> buffs; 
@@ -27,6 +30,9 @@ public abstract class Entity implements TickObserver, Renderable {
     protected Entity() { 
         this.collisionBoxes = new ArrayList<>();
         this.buffs = new ArrayList<>(); 
+        this.damageable = false;
+        this.maxHealth = 10;
+        this.health = 10;
     }
 
     public synchronized void tick(X x) { 
@@ -37,6 +43,23 @@ public abstract class Entity implements TickObserver, Renderable {
                 newBuffs.add(buff);
         }
         buffs = newBuffs;
+    }
+
+    public void damage( double health ) {
+        if ( !damageable ) return;
+        this.health -= health;
+        if ( this.health <= 0 )
+            onDestroy();
+    }
+
+    public void heal( double health ) {
+        this.health += health;
+        if ( this.health > maxHealth )
+            this.health = maxHealth;
+    }
+
+    public void onDestroy() {
+        // TODO remove entity from chunk
     }
 
     public void addCollisionBox(CollisionBox collisionBox) {collisionBoxes.add(collisionBox);}
@@ -81,6 +104,8 @@ public abstract class Entity implements TickObserver, Renderable {
     public int getyPosition() { return (int) yPosition; }
     public int getxSize() { return xSize; } 
     public int getySize() { return ySize; }  
+    public double getHealth() { return this.health; }
+    public double getMaxHealth() { return this.maxHealth; }
     public ArrayList<CollisionBox> getCollisionBoxes() { return this.collisionBoxes; }
 
     /**

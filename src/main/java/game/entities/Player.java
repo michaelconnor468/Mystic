@@ -36,18 +36,6 @@ public class Player extends DynamicEntity {
     
     public void render(Renderer r) { r.render(currentAnimation); }
 
-    public void damage( double health ) {
-        this.health -= health;
-        if ( this.health <= 0 )
-            onDestroy();
-    }
-
-    public void heal( double health ) {
-        this.health += health;
-        if ( this.health > maxHealth )
-            this.health = maxHealth;
-    }
-
     public void setMovementDirection(MovementDirection direction) {
         super.setMovementDirection(direction);
         currentAnimation.setStill(false);
@@ -82,8 +70,6 @@ public class Player extends DynamicEntity {
         }
     }
 
-    public void onDestroy() {}
-
     public static Player load(X x, ParserBlock block) {
         Player player = new Player();
         HashMap<String, ParserObject> map = block.getProperties();
@@ -113,6 +99,7 @@ public class Player extends DynamicEntity {
         player.direction = MovementDirection.still;
         player.speed = ((ParserInt) map.get("speed")).getNumber();
         player.addCollisionBox(x, (ParserBlock) map.get("collisionBox"));
+        player.damageable = true;
         x.getTimingManager().register(player);
         return player;
     }
