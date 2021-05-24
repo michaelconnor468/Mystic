@@ -106,8 +106,4 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
             }
         }
     }
-
-    public int getEntityCount() {
-        return entityCount;
-    }
 }
