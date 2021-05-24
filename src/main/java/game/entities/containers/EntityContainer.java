@@ -47,7 +47,7 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
         return ret;
     }
 
-    private int binarySearchFirstIndex( int yPositionLow ) {
+    private int binarySearchFirstIndex( double yPositionLow ) {
         if ( entities.size() == 0 ) return -1;
         int currentIndex = 0;
         int formerIndex = entities.size();
