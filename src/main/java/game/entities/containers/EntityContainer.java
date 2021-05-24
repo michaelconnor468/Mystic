@@ -42,6 +42,8 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
     public ArrayList<E> getAllEntities() { return (ArrayList<E>) entities.clone(); }
     public ArrayList<E> getEntitiesWithinRange(double minX, double maxX, double minY, double maxY) {
         ArrayList<E> ret = new ArrayList<E>();
+        for ( int i = binarySearchFirstIndex( minY ); i > -1 && i < entities.size() && entities.get(i).getyPosition() <= maxY; i++ )
+            if ( entities.get(i).getxPosition() >= minX && entities.get(i).getxPosition() <= maxX ) ret.add(entities.get(i));
         return ret;
     }
 
@@ -53,7 +55,7 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
             if ( formerIndex == currentIndex || currentIndex == 0 ) return entities.get(currentIndex).getyPosition() >= yPositionLow ? 0 : -1;
             int half = (int) Math.abs( currentIndex - formerIndex ) / 2;
             formerIndex = currentIndex;
-            currentIndex -= entities.get(currentIndex).getyPosition() > yPositionLow ? half : -half; 
+            currentIndex -= entities.get(currentIndex).getyPosition() >= yPositionLow ? half : -half; 
         }
     }
 
