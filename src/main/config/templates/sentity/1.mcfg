@@ -1,0 +1,7 @@
+{
+    name: "oak tree",
+    subtype: "small",
+    maxHealth: 40,
+    health: 40
+    collisionBoxes: [{xMin: 0, xMax: 0, yMin: 0, yMax:0}]
+}
