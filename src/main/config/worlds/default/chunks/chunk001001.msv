@@ -69,7 +69,7 @@
             [{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0},{type:1, biome:0}]
         ],
         staticEntities: [
-
+            {type:1, xPosition: 2000, yPosition: 2600}
         ],
         dynamicEntities: [
 
