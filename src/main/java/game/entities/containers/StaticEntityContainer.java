@@ -8,4 +8,7 @@ import game.main.render.Renderer;
 /**
  * Currently a type wrapper and no new functionality is added.
  */
-public class StaticEntityContainer extends EntityContainer<StaticEntity> {}
+public class StaticEntityContainer extends EntityContainer<StaticEntity> {
+    private StaticEntityContainer() {}
+    public StaticEntityContainer(X x) { super(x); }
+}

@@ -9,4 +9,7 @@ import java.util.ArrayList;
 /**
  * Currently a type wrapper and no new functionality is added.
  */
-public class DynamicEntityContainer extends EntityContainer<DynamicEntity> {}
+public class DynamicEntityContainer extends EntityContainer<DynamicEntity> {
+    private DynamicEntityContainer() {}
+    public DynamicEntityContainer(X x) { super(x); }
+}

@@ -23,6 +23,7 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
     private TileEntityContainer() {}
 
     public TileEntityContainer( X x ) {
+        super(x);
         this.chunkSize = x.getChunkManager().getChunkSize();
         this.tileSize = x.getChunkManager().getTileSize();
         this.tileEntities = new ArrayList<ArrayList<TileEntity>>();

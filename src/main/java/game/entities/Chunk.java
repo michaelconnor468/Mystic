@@ -106,6 +106,16 @@ public class Chunk implements TickObserver, Renderable {
                 tileEntityContainer.addEntity(entity);
             }
         }
+
+        StaticEntityContainer staticEntityContainer = new StaticEntityContainer(x);
+        ParserArray staticEntities = (ParserArray) properties.get("staticEntities");
+
+        for ( int i = 0; i < staticEntities.getLength(); i++ ) {
+            ParserBlock staticBlock = (ParserBlock) staticEntities.getIndex(i);
+            StaticEntity staticEntity = StaticEntity.load(x, staticBlock);
+            // TODO put entity into container after implementing load
+        }
+
         chunk.tileEntities.add(tileEntityContainer);
         return chunk;
     }

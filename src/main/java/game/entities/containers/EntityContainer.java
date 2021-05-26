@@ -16,6 +16,10 @@ import java.util.Collections;
 public abstract class EntityContainer<E extends Entity> implements TickObserver, Renderable {
     protected int entityCount;
     private ArrayList<E> entities;
+    private X x;
+
+    protected EntityContainer() {}
+    public EntityContainer(X x) { this.x = x; }
 
     /**
      * Re-indexing done upon addition of each entity in order to hide this implementation from external classes. Entities rarely cross chunks so

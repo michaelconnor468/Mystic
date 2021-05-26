@@ -167,8 +167,8 @@ public abstract class Entity implements TickObserver, Renderable {
             }
         }
     }
-
-    public String toJSON() {
-        return "";
+    
+    protected static Entity load(X x, ParserBlock block, Entity entity) {
+        return entity;
     }
 }
