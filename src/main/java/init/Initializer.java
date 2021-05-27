@@ -18,6 +18,7 @@ public class Initializer {
     public static void main(String[] args) {
         x = new X();
         x.createSettingsSingletons(Paths.get("src/main/config/settings"));
+        x.populateTemplates(Paths.get("src/main/config/templates"));
         x.createGameStateManagerSingleton();
         Application.launch(App.class);
     }

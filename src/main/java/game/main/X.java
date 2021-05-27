@@ -8,6 +8,11 @@ import util.parse.obj.ParserBlock;
 import java.util.HashMap;
 import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.stream.Stream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javafx.stage.Stage;
 import javafx.application.Application;
@@ -26,6 +31,7 @@ public class X {
     private ParserBlock mainSettings;
     private RenderManager renderManager;
     private TimingManager timingManager;
+    private HashMap<String, HashMap<Integer, ParserBlock>> templates;
     private ParserBlock buffs;
     private Player player;
 
@@ -60,6 +66,14 @@ public class X {
             mainSettings = FileParser.parse(path.resolve(Paths.get("main.mcfg")));
         if ( buffs == null )
             buffs = FileParser.parse(path.resolve(Paths.get("buffs.mcfg")));
+    }
+    public void populateTemplates(Path path) {
+        if ( templates == null )
+            templates  = new HashMap<>();
+        Pattern pattern = Pattern.compile("[0-9]+\\.mcfg");
+    }
+    public HashMap<Integer, ParserBlock> getTemplate(String str) {
+        return templates.containsKey(str) ? templates.get(str) : null;
     }
     public ParserBlock getMainSettings() { return mainSettings; }
     public void createPlayer(Path path) { 
