@@ -29,27 +29,20 @@ public class Chunk implements TickObserver, Renderable {
     private Chunk() {}
 
     // Linked list provides layering, with each succesive index to be atop the other
-    private ArrayList<TileEntityContainer> tileEntities;
-    private ArrayList<StaticEntityContainer> staticEntities;
-    private ArrayList<DynamicEntityContainer> dynamicEntities;
-    private ArrayList<Entity> collidableEntities;
+    private TileEntityContainer tileEntities;
+    private StaticEntityContainer staticEntities;
+    private DynamicEntityContainer dynamicEntities;
 
     public void tick(X x) {
-        for ( TileEntityContainer container : tileEntities )
-            container.tick(x);
-        for ( StaticEntityContainer container : staticEntities )
-            container.tick(x);
-        for ( DynamicEntityContainer container : dynamicEntities )
-            container.tick(x);
+        tileEntities.tick(x);
+        staticEntities.tick(x);
+        dynamicEntities.tick(x);
     }
 
     public void render(Renderer renderer) {
-        for ( TileEntityContainer container : tileEntities )
-            container.render(renderer);
-        for ( StaticEntityContainer container : staticEntities )
-            container.render(renderer);
-        for ( DynamicEntityContainer container : dynamicEntities )
-            container.render(renderer);
+        tileEntities.render(renderer);
+        staticEntities.render(renderer);
+        dynamicEntities.render(renderer);
     }
 
     public int getXChunkPosition() { return xChunkPosition; }
@@ -58,26 +51,22 @@ public class Chunk implements TickObserver, Renderable {
     public int getSizeInTiles() { return sizeInTiles; }
 
     public boolean isColliding(Entity entity) {
-        for ( TileEntityContainer container : tileEntities ) 
-            if ( container.isColliding(entity) ) return true;
+        if ( tileEntities.isColliding(entity) ) return true;
             
         return false;
     }
 
     public void removeEntity(Entity entity) {
-        if ( entity instanceof StaticEntity )
-            for ( StaticEntityContainer container : staticEntities ) container.removeEntity((StaticEntity) entity);
-        if ( entity instanceof DynamicEntity )
-            for ( DynamicEntityContainer container : dynamicEntities ) container.removeEntity((DynamicEntity) entity);
+        if ( entity instanceof StaticEntity ) staticEntities.removeEntity((StaticEntity) entity);
+        if ( entity instanceof DynamicEntity ) dynamicEntities.removeEntity((DynamicEntity) entity);
     }
 
     public ArrayList<TileEntity> getTilesAround( Entity entity ) {
         ArrayList<TileEntity> ret = new ArrayList<>();
-        for ( TileEntityContainer container : tileEntities )
-            for ( TileEntity tileEntity : container.getEntitiesWithinRange( 
-                entity.getxPosition(), entity.getxPosition() + entity.getxSize(), 
-                    entity.getyPosition(), entity.getyPosition() + entity.getySize() ) )
-                ret.add(tileEntity);
+        for ( TileEntity tileEntity : tileEntities.getEntitiesWithinRange( 
+            entity.getxPosition(), entity.getxPosition() + entity.getxSize(), 
+                entity.getyPosition(), entity.getyPosition() + entity.getySize() ) )
+                    ret.add(tileEntity);
         return ret;
     }
     
@@ -86,7 +75,6 @@ public class Chunk implements TickObserver, Renderable {
         chunk.chunkManager = x.getChunkManager();
         chunk.tileSize = chunk.chunkManager.getTileSize();
         chunk.sizeInTiles = chunk.chunkManager.getChunkSize();
-        chunk.tileEntities = new ArrayList<TileEntityContainer>();
 
         HashMap<String, ParserObject> properties = ((ParserBlock) block.getProperties().get("chunk")).getProperties();
         chunk.xChunkPosition = xPosition; 
@@ -106,6 +94,7 @@ public class Chunk implements TickObserver, Renderable {
                 tileEntityContainer.addEntity(entity);
             }
         }
+        chunk.tileEntities = tileEntityContainer;
 
         StaticEntityContainer staticEntityContainer = new StaticEntityContainer(x);
         ParserArray staticEntities = (ParserArray) properties.get("staticEntities");
@@ -113,10 +102,10 @@ public class Chunk implements TickObserver, Renderable {
         for ( int i = 0; i < staticEntities.getLength(); i++ ) {
             ParserBlock staticBlock = (ParserBlock) staticEntities.getIndex(i);
             StaticEntity staticEntity = StaticEntity.load(x, staticBlock);
-            // TODO put entity into container after implementing load
+            staticEntityContainer.addEntity(staticEntity);
         }
 
-        chunk.tileEntities.add(tileEntityContainer);
+        chunk.staticEntities = staticEntityContainer;
         return chunk;
     }
 

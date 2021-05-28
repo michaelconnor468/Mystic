@@ -8,6 +8,7 @@ import game.entities.buffs.Buff;
 import util.parse.obj.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Collections;
 import java.util.Iterator;
@@ -19,6 +20,7 @@ import java.util.Iterator;
  */
 public abstract class Entity implements TickObserver, Renderable {
     protected X x;
+    protected String name;
     protected int xSize, ySize;
     protected int health;
     protected int maxHealth;
@@ -168,7 +170,22 @@ public abstract class Entity implements TickObserver, Renderable {
         }
     }
     
-    protected static Entity load(X x, ParserBlock block, Entity entity) {
+    protected static Entity load(X x, ParserBlock block, ParserBlock template, Entity entity) {
+        entity.maxHealth = ((ParserInt) loadProperty(block, template, "maxHealth")).getNumber();
+        entity.health = ((ParserInt) loadProperty(block, template, "health")).getNumber();
+        entity.name = ((ParserString) loadProperty(block, template, "name")).getString();
+        entity.ySize = ((ParserInt) loadProperty(block, template, "ySize")).getNumber();
+        entity.xSize = ((ParserInt) loadProperty(block, template, "xSize")).getNumber();
+        entity.xPosition = ((ParserInt) loadProperty(block, template, "xPosition")).getNumber();
+        entity.yPosition = ((ParserInt) loadProperty(block, template, "yPosition")).getNumber();
+        for ( ParserObject box : ((ParserArray) loadProperty(block, template, "collisionBoxes")) )
+            ;
         return entity;
+    }
+
+    private static ParserObject loadProperty(ParserBlock block, ParserBlock template, String name) {
+        HashMap<String, ParserObject> templateProps = template.getProperties();
+        HashMap<String, ParserObject> props = block.getProperties();
+        return props.containsKey(name) ? props.get(name) : templateProps.get(name);
     }
 }
