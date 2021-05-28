@@ -62,15 +62,30 @@ public class X {
         chunkManager = new ChunkManager(this, FileParser.parse(path.resolve(Paths.get("config/world.mcfg")))); 
     }
     public void createSettingsSingletons(Path path) {
-        if ( mainSettings == null )
-            mainSettings = FileParser.parse(path.resolve(Paths.get("main.mcfg")));
-        if ( buffs == null )
-            buffs = FileParser.parse(path.resolve(Paths.get("buffs.mcfg")));
+        if ( mainSettings == null ) mainSettings = FileParser.parse(path.resolve(Paths.get("main.mcfg")));
+        if ( buffs == null ) buffs = FileParser.parse(path.resolve(Paths.get("buffs.mcfg")));
     }
     public void populateTemplates(Path path) {
-        if ( templates == null )
-            templates  = new HashMap<>();
+        if ( templates == null ) templates  = new HashMap<>();
+        try { 
+            templates.put("staticEntities", loadTemplates( Files.walk(path.resolve(Paths.get("sentity")))));
+            templates.put("dynamicEntities", loadTemplates( Files.walk(path.resolve(Paths.get("dentity")))));
+        } catch ( Exception e ) {
+            System.err.println("Failed to read template files\n" + e);
+            System.exit(1);
+        }
+    }
+    private HashMap<Integer, ParserBlock> loadTemplates(Stream<Path> paths) {
+        HashMap<Integer, ParserBlock> retmap = new HashMap<>();
         Pattern pattern = Pattern.compile("[0-9]+\\.mcfg");
+        paths.forEach(f -> {
+            Matcher matcher = pattern.matcher(f.toString());
+            if ( matcher.find() ) {
+                String name = matcher.group();
+                retmap.put(Integer.parseInt(name.substring(0, name.length() - 5)), FileParser.parse(f)); 
+            }
+        });
+        return retmap;
     }
     public HashMap<Integer, ParserBlock> getTemplate(String str) {
         return templates.containsKey(str) ? templates.get(str) : null;
