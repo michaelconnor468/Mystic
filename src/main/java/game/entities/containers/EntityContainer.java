@@ -18,8 +18,8 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
     private ArrayList<E> entities;
     private X x;
 
-    protected EntityContainer() {}
-    public EntityContainer(X x) { this.x = x; }
+    protected EntityContainer() { this.entities = new ArrayList<>(); }
+    public EntityContainer(X x) { this(); this.x = x; }
 
     /**
      * Re-indexing done upon addition of each entity in order to hide this implementation from external classes. Entities rarely cross chunks so

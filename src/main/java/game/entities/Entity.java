@@ -47,6 +47,8 @@ public abstract class Entity implements TickObserver, Renderable {
         buffs = newBuffs;
     }
 
+    public void render(Renderer renderer) {}
+
     public void damage( double health ) {
         if ( !damageable ) return;
         this.health -= health;
