@@ -29,8 +29,6 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
         this.tileEntities = new ArrayList<ArrayList<TileEntity>>();
         for ( int i = 0; i < chunkSize; i++ )
             this.tileEntities.add(new ArrayList<TileEntity>());
-        x.getTimingManager().register(this);
-        x.getRenderManager().register(this);
     }
 
     public void addEntity( TileEntity tileEntity ) {

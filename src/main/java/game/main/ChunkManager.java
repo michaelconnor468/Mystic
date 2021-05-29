@@ -3,6 +3,8 @@ package game.main;
 import game.entities.Chunk;
 import game.entities.Entity;
 import game.entities.TileEntity;
+import game.main.render.Renderable;
+import game.main.render.Renderer;
 import util.parse.FileParser;
 import util.parse.obj.ParserBlock;
 import util.parse.obj.ParserInt;
@@ -22,7 +24,7 @@ import java.util.regex.Pattern;
  * interact with each other within the game. Delegates ticks to the chunks so they may dispatch them to thir corresponding entities. 
  * Implements the part of the game's api which is used to manage entities within the game.
  */
-public class ChunkManager {
+public class ChunkManager implements TickObserver, Renderable {
     private X x;
     private ArrayList<ArrayList<Chunk>> chunks;
     private int chunkSize, tileSize, chunkGridSize, chunkLoadDiameter;
@@ -38,8 +40,22 @@ public class ChunkManager {
         this.chunks = new ArrayList<ArrayList<Chunk>>();
         for ( int i = 0; i < this.chunkGridSize; i++ )
             this.chunks.add(new ArrayList<Chunk>(Collections.nCopies(chunkGridSize, null)));
+        x.getTimingManager().register(this);
+        x.getRenderManager().register(this);
     }
 
+    public void tick(X x) {
+        for ( ArrayList<Chunk> chunkList : chunks )
+            for ( Chunk chunk : chunkList ) 
+                chunk.tick(x);
+    }
+
+    public void render(Renderer r) {
+        for ( ArrayList<Chunk> chunkList : chunks )
+            for ( Chunk chunk : chunkList ) 
+                chunk.render(r);
+    }
+    
     public void loadChunks(Path path) {
         Pattern pattern = Pattern.compile("[0-9]{6}\\.msv");
         try ( Stream<Path> paths = Files.walk(path.resolve(Paths.get("chunks"))) ) {
