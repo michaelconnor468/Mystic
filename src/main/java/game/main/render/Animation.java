@@ -45,8 +45,8 @@ public class Animation implements TickObserver {
             Image loadedImage = new Image(path.toUri().toURL().toString());
             int imgWidth = (int) loadedImage.getWidth();
             int imgHeight = (int) loadedImage.getHeight();
-            assert imgHeight == entity.getySize() : "image height incompatible with entity height";
-            assert imgWidth % entity.getxSize() == 0 : "image width not divisible by entity width";
+            assert imgHeight == entity.getySize() : "image height "+imgHeight+" incompatible with entity height";
+            assert imgWidth % entity.getxSize() == 0 : "image width "+imgWidth+" not divisible by entity width";
             PixelReader reader = loadedImage.getPixelReader();
             for ( int i = 0; i < imgWidth/entity.getxSize(); i++ ) 
                 frames.add(new WritableImage(reader, i*imgWidth, 0, imgWidth, imgHeight));

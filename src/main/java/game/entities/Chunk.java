@@ -28,7 +28,6 @@ public class Chunk implements TickObserver, Renderable {
     // Use load method to instantiate object
     private Chunk() {}
 
-    // Linked list provides layering, with each succesive index to be atop the other
     private TileEntityContainer tileEntities;
     private StaticEntityContainer staticEntities;
     private DynamicEntityContainer dynamicEntities;
@@ -97,15 +96,18 @@ public class Chunk implements TickObserver, Renderable {
         chunk.tileEntities = tileEntityContainer;
 
         StaticEntityContainer staticEntityContainer = new StaticEntityContainer(x);
-        ParserArray staticEntities = (ParserArray) properties.get("staticEntities");
+        ParserArray staticEntityArray = (ParserArray) properties.get("staticEntities");
 
-        for ( int i = 0; i < staticEntities.getLength(); i++ ) {
-            ParserBlock staticBlock = (ParserBlock) staticEntities.getIndex(i);
+        for ( int i = 0; i < staticEntityArray.getLength(); i++ ) {
+            ParserBlock staticBlock = (ParserBlock) staticEntityArray.getIndex(i);
             StaticEntity staticEntity = StaticEntity.load(x, staticBlock);
             staticEntityContainer.addEntity(staticEntity);
         }
 
         chunk.staticEntities = staticEntityContainer;
+
+        DynamicEntityContainer dynamicEntityContainer = new DynamicEntityContainer(x);
+        chunk.dynamicEntities = dynamicEntityContainer;
         return chunk;
     }
 
