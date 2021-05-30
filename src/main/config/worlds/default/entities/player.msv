@@ -11,8 +11,8 @@
     yPosition: 6144,
     collisionBox: {
         xMin: 20,
-        yMin: 40,
+        yMin: 90,
         xMax: 44,
-        yMax: 84
+        yMax: 110
     }
 }
