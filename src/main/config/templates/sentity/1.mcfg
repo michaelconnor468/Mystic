@@ -4,5 +4,5 @@
     health: 40,
     ySize: 128,
     xSize: 64,
-    collisionBoxes: [{xMin: 30, xMax: 34, yMin: 0, yMax:64}]
+    collisionBoxes: [{xMin: 30, xMax: 34, yMin: 64, yMax:128}]
 }

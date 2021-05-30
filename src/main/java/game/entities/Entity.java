@@ -181,7 +181,7 @@ public abstract class Entity implements TickObserver, Renderable {
         entity.xPosition = ((ParserInt) loadProperty(block, template, "xPosition")).getNumber();
         entity.yPosition = ((ParserInt) loadProperty(block, template, "yPosition")).getNumber();
         for ( ParserObject box : ((ParserArray) loadProperty(block, template, "collisionBoxes")) )
-            ;
+            entity.addCollisionBox(x, (ParserBlock) box);
         return entity;
     }
 
