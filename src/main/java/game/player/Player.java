@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import game.main.render.Animation;
 import game.main.render.Renderer;
 import game.entities.DynamicEntity;
+import game.player.weapons.Weapon;
 import game.main.X;
 import util.parse.*;
 import util.parse.obj.*;
@@ -25,6 +26,8 @@ public class Player extends DynamicEntity {
     private Animation walkSouthEastAnimation;
     private Animation walkWestAnimation;
     private Animation walkEastAnimation;
+
+    private Weapon weapon;
 
     private Player() {
         super();
