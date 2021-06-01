@@ -1,0 +1,6 @@
+{
+    name: "sword",
+    physicalDamage: 10,
+    durability: 1000,
+    range: 64
+}
