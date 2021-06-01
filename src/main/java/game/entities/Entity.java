@@ -25,6 +25,7 @@ public abstract class Entity implements TickObserver, Renderable {
     protected int health;
     protected int maxHealth;
     protected boolean damageable;
+    protected boolean passable;
     protected double xPosition, yPosition;
     protected ArrayList<CollisionBox> collisionBoxes;
     protected ArrayList<Buff> buffs; 
@@ -131,10 +132,16 @@ public abstract class Entity implements TickObserver, Renderable {
             return false;
         for ( CollisionBox box : collisionBoxes ) {
             for ( CollisionBox box2 : entity.getCollisionBoxes() )
-                if ( box.collidesWith(box2) ) return true;
+                if ( box.collidesWith(box2) ) {
+                    onCollision(entity);
+                    entity.onCollision(this);
+                    return passable ? false : true;
+                }
         }
         return false; 
     }
+
+    public void onCollision(Entity entity) {}
 
     /**
      * Represents the collision box for the entity. This data structure allows for storage in an array giving the 
