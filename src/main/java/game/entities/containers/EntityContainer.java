@@ -1,7 +1,7 @@
 package game.entities.containers;
 
 import game.entities.Entity;
-import game.entities.Player;
+import game.player.Player;
 import game.main.render.Renderable;
 import game.main.render.Renderer;
 import game.main.TickObserver;

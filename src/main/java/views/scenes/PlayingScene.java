@@ -1,7 +1,7 @@
 package views.scenes;
 
 import game.main.X;
-import game.entities.Player;
+import game.player.Player;
 import game.entities.DynamicEntity;
 import game.entities.buffs.Buff;
 import util.parse.obj.*;

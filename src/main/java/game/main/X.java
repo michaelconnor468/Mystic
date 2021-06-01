@@ -1,7 +1,7 @@
 package game.main;
 
 import game.entities.Entity;
-import game.entities.Player;
+import game.player.Player;
 import util.parse.FileParser;
 import util.parse.obj.ParserBlock;
 

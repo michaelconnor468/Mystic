@@ -2,7 +2,7 @@ package game.main;
 
 import util.parse.obj.*;
 import game.main.render.*;
-import game.entities.Player;
+import game.player.Player;
 
 import java.util.ArrayList;
 import javafx.scene.canvas.GraphicsContext;

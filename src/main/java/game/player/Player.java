@@ -1,4 +1,4 @@
-package game.entities;
+package game.player;
 
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 
 import game.main.render.Animation;
 import game.main.render.Renderer;
+import game.entities.DynamicEntity;
 import game.main.X;
 import util.parse.*;
 import util.parse.obj.*;
