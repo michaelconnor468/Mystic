@@ -25,7 +25,7 @@ public class RenderManager {
     private RenderManager() {}
     public RenderManager(X x) {
         this.x = x;
-        this.framesPerSecond = ((ParserInt) x.getMainSettings().getProperties().get("framesPerSecond")).getNumber();
+        this.framesPerSecond = ((ParserInt) x.getMainSettings().get("framesPerSecond")).getNumber();
         this.toRender = new ArrayList<>();
         this.toRenderAbove = new ArrayList<>();
         this.renderTimer = new RenderTimer();

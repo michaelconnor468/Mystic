@@ -69,6 +69,7 @@ public abstract class Entity implements TickObserver, Renderable {
 
     public void addCollisionBox(CollisionBox collisionBox) {collisionBoxes.add(collisionBox);}
     public void removeCollisionBox(CollisionBox collisionBox) {collisionBoxes.remove(collisionBox);}
+    public void removeCollisionBoxes() {collisionBoxes = new ArrayList<>();}
 
     /**
      * Returns a deep clone of the entity in order to ensure changes to one clone do not impact the other

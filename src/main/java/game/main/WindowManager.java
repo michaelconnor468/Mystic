@@ -18,8 +18,8 @@ public class WindowManager implements GameStateChangeListener {
     private WindowManager() {}
     public WindowManager(X x, Stage stage) {
         this.stage = stage; 
-        this._canvas = new Canvas(((ParserInt) x.getMainSettings().getProperties().get("resolutionx")).getNumber(),
-            ((ParserInt) x.getMainSettings().getProperties().get("resolutiony")).getNumber());
+        this._canvas = new Canvas(((ParserInt) x.getMainSettings().get("resolutionx")).getNumber(),
+            ((ParserInt) x.getMainSettings().get("resolutiony")).getNumber());
         this.mainMenuView = new MainMenuView(x);
         this.playingView = new PlayingView(x);
         this.x = x;

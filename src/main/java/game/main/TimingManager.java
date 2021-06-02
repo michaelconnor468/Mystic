@@ -24,7 +24,7 @@ public class TimingManager {
     public TimingManager(X x) {
         this.tickObservers = new ArrayList<>();
         this.timer = new Timer();
-        this.ticksPerSecond = ((ParserInt) x.getMainSettings().getProperties().get("ticksPerSecond")).getNumber();
+        this.ticksPerSecond = ((ParserInt) x.getMainSettings().get("ticksPerSecond")).getNumber();
         this.x = x;
     }
 

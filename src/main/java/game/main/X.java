@@ -4,6 +4,7 @@ import game.entities.Entity;
 import game.player.Player;
 import util.parse.FileParser;
 import util.parse.obj.ParserBlock;
+import util.parse.obj.ParserObject;
 
 import java.util.HashMap;
 import java.nio.file.Paths;
@@ -28,7 +29,7 @@ public class X {
     private GameStateManager gameStateManager;
     private ChunkManager chunkManager;
     private Application application;
-    private HashMap<Integer, ParserBlock> mainSettings;
+    private HashMap<String, ParserObject> mainSettings;
     private RenderManager renderManager;
     private TimingManager timingManager;
     private HashMap<String, HashMap<Integer, ParserBlock>> templates;
@@ -62,8 +63,8 @@ public class X {
         chunkManager = new ChunkManager(this, FileParser.parse(path.resolve(Paths.get("config/world.mcfg")))); 
     }
     public void createSettingsSingletons(Path path) {
-        if ( mainSettings == null ) mainSettings = FileParser.parse(path.resolve(Paths.get("main.mcfg"))).getPropertis();
-        if ( buffs == null ) buffs = FileParser.parse(path.resolve(Paths.get("buffs.mcfg")).getProperties());
+        if ( mainSettings == null ) mainSettings = FileParser.parse(path.resolve(Paths.get("main.mcfg"))).getProperties();
+        if ( buffs == null ) buffs = FileParser.parse(path.resolve(Paths.get("buffs.mcfg"))).getProperties();
     }
     public void populateTemplates(Path path) {
         if ( templates == null ) templates  = new HashMap<>();

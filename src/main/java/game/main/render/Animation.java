@@ -38,7 +38,7 @@ public class Animation implements TickObserver {
         this.still = false;
         this.frame = 0;
         this.ticksElapsed = 0;
-        this.ticksPerSecond = ((ParserInt) x.getMainSettings().getProperties().get("ticksPerSecond")).getNumber();
+        this.ticksPerSecond = ((ParserInt) x.getMainSettings().get("ticksPerSecond")).getNumber();
         this.framesPerSecond = 60; 
         this.frames = new ArrayList<>();
         try {

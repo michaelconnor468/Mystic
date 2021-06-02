@@ -36,7 +36,7 @@ public class ChunkManager implements TickObserver, Renderable {
         this.chunkSize = ((ParserInt) worldSettings.getProperties().get("chunkSize")).getNumber();
         this.tileSize = ((ParserInt) worldSettings.getProperties().get("tileSize")).getNumber();
         this.chunkGridSize = ((ParserInt) worldSettings.getProperties().get("chunkGridSize")).getNumber();
-        this.chunkLoadDiameter = ((ParserInt) x.getMainSettings().getProperties().get("chunkLoadDiameter")).getNumber(); 
+        this.chunkLoadDiameter = ((ParserInt) x.getMainSettings().get("chunkLoadDiameter")).getNumber(); 
         this.chunks = new ArrayList<ArrayList<Chunk>>();
         for ( int i = 0; i < this.chunkGridSize; i++ )
             this.chunks.add(new ArrayList<Chunk>(Collections.nCopies(chunkGridSize, null)));
@@ -86,6 +86,9 @@ public class ChunkManager implements TickObserver, Renderable {
         int chunkSizePX = chunkSize*tileSize;
         return chunks.get((int) entity.getxPosition()/chunkSizePX).get((int) entity.getyPosition()/chunkSizePX);
     }
+
+    public void addEntity( Entity entity ) { getChunkInsideOf(entity).addEntity(entity); }
+    public void removeEntity( Entity entity ) { getChunkInsideOf(entity).removeEntity(entity); }
 
     public ArrayList<Chunk> getChunksAround( Entity entity ) {
         ArrayList<Chunk> ret = new ArrayList<>();

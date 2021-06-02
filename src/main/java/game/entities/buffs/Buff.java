@@ -27,7 +27,7 @@ public class Buff implements TickObserver {
 
     public static Buff load(X x, Entity entity, String name) {
         Buff buff = new Buff();
-        HashMap<String, ParserObject> props = ((ParserBlock) x.getBuffs().getProperties().get(name)).getProperties();
+        HashMap<String, ParserObject> props = ((ParserBlock) x.getBuffs().get(name)).getProperties();
 
         buff.x = x;
         buff.entity = entity;

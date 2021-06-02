@@ -10,4 +10,6 @@ public class MeleeWeapon extends Weapon {
         load(x, player, block, weapon);
         return weapon;
     }   
+
+    public void use() { new MeleeAttack(player); }
 }

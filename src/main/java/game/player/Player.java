@@ -42,6 +42,7 @@ public class Player extends DynamicEntity {
 
     public void equip(Weapon weapon) { if ( weapon.getDurability() > 0 ) this.weapon = weapon; }
     public void unequip() { this.weapon = null; }
+    public Weapon getWeapon() { return this.weapon; }
 
     public void setMovementDirection(MovementDirection direction) {
         super.setMovementDirection(direction);

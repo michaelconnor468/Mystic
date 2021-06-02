@@ -60,6 +60,11 @@ public class Chunk implements TickObserver, Renderable {
         if ( entity instanceof DynamicEntity ) dynamicEntities.removeEntity((DynamicEntity) entity);
     }
 
+    public void addEntity(Entity entity) {
+        if ( entity instanceof StaticEntity ) staticEntities.addEntity((StaticEntity) entity);
+        if ( entity instanceof DynamicEntity ) dynamicEntities.addEntity((DynamicEntity) entity);
+    }
+
     public ArrayList<TileEntity> getTilesAround( Entity entity ) {
         ArrayList<TileEntity> ret = new ArrayList<>();
         for ( TileEntity tileEntity : tileEntities.getEntitiesWithinRange( 

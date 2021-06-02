@@ -27,8 +27,8 @@ public class Renderer {
     public Renderer(X x, GraphicsContext gc) {
         this.x = x;
         this.gc = gc;
-        this.resolutionx = ((ParserInt) x.getMainSettings().getProperties().get("resolutionx")).getNumber(); 
-        this.resolutiony = ((ParserInt) x.getMainSettings().getProperties().get("resolutiony")).getNumber(); 
+        this.resolutionx = ((ParserInt) x.getMainSettings().get("resolutionx")).getNumber(); 
+        this.resolutiony = ((ParserInt) x.getMainSettings().get("resolutiony")).getNumber(); 
         this.tileEntities = new ArrayList<>();
         this.entities = new ArrayList<>();
     }

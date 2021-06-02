@@ -7,12 +7,12 @@ import util.parse.obj.*;
 import java.util.HashMap;
 
 public class Weapon {
-    private X x;
-    private Player player;
-    private String name;
-    private double physicalDamage;
-    private int durability;
-    private int range;
+    protected X x;
+    protected Player player;
+    protected String name;
+    protected double physicalDamage;
+    protected int durability;
+    protected int range, speed; // distance to damage away from edge of player and ticks to do damage for
 
     protected Weapon() {}
     public static Weapon load(X x, Player player, ParserBlock block, Weapon weapon) {
@@ -23,6 +23,8 @@ public class Weapon {
         weapon.physicalDamage = ((ParserDouble) props.get("physicalDamage")).getNumber(); 
         weapon.durability = ((ParserInt) props.get("durability")).getNumber();
         weapon.range = ((ParserInt) props.get("range")).getNumber();
+        weapon.speed = (int) ((ParserDouble) props.get("speed")).getNumber()*
+            ((ParserInt) x.getMainSettings().get("ticksPerSecond")).getNumber();
         return weapon;
     }
 
@@ -32,4 +34,7 @@ public class Weapon {
     }
 
     public int getDurability() { return durability; }
+    public Player getPlayer() { return player; }
+    public int getRange() { return range; }
+    public int getSpeed() { return speed; }
 }

@@ -20,8 +20,8 @@ public class MainMenuScene {
 
     public static Scene getScene(X context) {
         x = context;
-        int width = ((ParserInt) x.getMainSettings().getProperties().get("resolutionx")).getNumber();
-        int height = ((ParserInt) x.getMainSettings().getProperties().get("resolutiony")).getNumber();
+        int width = ((ParserInt) x.getMainSettings().get("resolutionx")).getNumber();
+        int height = ((ParserInt) x.getMainSettings().get("resolutiony")).getNumber();
         BorderPane borderPane = new BorderPane();
 
         Scene scene = new Scene(borderPane, width, height);
