@@ -28,11 +28,11 @@ public class X {
     private GameStateManager gameStateManager;
     private ChunkManager chunkManager;
     private Application application;
-    private ParserBlock mainSettings;
+    private HashMap<Integer, ParserBlock> mainSettings;
     private RenderManager renderManager;
     private TimingManager timingManager;
     private HashMap<String, HashMap<Integer, ParserBlock>> templates;
-    private ParserBlock buffs;
+    private HashMap<String, ParserObject> buffs;
     private Player player;
 
     public X() {}
@@ -62,8 +62,8 @@ public class X {
         chunkManager = new ChunkManager(this, FileParser.parse(path.resolve(Paths.get("config/world.mcfg")))); 
     }
     public void createSettingsSingletons(Path path) {
-        if ( mainSettings == null ) mainSettings = FileParser.parse(path.resolve(Paths.get("main.mcfg")));
-        if ( buffs == null ) buffs = FileParser.parse(path.resolve(Paths.get("buffs.mcfg")));
+        if ( mainSettings == null ) mainSettings = FileParser.parse(path.resolve(Paths.get("main.mcfg"))).getPropertis();
+        if ( buffs == null ) buffs = FileParser.parse(path.resolve(Paths.get("buffs.mcfg")).getProperties());
     }
     public void populateTemplates(Path path) {
         if ( templates == null ) templates  = new HashMap<>();
@@ -90,11 +90,11 @@ public class X {
     public HashMap<Integer, ParserBlock> getTemplate(String str) {
         return templates.containsKey(str) ? templates.get(str) : null;
     }
-    public ParserBlock getMainSettings() { return mainSettings; }
+    public HashMap<String, ParserObject> getMainSettings() { return mainSettings; }
     public void createPlayer(Path path) { 
         player = Player.load(this, FileParser.parse(path.resolve("entities/player.msv"))); 
     }
-    public ParserBlock getBuffs() { return buffs; }
+    public HashMap<String, ParserObject> getBuffs() { return buffs; }
     public Player getPlayer() { return player; }
     public void createRenderManager() { renderManager = new RenderManager(this); }
     public RenderManager getRenderManager() { return renderManager; };
