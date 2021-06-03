@@ -37,9 +37,36 @@ public class MeleeAttack extends StaticEntity {
             case north:
             case northwest:
             case northeast:
-                //addCollisionBox();  
+                addCollisionBox(player.getxPosition() - range, player.getxPosition() + player.getxSize() + range,
+                    player.getyPosition() - range, player.getyPosition());  
+                break;
+            case south:
+            case southwest:
+            case southeast:
+                addCollisionBox(player.getxPosition() - range, player.getxPosition() + player.getxSize() + range,
+                    player.getyPosition() + player.getySize(), player.getyPosition() + player.getySize() + range);
                 break;
         }
+        switch ( player.getMovementDirection() ) {
+            case west:
+            case northwest:
+            case southwest:
+                addCollisionBox(player.getxPosition() - range, player.getxPosition(),
+                    player.getyPosition(), player.getyPosition() + player.getySize());
+                break;
+            case east:
+            case northeast:
+            case southeast:
+                addCollisionBox(player.getxPosition()+player.getxSize(), player.getxPosition()+player.getxSize() + range,
+                    player.getyPosition(), player.getyPosition() + player.getySize());
+                break;
+        }
+    }
+
+    public void onCollision(Entity entity) {
+        if ( damaged.contains(entity) ) return;
+        damaged.add(entity);
+        entity.damage(weapon);
     }
 
     public void tick(X x) {

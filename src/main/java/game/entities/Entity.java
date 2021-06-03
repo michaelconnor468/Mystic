@@ -5,6 +5,7 @@ import game.main.render.Renderable;
 import game.main.render.Renderer;
 import game.main.X;
 import game.entities.buffs.Buff;
+import game.player.weapons.Weapon;
 import util.parse.obj.*;
 import util.parse.BlockParser;
 
@@ -51,9 +52,9 @@ public abstract class Entity implements TickObserver, Renderable {
 
     public void render(Renderer renderer) {}
 
-    public void damage( double health ) {
+    public void damage( Weapon weapon ) {
         if ( !damageable ) return;
-        this.health -= health;
+        this.health -= weapon.getPhysicalDamage();
         if ( this.health <= 0 )
             onDestroy();
     }

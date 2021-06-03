@@ -34,6 +34,7 @@ public class Weapon {
     }
 
     public int getDurability() { return durability; }
+    public double getPhysicalDamage() { return physicalDamage; }
     public Player getPlayer() { return player; }
     public int getRange() { return range; }
     public int getSpeed() { return speed; }
