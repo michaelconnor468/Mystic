@@ -106,7 +106,7 @@ public class Player extends DynamicEntity {
         player.currentAnimation = player.walkSouthEastAnimation;
         player.direction = MovementDirection.still;
         player.speed = ((ParserInt) map.get("speed")).getNumber();
-        player.addCollisionBox(x, (ParserBlock) map.get("collisionBox"));
+        player.addCollisionBox((ParserBlock) map.get("collisionBox"));
         player.damageable = true;
         x.getTimingManager().register(player);
         return player;

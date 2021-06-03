@@ -6,6 +6,7 @@ import game.main.render.Renderer;
 import game.main.X;
 import game.entities.buffs.Buff;
 import util.parse.obj.*;
+import util.parse.BlockParser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -117,7 +118,7 @@ public abstract class Entity implements TickObserver, Renderable {
     /**
      * Exists instead of a static loader because non-static inner classes in java do not play well with static methods.
      */
-    public void addCollisionBox(X x, ParserBlock block) {
+    public void addCollisionBox(ParserBlock block) {
         CollisionBox box = new CollisionBox();
         box.xMin = ((ParserInt) block.getProperties().get("xMin")).getNumber();
         box.yMin = ((ParserInt) block.getProperties().get("yMin")).getNumber();
@@ -126,6 +127,10 @@ public abstract class Entity implements TickObserver, Renderable {
         if ( this.collisionBoxes == null )
             this.collisionBoxes = new ArrayList<>();
         this.collisionBoxes.add(box);
+    }
+
+    public void addCollisionBox(int xmin, int xmax, int ymin, int ymax) {
+        addCollisionBox((new BlockParser()).parse("{ xMin: "+xmin+" xMax: "+xmax+" yMin "+ymin+" yMax "+ymax+" }"));
     }
 
     public boolean isColliding(Entity entity) {
@@ -189,7 +194,7 @@ public abstract class Entity implements TickObserver, Renderable {
         entity.xPosition = ((ParserInt) loadProperty(block, template, "xPosition")).getNumber();
         entity.yPosition = ((ParserInt) loadProperty(block, template, "yPosition")).getNumber();
         for ( ParserObject box : ((ParserArray) loadProperty(block, template, "collisionBoxes")) )
-            entity.addCollisionBox(x, (ParserBlock) box);
+            entity.addCollisionBox((ParserBlock) box);
         return entity;
     }
 

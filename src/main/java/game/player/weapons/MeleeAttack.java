@@ -31,7 +31,15 @@ public class MeleeAttack extends StaticEntity {
     }
 
     private void createCollisionBoxes() {
-
+        int xpos = Integer.MIN_VALUE;
+        int ypos = Integer.MIN_VALUE;
+        switch ( player.getMovementDirection() ) {
+            case north:
+            case northwest:
+            case northeast:
+                //addCollisionBox();  
+                break;
+        }
     }
 
     public void tick(X x) {
