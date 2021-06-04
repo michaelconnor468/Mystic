@@ -10,14 +10,16 @@ public class Weapon {
     protected X x;
     protected Player player;
     protected String name;
+    protected int id;
     protected double physicalDamage;
     protected int durability;
     protected int range, speed; // distance to damage away from edge of player and ticks to do damage for
 
     protected Weapon() {}
-    public static Weapon load(X x, Player player, ParserBlock block, Weapon weapon) {
+    public static Weapon load(X x, Player player, ParserBlock block, Weapon weapon, int id) {
         weapon.x = x;
         weapon.player = player;
+        weapon.id = id;
         HashMap<String, ParserObject> props = block.getProperties();
         weapon.name = ((ParserString) props.get("name")).getString(); 
         weapon.physicalDamage = ((ParserDouble) props.get("physicalDamage")).getNumber(); 

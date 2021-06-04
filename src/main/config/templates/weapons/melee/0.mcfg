@@ -1,5 +1,5 @@
 {
-    name: "sword",
+    name: "hands",
     physicalDamage: 10,
     durability: 1000,
     speed: 0.5,

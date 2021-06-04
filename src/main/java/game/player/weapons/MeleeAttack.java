@@ -4,9 +4,11 @@ import game.entities.StaticEntity;
 import game.entities.Entity;
 import game.player.Player;
 import game.main.render.Renderer;
+import game.main.render.Animation;
 import game.main.X;
 
 import java.util.HashSet;
+import java.nio.file.Paths;
 
 /**
  * Uses collisions framework to deal damage to entities based on player state. This allows any animations and
@@ -19,16 +21,22 @@ public class MeleeAttack extends StaticEntity {
     private int range;
     private HashSet<Entity> damaged;
     private Weapon weapon;
+    private Animation animation;
+    private X x;
 
     private MeleeAttack() {}
-    public MeleeAttack(Player player) {
+    public MeleeAttack(X x, Player player, int id) {
         this.weapon = player.getWeapon();
         this.damaged = new HashSet<>();
         this.ticksToLive = weapon.getSpeed();
         this.player = weapon.getPlayer();
         this.range = weapon.getRange();
+        this.x = x;
+        this.animation = new Animation(x, player, Paths.get("src/main/resources/weapons/melee/" + id + ".png"));
         createCollisionBoxes();
     }
+
+    public void render(Renderer renderer) { renderer.render(animation); }
 
     private void createCollisionBoxes() {
         int xpos = Integer.MIN_VALUE;

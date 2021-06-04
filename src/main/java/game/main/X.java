@@ -71,6 +71,8 @@ public class X {
         try { 
             templates.put("staticEntities", loadTemplates( Files.walk(path.resolve(Paths.get("sentity")))));
             templates.put("dynamicEntities", loadTemplates( Files.walk(path.resolve(Paths.get("dentity")))));
+            templates.put("melee", loadTemplates( Files.walk(path.resolve(Paths.get("weapons/melee")))));
+            templates.put("ranged", loadTemplates( Files.walk(path.resolve(Paths.get("weapons/ranged")))));
         } catch ( Exception e ) {
             System.err.println("Failed to read template files\n" + e);
             System.exit(1);

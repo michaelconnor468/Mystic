@@ -6,9 +6,9 @@ import util.parse.obj.*;
 
 public class RangedWeapon extends Weapon {
     private RangedWeapon() {}
-    public static RangedWeapon load(X x, Player player, ParserBlock block) {
+    public static RangedWeapon load(X x, Player player, ParserBlock block, int id) {
         RangedWeapon weapon = new RangedWeapon();
-        load(x, player, block, weapon);
+        load(x, player, block, weapon, id);
         return weapon;
     }
 }
