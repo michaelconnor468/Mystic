@@ -1,6 +1,6 @@
 {
     name: "hands",
-    physicalDamage: 10,
+    physicalDamage: 10.0,
     durability: 1000,
     maxDurability: 1000,
     speed: 0.5,

@@ -24,7 +24,7 @@ public class Weapon {
         weapon.id = ((ParserInt) props.get("id")).getNumber();
         HashMap<String, ParserObject> template = x.getTemplates("melee").get(weapon.id).getProperties();
         weapon.name = ((ParserString) template.get("name")).getString(); 
-        weapon.physicalDamage = props.containsKey("physicalDamge") ? 
+        weapon.physicalDamage = props.containsKey("physicalDamage") ? 
             ((ParserDouble) props.get("physicalDamage")).getNumber() : 
             ((ParserDouble) template.get("physicalDamage")).getNumber(); 
         weapon.durability = props.containsKey("durability") ? ((ParserInt) props.get("durability")).getNumber() :
