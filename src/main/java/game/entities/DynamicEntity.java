@@ -11,6 +11,7 @@ import java.lang.Math;
  * comprises of setting properties which are used to calculate moves per tick in order to simplify logic and keep movement functionality contained to class.
  */
 public abstract class DynamicEntity extends Entity {
+    protected double directionAngle;
     protected double speed; 
     protected double stamina;
     protected double maxStamina;
@@ -99,6 +100,18 @@ public abstract class DynamicEntity extends Entity {
 
     public void setSpeed(int speed) { this.speed = speed; }
     public void setMovementDirection(MovementDirection direction) { this.direction = direction; }
+    public void setDirectionAngle(double angle) {
+        this.directionAngle = angle;
+        if ( angle >= 340 || angle < 20 ) setMovementDirection(MovementDirection.north);
+        if ( angle >= 20 && angle < 70 ) setMovementDirection(MovementDirection.northeast);
+        if ( angle >= 290 && angle < 340 ) setMovementDirection(MovementDirection.northwest);
+        if ( angle >= 70 && angle < 110 ) setMovementDirection(MovementDirection.east);
+        if ( angle >= 250 && angle < 290 ) setMovementDirection(MovementDirection.west);
+        if ( angle >= 110 && angle < 160 ) setMovementDirection(MovementDirection.southeast);
+        if ( angle >= 190 && angle < 240 ) setMovementDirection(MovementDirection.southwest);
+        if ( angle >= 160 && angle < 190 ) setMovementDirection(MovementDirection.south);
+    }
+    public double getDirectionAngle() { return this.directionAngle; }
     public double getStamina() { return this.stamina; }
     public double getMaxStamina() { return this.maxStamina; }
     public MovementDirection getMovementDirection() { return this.direction; }
