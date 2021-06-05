@@ -19,20 +19,22 @@ public class MeleeAttack extends StaticEntity {
     private int ticksToLive;
     private Player player;
     private int range;
+    private int weaponId;
     private HashSet<Entity> damaged;
     private Weapon weapon;
     private Animation animation;
     private X x;
 
     private MeleeAttack() {}
-    public MeleeAttack(X x, Player player, int id) {
+    public MeleeAttack(X x, Player player) {
         this.weapon = player.getWeapon();
         this.damaged = new HashSet<>();
         this.ticksToLive = weapon.getSpeed();
         this.player = weapon.getPlayer();
         this.range = weapon.getRange();
+        this.weaponId = weapon.getId();
         this.x = x;
-        this.animation = new Animation(x, player, Paths.get("src/main/resources/weapons/melee/" + id + ".png"));
+        this.animation = new Animation(x, player, Paths.get("src/main/resources/weapons/melee/" + weaponId + ".png"));
         createCollisionBoxes();
     }
 

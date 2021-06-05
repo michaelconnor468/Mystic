@@ -5,11 +5,11 @@ import game.player.Player;
 import util.parse.obj.*;
 
 public class MeleeWeapon extends Weapon {
-    public static MeleeWeapon load(X x, Player player, ParserBlock block, int id) {
+    public static MeleeWeapon load(X x, Player player, ParserBlock block) {
         MeleeWeapon weapon = new MeleeWeapon();
-        load(x, player, block, weapon, id);
+        load(x, player, block, weapon);
         return weapon;
     }   
 
-    public void use() { new MeleeAttack(x, player, id); }
+    public void use() { new MeleeAttack(x, player); }
 }

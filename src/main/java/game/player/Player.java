@@ -3,11 +3,12 @@ package game.player;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.nio.file.Paths;
+import javafx.scene.input.MouseEvent;
 
 import game.main.render.Animation;
 import game.main.render.Renderer;
 import game.entities.DynamicEntity;
-import game.player.weapons.Weapon;
+import game.player.weapons.*;
 import game.main.X;
 import util.parse.*;
 import util.parse.obj.*;
@@ -39,6 +40,15 @@ public class Player extends DynamicEntity {
     }
     
     public void render(Renderer r) { r.render(currentAnimation); }
+
+    public void onClick(MouseEvent e) {
+        double mouseX = e.getX() - ((ParserInt) x.getMainSettings().get("resolutionx")).getNumber()/2;
+        double mouseY = -(e.getY() - ((ParserInt) x.getMainSettings().get("resolutiony")).getNumber()/2);
+        double angle = Math.toDegrees(Math.PI/2 - Math.atan(mouseY/mouseX)) + (mouseX > 0 ? 0 : 180);
+        setDirectionAngle(angle);
+        direction = MovementDirection.still; 
+        if ( weapon != null ) weapon.use();
+    }
 
     public void equip(Weapon weapon) { if ( weapon.getDurability() > 0 ) this.weapon = weapon; }
     public void unequip() { this.weapon = null; }
@@ -108,6 +118,9 @@ public class Player extends DynamicEntity {
         player.speed = ((ParserInt) map.get("speed")).getNumber();
         player.addCollisionBox((ParserBlock) map.get("collisionBox"));
         player.damageable = true;
+        ParserBlock weaponBlock = ((ParserBlock) map.get("weapon"));
+        if ( weaponBlock.getProperties().containsKey("melee") )
+            player.weapon = MeleeWeapon.load(x, player, weaponBlock);
         x.getTimingManager().register(player);
         return player;
     }

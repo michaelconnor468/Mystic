@@ -15,5 +15,9 @@
         xMax: 44,
         yMax: 110
     }
+    weapon: {
+        id: 0,
+        melee: 1
+    }
 }
 

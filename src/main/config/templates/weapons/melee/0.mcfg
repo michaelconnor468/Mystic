@@ -2,6 +2,7 @@
     name: "hands",
     physicalDamage: 10,
     durability: 1000,
+    maxDurability: 1000,
     speed: 0.5,
     range: 64
 }

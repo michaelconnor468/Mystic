@@ -90,7 +90,7 @@ public class X {
         });
         return retmap;
     }
-    public HashMap<Integer, ParserBlock> getTemplate(String str) {
+    public HashMap<Integer, ParserBlock> getTemplates(String str) {
         return templates.containsKey(str) ? templates.get(str) : null;
     }
     public HashMap<String, ParserObject> getMainSettings() { return mainSettings; }

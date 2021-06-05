@@ -10,7 +10,7 @@ import game.entities.DynamicEntity;
  */
 public class RangedAttack extends DynamicEntity {
     private RangedAttack() {}
-    public RangedAttack(Player player, double angle) {
+    public RangedAttack(Player player) {
 
     }
 }

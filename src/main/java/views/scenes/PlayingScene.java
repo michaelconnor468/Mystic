@@ -114,12 +114,6 @@ public class PlayingScene {
                     x.getPlayer().removeBuff("running");
             }
         });
-        scene.setOnMouseClicked( e -> {
-            double mouseX = e.getX() - ((ParserInt) x.getMainSettings().get("resolutionx")).getNumber()/2;
-            double mouseY = -(e.getY() - ((ParserInt) x.getMainSettings().get("resolutiony")).getNumber()/2);
-            double angle = Math.toDegrees(Math.PI/2 - Math.atan(mouseY/mouseX)) + (mouseX > 0 ? 0 : 180);
-            x.getPlayer().setDirectionAngle(angle);
-            x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.still);
-        });
+        scene.setOnMouseClicked( e -> { x.getPlayer().onClick(e); });
     }
 }
