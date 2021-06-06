@@ -36,6 +36,8 @@ public class MeleeAttack extends StaticEntity {
         this.x = x;
         this.ySize = player.getySize() / 2;
         this.xSize = player.getxSize() / 2;
+        this.xPosition = player.getxPosition() - xSize;
+        this.yPosition = player.getyPosition();
         this.animation = new Animation(x, this, Paths.get("src/main/resources/weapons/melee/" + weaponId + ".png"));
         createCollisionBoxes();
     }
@@ -78,7 +80,7 @@ public class MeleeAttack extends StaticEntity {
     public void onCollision(Entity entity) {
         if ( damaged.contains(entity) ) return;
         damaged.add(entity);
-        entity.damage(weapon);
+        if ( entity != player ) entity.damage(weapon);
     }
 
     public void tick(X x) {
