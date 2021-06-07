@@ -131,7 +131,7 @@ public abstract class Entity implements TickObserver, Renderable {
     }
 
     public void addCollisionBox(int xmin, int xmax, int ymin, int ymax) {
-        addCollisionBox((new BlockParser()).parse("{ xMin: "+xmin+" xMax: "+xmax+" yMin "+ymin+" yMax "+ymax+" }"));
+        addCollisionBox((new BlockParser()).parse("{ xMin: "+xmin+" xMax: "+xmax+" yMin: "+ymin+" yMax: "+ymax+" }"));
     }
 
     public boolean isColliding(Entity entity) {
