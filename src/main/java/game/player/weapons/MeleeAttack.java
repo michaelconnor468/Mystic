@@ -22,7 +22,6 @@ public class MeleeAttack extends StaticEntity {
     private int weaponId;
     private HashSet<Entity> damaged;
     private Weapon weapon;
-    private Animation animation;
     private X x;
 
     private MeleeAttack() {}
@@ -43,6 +42,14 @@ public class MeleeAttack extends StaticEntity {
     }
 
     public void render(Renderer renderer) { renderer.render(animation); }
+
+    public void tick(X x) {
+        if ( ticksToLive == 0 ) x.getChunkManager().removeEntity(this);
+        super.tick(x);
+        removeCollisionBoxes();
+        createCollisionBoxes();
+        ticksToLive--;
+    }
 
     private void createCollisionBoxes() {
         int xpos = Integer.MIN_VALUE;
@@ -83,11 +90,4 @@ public class MeleeAttack extends StaticEntity {
         if ( entity != player ) entity.damage(weapon);
     }
 
-    public void tick(X x) {
-        if ( ticksToLive == 0 ) x.getChunkManager().removeEntity(this);
-        super.tick(x);
-        removeCollisionBoxes();
-        createCollisionBoxes();
-        ticksToLive--;
-    }
 }

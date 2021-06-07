@@ -1,8 +1,7 @@
 package game.entities;
 
 import game.main.TickObserver;
-import game.main.render.Renderable;
-import game.main.render.Renderer;
+import game.main.render.*;
 import game.main.X;
 import game.entities.buffs.Buff;
 import game.player.weapons.Weapon;
@@ -31,6 +30,7 @@ public abstract class Entity implements TickObserver, Renderable {
     protected double xPosition, yPosition;
     protected ArrayList<CollisionBox> collisionBoxes;
     protected ArrayList<Buff> buffs; 
+    protected Animation animation;
 
     protected Entity() { 
         this.collisionBoxes = new ArrayList<>();

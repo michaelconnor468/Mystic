@@ -11,5 +11,5 @@ public class MeleeWeapon extends Weapon {
         return weapon;
     }   
 
-    public void use() { new MeleeAttack(x, player); }
+    public void use() { x.getChunkManager().addEntity(new MeleeAttack(x, player)); }
 }

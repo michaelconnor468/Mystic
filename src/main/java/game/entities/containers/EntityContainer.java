@@ -54,9 +54,11 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
         return false;
     }
 
-    public void tick(X x) { for ( E entity : entities ) entity.tick(x); }
+    public void tick(X x) { for ( int i = entities.size(); i > 0; i-- ) entities.get(i-1).tick(x); }
 
-    public void render(Renderer renderer) { for ( E entity : entities ) entity.render(renderer); }
+    public void render(Renderer renderer) { 
+        for ( int i = entities.size(); i > 0; i-- ) entities.get(i-1).render(renderer); 
+    }
     public ArrayList<E> getAllEntities() { return (ArrayList<E>) entities.clone(); }
     public ArrayList<E> getEntitiesWithinRange(double minX, double maxX, double minY, double maxY) {
         ArrayList<E> ret = new ArrayList<E>();
