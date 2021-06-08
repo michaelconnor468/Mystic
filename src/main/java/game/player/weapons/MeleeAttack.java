@@ -33,17 +33,16 @@ public class MeleeAttack extends StaticEntity {
         this.range = weapon.getRange();
         this.weaponId = weapon.getId();
         this.x = x;
-        this.ySize = player.getySize() / 2;
-        this.xSize = player.getxSize() / 2;
-        this.xPosition = player.getxPosition() - xSize;
+        this.ySize = player.getySize();
+        this.xSize = player.getxSize();
+        this.xPosition = player.getxPosition();
         this.yPosition = player.getyPosition();
-        this.animation = new Animation(x, this, Paths.get("src/main/resources/weapons/melee/" + weaponId + ".png"));
         createCollisionBoxes();
     }
 
-    public void render(Renderer renderer) { renderer.render(animation); }
+    @Override public void render(Renderer renderer) {}
 
-    public void tick(X x) {
+    @Override public void tick(X x) {
         if ( ticksToLive == 0 ) x.getChunkManager().removeEntity(this);
         super.tick(x);
         removeCollisionBoxes();
@@ -52,30 +51,9 @@ public class MeleeAttack extends StaticEntity {
     }
 
     private void createCollisionBoxes() {
-        switch ( player.getMovementDirection() ) {
-            case north:
-            case northwest:
-            case northeast:
-                addCollisionBox(0, ySize, 0, xSize);
-                break;
-            case south:
-            case southwest:
-            case southeast:
-                addCollisionBox(0, ySize, 0, xSize);
-                break;
-        }
-        switch ( player.getMovementDirection() ) {
-            case west:
-            case northwest:
-            case southwest:
-                addCollisionBox(0, xSize, 0, ySize); 
-                break;
-            case east:
-            case northeast:
-            case southeast:
-                addCollisionBox(0, xSize, 0, ySize);
-                break;
-        }
+        this.xPosition = player.getxPosition();
+        this.yPosition = player.getyPosition();
+        addCollisionBox(-range, xSize + range, -range, ySize + range);
     }
 
     public void onCollision(Entity entity) {

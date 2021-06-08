@@ -41,6 +41,7 @@ public abstract class Entity implements TickObserver, Renderable {
     }
 
     public synchronized void tick(X x) { 
+        if ( animation != null ) this.animation.tick(x);
         ArrayList<Buff> newBuffs = new ArrayList<>();
         for ( Buff buff : buffs ) {
             buff.tick(x);

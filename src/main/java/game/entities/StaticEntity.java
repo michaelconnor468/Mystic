@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.nio.file.Paths;
 
 public class StaticEntity extends Entity {
-    public void tick(X x) { animation.tick(x); }
+    public void tick(X x) {}
     public void render(Renderer renderer) { renderer.render(animation); }
     public static StaticEntity load(X x, ParserBlock block) {
         StaticEntity entity = new StaticEntity();
