@@ -12,11 +12,11 @@ class NumberParser implements Parser<ParserNumber> {
   private int parseCount;
 
   public ParserNumber parse(String text) {
-        Pattern pattern = Pattern.compile("^\\d+\\.\\d+");
+        Pattern pattern = Pattern.compile("^-?\\d+\\.\\d+");
         parseCount = 0;
         Matcher matcher = pattern.matcher(text);
         if ( !matcher.find() ) {
-            pattern = Pattern.compile("^\\d+");
+            pattern = Pattern.compile("^-?\\d+");
             matcher = pattern.matcher(text);
             if (!matcher.find()) return null;
             parseCount = matcher.group().length();
