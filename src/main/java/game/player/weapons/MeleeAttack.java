@@ -52,34 +52,28 @@ public class MeleeAttack extends StaticEntity {
     }
 
     private void createCollisionBoxes() {
-        int xpos = Integer.MIN_VALUE;
-        int ypos = Integer.MIN_VALUE;
         switch ( player.getMovementDirection() ) {
             case north:
             case northwest:
             case northeast:
-                addCollisionBox(player.getxPosition() - range, player.getxPosition() + player.getxSize() + range,
-                    player.getyPosition() - range, player.getyPosition());  
+                addCollisionBox(0, ySize, 0, xSize);
                 break;
             case south:
             case southwest:
             case southeast:
-                addCollisionBox(player.getxPosition() - range, player.getxPosition() + player.getxSize() + range,
-                    player.getyPosition() + player.getySize(), player.getyPosition() + player.getySize() + range);
+                addCollisionBox(0, ySize, 0, xSize);
                 break;
         }
         switch ( player.getMovementDirection() ) {
             case west:
             case northwest:
             case southwest:
-                addCollisionBox(player.getxPosition() - range, player.getxPosition(),
-                    player.getyPosition(), player.getyPosition() + player.getySize());
+                addCollisionBox(0, xSize, 0, ySize); 
                 break;
             case east:
             case northeast:
             case southeast:
-                addCollisionBox(player.getxPosition()+player.getxSize(), player.getxPosition()+player.getxSize() + range,
-                    player.getyPosition(), player.getyPosition() + player.getySize());
+                addCollisionBox(0, xSize, 0, ySize);
                 break;
         }
     }

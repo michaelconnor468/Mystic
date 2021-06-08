@@ -184,6 +184,8 @@ public abstract class Entity implements TickObserver, Renderable {
                 return null;
             }
         }
+
+        public String toString() {return "{xMin: "+xMin+" xMax: "+xMax+" yMin: "+yMin+" yMax: "+yMax+"}";}
     }
     
     protected static Entity load(X x, ParserBlock block, ParserBlock template, Entity entity) {

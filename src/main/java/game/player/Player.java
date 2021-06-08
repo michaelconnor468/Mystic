@@ -46,7 +46,7 @@ public class Player extends DynamicEntity {
         double mouseY = -(e.getY() - ((ParserInt) x.getMainSettings().get("resolutiony")).getNumber()/2);
         double angle = Math.toDegrees(Math.PI/2 - Math.atan(mouseY/mouseX)) + (mouseX > 0 ? 0 : 180);
         setDirectionAngle(angle);
-        direction = MovementDirection.still; 
+        setStationary(true);
         if ( weapon != null ) weapon.use();
     }
 
@@ -82,9 +82,6 @@ public class Player extends DynamicEntity {
             case west:
                 currentAnimation = walkWestAnimation;
                 break;
-            case still:
-                currentAnimation.setStill(true);
-                break;
         }
     }
 
@@ -114,7 +111,8 @@ public class Player extends DynamicEntity {
         player.walkWestAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_west.png"));
         player.walkEastAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_east.png"));
         player.currentAnimation = player.walkSouthEastAnimation;
-        player.direction = MovementDirection.still;
+        player.direction = MovementDirection.west;
+        player.stationary = true;
         player.speed = ((ParserInt) map.get("speed")).getNumber();
         player.addCollisionBox((ParserBlock) map.get("collisionBox"));
         player.damageable = true;
@@ -123,6 +121,12 @@ public class Player extends DynamicEntity {
             player.weapon = MeleeWeapon.load(x, player, weaponBlock);
         x.getTimingManager().register(player);
         return player;
+    }
+
+    @Override
+    public void setStationary(boolean stationary) {
+        currentAnimation.setStill(stationary);
+        this.stationary = stationary;
     }
 
     public static ParserBlock save(Player player) {

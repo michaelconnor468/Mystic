@@ -41,36 +41,40 @@ public class PlayingScene {
         scene.setOnKeyPressed( e -> {
             switch ( e.getCode() ) {
                 case W:
-                    if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.west )
+                    if ( x.getPlayer().isStationary() )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.north);
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.west )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.northwest);
                     else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.east )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.northeast);
-                    if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.still )
-                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.north);
+                    x.getPlayer().setStationary(false);
                     break;
                 case S:
-                    if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.west )
+                    if ( x.getPlayer().isStationary() )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.south);
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.west )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.southwest);
                     else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.east )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.southeast);
-                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.still )
-                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.south);
+                    x.getPlayer().setStationary(false);
                     break;
                 case A:
-                    if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.north )
+                    if ( x.getPlayer().isStationary() )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.west);
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.north )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.northwest);
                     else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.south )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.southwest);
-                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.still )
-                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.west);
+                    x.getPlayer().setStationary(false);
                     break;
                 case D:
-                    if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.north )
+                    if ( x.getPlayer().isStationary() )
+                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.east);
+                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.north )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.northeast);
                     else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.south )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.southeast);
-                    else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.still )
-                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.east);
+                    x.getPlayer().setStationary(false);
                     break;
                 case SHIFT:
                     x.getPlayer().addBuff(Buff.load(x, x.getPlayer(), "running"));
@@ -84,7 +88,7 @@ public class PlayingScene {
                     else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.northeast )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.east);
                     else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.north )
-                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.still);
+                        x.getPlayer().setStationary(true);
                     break;
                 case S:
                     if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.southwest )
@@ -92,7 +96,7 @@ public class PlayingScene {
                     else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.southeast )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.east);
                     else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.south )
-                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.still);
+                        x.getPlayer().setStationary(true);
                     break;
                 case A:
                     if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.northwest )
@@ -100,7 +104,7 @@ public class PlayingScene {
                     else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.southwest )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.south);
                     else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.west )
-                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.still);
+                        x.getPlayer().setStationary(true);
                     break;
                 case D:
                     if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.northeast )
@@ -108,7 +112,7 @@ public class PlayingScene {
                     else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.southeast )
                         x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.south);
                     else if ( x.getPlayer().getMovementDirection() == DynamicEntity.MovementDirection.east )
-                        x.getPlayer().setMovementDirection(DynamicEntity.MovementDirection.still);
+                        x.getPlayer().setStationary(true);
                     break;
                 case SHIFT:
                     x.getPlayer().removeBuff("running");

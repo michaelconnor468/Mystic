@@ -16,6 +16,7 @@ public abstract class DynamicEntity extends Entity {
     protected double stamina;
     protected double maxStamina;
     protected MovementDirection direction;
+    protected boolean stationary;
     public enum MovementDirection {
         north,
         south,
@@ -24,8 +25,7 @@ public abstract class DynamicEntity extends Entity {
         northeast,
         northwest,
         southeast,
-        southwest,
-        still
+        southwest
     }
 
     protected DynamicEntity() {
@@ -72,6 +72,11 @@ public abstract class DynamicEntity extends Entity {
                 break;
         }
 
+        if ( stationary ) {
+            dx = 0;
+            dy = 0;
+        }
+
         if ( isSwimming() )
             addBuff(Buff.load(x, this, "swimming"));
         
@@ -115,4 +120,7 @@ public abstract class DynamicEntity extends Entity {
     public double getStamina() { return this.stamina; }
     public double getMaxStamina() { return this.maxStamina; }
     public MovementDirection getMovementDirection() { return this.direction; }
+    public boolean isStationary() { return stationary; }
+    public void toggleStationary() { stationary = !stationary; }
+    public void setStationary(boolean stationary) { this.stationary = stationary; }
 }
