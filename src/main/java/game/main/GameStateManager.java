@@ -35,13 +35,9 @@ public class GameStateManager {
                 onTransitionTo.get(s).put(to, new HashSet<GameStateChangeListener>());
         }
         canTransitionTo.get(state.Initialization).add(state.MainMenu);
-
         canTransitionTo.get(state.MainMenu).add(state.Loading);
-
         canTransitionTo.get(state.Loading).add(state.Playing);
-
         canTransitionTo.get(state.Playing).add(state.Paused);
-
         canTransitionTo.get(state.Paused).add(state.MainMenu);
     }
     public State getState() { return state; }
