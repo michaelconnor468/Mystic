@@ -33,14 +33,15 @@ public class MeleeAttack extends StaticEntity {
         this.range = weapon.getRange();
         this.weaponId = weapon.getId();
         this.x = x;
-        this.ySize = player.getySize();
+        this.ySize = player.getySize() + 2;
         this.xSize = player.getxSize();
         this.xPosition = player.getxPosition();
         this.yPosition = player.getyPosition();
+        this.animation = new Animation(x, this, Paths.get("src/main/resources/weapons/melee/"+weaponId+".png"));
         createCollisionBoxes();
     }
 
-    @Override public void render(Renderer renderer) {}
+    @Override public void render(Renderer renderer) { renderer.render(this.animation); }
 
     @Override public void tick(X x) {
         if ( ticksToLive == 0 ) x.getChunkManager().removeEntity(this);
