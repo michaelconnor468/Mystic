@@ -115,6 +115,7 @@ public abstract class Entity implements TickObserver, Renderable {
     public int getySize() { return ySize; }  
     public double getHealth() { return this.health; }
     public double getMaxHealth() { return this.maxHealth; }
+    public String getName() { return this.name; }
     public ArrayList<CollisionBox> getCollisionBoxes() { return this.collisionBoxes; }
 
     /**
@@ -198,6 +199,8 @@ public abstract class Entity implements TickObserver, Renderable {
         entity.xSize = ((ParserInt) loadProperty(block, template, "xSize")).getNumber();
         entity.xPosition = ((ParserInt) loadProperty(block, template, "xPosition")).getNumber();
         entity.yPosition = ((ParserInt) loadProperty(block, template, "yPosition")).getNumber();
+        if (loadProperty(block, template, "damageable") != null)
+            entity.damageable = ((ParserInt) loadProperty(block, template, "damageable")).getNumber() == 1;
         for ( ParserObject box : ((ParserArray) loadProperty(block, template, "collisionBoxes")) )
             entity.addCollisionBox((ParserBlock) box);
         return entity;

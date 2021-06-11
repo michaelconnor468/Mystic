@@ -59,7 +59,7 @@ public class MeleeAttack extends StaticEntity {
 
     public void onCollision(Entity entity) {
         if ( damaged.contains(entity) ) return;
-        damaged.add(entity);
+            damaged.add(entity);
         if ( entity != player ) entity.damage(weapon);
     }
 

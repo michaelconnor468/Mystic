@@ -4,5 +4,6 @@
     health: 1200,
     ySize: 128,
     xSize: 64,
+    damageable: 1,
     collisionBoxes: [{xMin: 30, xMax: 34, yMin: 94, yMax:128}]
 }
