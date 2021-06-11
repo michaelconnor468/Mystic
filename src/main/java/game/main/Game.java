@@ -31,7 +31,6 @@ public class Game implements GameStateChangeListener {
             case Playing:
                 x.getTimingManager().stopTiming();
                 x.getRenderManager().stop();
-                break;
         }
     }
     public void afterStateTransition(GameStateManager.State from, GameStateManager.State to) {
@@ -41,7 +40,6 @@ public class Game implements GameStateChangeListener {
                 x.getGameStateManager().setState(GameStateManager.State.Playing);
                 x.getTimingManager().startTiming();
                 x.getRenderManager().start();
-                break;
         }
     }
 }
