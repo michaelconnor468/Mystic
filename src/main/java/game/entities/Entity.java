@@ -190,6 +190,7 @@ public abstract class Entity implements TickObserver, Renderable {
     }
     
     protected static Entity load(X x, ParserBlock block, ParserBlock template, Entity entity) {
+        entity.x = x;
         entity.maxHealth = ((ParserInt) loadProperty(block, template, "maxHealth")).getNumber();
         entity.health = ((ParserInt) loadProperty(block, template, "health")).getNumber();
         entity.name = ((ParserString) loadProperty(block, template, "name")).getString();
