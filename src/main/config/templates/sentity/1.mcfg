@@ -5,5 +5,6 @@
     ySize: 128,
     xSize: 64,
     damageable: 1,
-    collisionBoxes: [{xMin: 30, xMax: 34, yMin: 94, yMax:128}]
+    collisionBoxes: [{xMin: 30, xMax: 34, yMin: 94, yMax:128}],
+    drops: [0, 0]
 }

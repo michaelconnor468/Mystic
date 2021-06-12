@@ -5,6 +5,7 @@ import game.main.render.*;
 import game.main.X;
 import game.entities.buffs.Buff;
 import game.player.weapons.Weapon;
+import game.player.items.Item;
 import util.parse.obj.*;
 import util.parse.BlockParser;
 
@@ -30,6 +31,7 @@ public abstract class Entity implements TickObserver, Renderable {
     protected double xPosition, yPosition;
     protected ArrayList<CollisionBox> collisionBoxes;
     protected ArrayList<Buff> buffs; 
+    protected ArrayList<Integer> drops; 
     protected Animation animation;
 
     protected Entity() { 
@@ -67,6 +69,7 @@ public abstract class Entity implements TickObserver, Renderable {
     }
 
     public void onDestroy() {
+        for ( int drop : drops ) Item.drop(x, drop, this);
         x.getChunkManager().getChunkInsideOf(this).removeEntity(this);
     }
 
@@ -203,6 +206,9 @@ public abstract class Entity implements TickObserver, Renderable {
             entity.damageable = ((ParserInt) loadProperty(block, template, "damageable")).getNumber() == 1;
         for ( ParserObject box : ((ParserArray) loadProperty(block, template, "collisionBoxes")) )
             entity.addCollisionBox((ParserBlock) box);
+        entity.drops = new ArrayList<>();
+        for ( ParserObject i : ((ParserArray) loadProperty(block, template, "drops")) )
+            entity.drops.add(((ParserInt) i).getNumber());
         return entity;
     }
 

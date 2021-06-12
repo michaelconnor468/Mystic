@@ -9,6 +9,7 @@ import game.main.render.Animation;
 import game.main.render.Renderer;
 import game.entities.DynamicEntity;
 import game.player.weapons.*;
+import game.player.items.*;
 import game.main.X;
 import util.parse.*;
 import util.parse.obj.*;
@@ -53,6 +54,11 @@ public class Player extends DynamicEntity {
     public void equip(Weapon weapon) { if ( weapon.getDurability() > 0 ) this.weapon = weapon; }
     public void unequip() { this.weapon = null; }
     public Weapon getWeapon() { return this.weapon; }
+    
+    public void addItem(Item item) { 
+        item.collected();
+        x.getChunkManager().removeEntity(item);
+    }
 
     public void setMovementDirection(MovementDirection direction) {
         super.setMovementDirection(direction);
