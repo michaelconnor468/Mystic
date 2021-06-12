@@ -20,7 +20,7 @@ import java.util.Iterator;
  * be synchronized by the tick and render timers so that any logic and animation of arbitrary features may be easily added in the future without changing 
  * the front end drivers.
  */
-public abstract class Entity implements TickObserver, Renderable {
+public abstract class Entity implements TickObserver, Renderable, Positionable {
     protected X x;
     protected String name;
     protected int xSize, ySize;
