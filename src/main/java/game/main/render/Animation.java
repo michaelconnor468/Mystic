@@ -1,7 +1,7 @@
 package game.main.render;
 
 import game.main.X;
-import game.entities.Entity;
+import game.entities.Positionable;
 import game.main.TickObserver;
 import util.parse.obj.*;
 
@@ -18,7 +18,7 @@ import javafx.scene.image.PixelReader;
  */
 public class Animation implements TickObserver {
     private int frame;
-    private Entity entity;
+    private Positionable entity;
     private ArrayList<Image> frames;
     private boolean still;
     private int ticksElapsed;
@@ -33,7 +33,7 @@ public class Animation implements TickObserver {
      * multiple of it so as to not hardcode the length of the animation but leave it to be configured by the width
      * of the animation image.
      */
-    public Animation(X x, Entity entity, Path path) {
+    public Animation(X x, Positionable entity, Path path) {
         this.entity = entity;
         this.still = false;
         this.frame = 0;
@@ -64,7 +64,7 @@ public class Animation implements TickObserver {
             frame = frame >= totalFrames - 1 ? 0 : frame + 1;
     }
 
-    public Entity getEntity() { return this.entity; }
+    public Positionable getEntity() { return this.entity; }
     public Image getImage() { 
         if ( still )
             return frames.get(0);

@@ -1,7 +1,7 @@
 package game.main.render;
 
 import game.main.X;
-import game.entities.Entity;
+import game.entities.Positionable;
 import game.entities.TileEntity;
 import game.entities.DynamicEntity;
 import util.parse.obj.*;
@@ -62,7 +62,7 @@ public class Renderer {
      * centering of the camera on them at all times and that off-screen entities do not cause issues during rendering.
      */
     private void drawAnimation(Animation animation) {
-        Entity e = animation.getEntity();
+        Positionable e = animation.getEntity();
         int xCorner = x.getPlayer().getxPosition() + x.getPlayer().getxSize()/2 - (resolutionx/2);
         int xRenderLocation = e.getxPosition() - xCorner; 
         if ( xRenderLocation > resolutionx || xRenderLocation + e.getxSize() < 0 )
