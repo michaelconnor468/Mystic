@@ -84,11 +84,11 @@ public abstract class DynamicEntity extends Entity {
         for ( Buff buff : buffs )
             finalSpeedModifier *= buff.getSpeedModifier(); 
 
-        xPosition += dx*speed*finalSpeedModifier;
-        yPosition += dy*speed*finalSpeedModifier;
+        position.getX() += dx*speed*finalSpeedModifier;
+        position.getY() += dy*speed*finalSpeedModifier;
         if ( x.getChunkManager().isColliding(this) ) {
-            xPosition -= dx*speed*finalSpeedModifier;
-            yPosition -= dy*speed*finalSpeedModifier;
+            position.getX() -= dx*speed*finalSpeedModifier;
+            position.getY() -= dy*speed*finalSpeedModifier;
         }
     }
 

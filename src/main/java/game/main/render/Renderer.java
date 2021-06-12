@@ -49,8 +49,8 @@ public class Renderer {
             drawAnimation(a);
         tileEntities = new ArrayList<>();
         entities.sort((a1, a2) -> { 
-            return (a1.getEntity().getyPosition() + a1.getEntity().getySize()) 
-                - (a2.getEntity().getyPosition() + a2.getEntity().getySize()); 
+            return (a1.getEntity().getPosition().getY() + a1.getEntity().getSize().getY()) 
+                - (a2.getEntity().getPosition().getY() + a2.getEntity().getSize().getY()); 
         });
         for ( Animation a : entities ) 
             drawAnimation(a);
@@ -63,17 +63,17 @@ public class Renderer {
      */
     private void drawAnimation(Animation animation) {
         Positionable e = animation.getEntity();
-        int xCorner = x.getPlayer().getxPosition() + x.getPlayer().getxSize()/2 - (resolutionx/2);
-        int xRenderLocation = e.getxPosition() - xCorner; 
-        if ( xRenderLocation > resolutionx || xRenderLocation + e.getxSize() < 0 )
+        int xCorner = x.getPlayer().getPosition().getX() + x.getPlayer().getSize().getX()/2 - (resolutionx/2);
+        int xRenderLocation = e.getPosition().getX() - xCorner; 
+        if ( xRenderLocation > resolutionx || xRenderLocation + e.getSize().getX() < 0 )
             return;
-        int yCorner = x.getPlayer().getyPosition() + x.getPlayer().getySize()/2 - (resolutiony/2);
-        int yRenderLocation = e.getyPosition() - yCorner; 
-        if ( yRenderLocation > resolutiony || yRenderLocation + e.getySize() < 0 )
+        int yCorner = x.getPlayer().getPosition().getY() + x.getPlayer().getSize().getY()/2 - (resolutiony/2);
+        int yRenderLocation = e.getPosition().getY() - yCorner; 
+        if ( yRenderLocation > resolutiony || yRenderLocation + e.getSize().getY() < 0 )
             return;
         Image image = animation.getImage();
         if ( e instanceof DynamicEntity && ((DynamicEntity) e).isSwimming() ) 
-            image = new WritableImage(image.getPixelReader(), 0, 0, e.getxSize(), (int) (e.getySize()*0.28));
+            image = new WritableImage(image.getPixelReader(), 0, 0, e.getSize().getX(), (int) (e.getSize().getY()*0.28));
         gc.drawImage(image, xRenderLocation, yRenderLocation);
     }
 }

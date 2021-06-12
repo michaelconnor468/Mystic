@@ -84,7 +84,7 @@ public class ChunkManager implements TickObserver, Renderable {
 
     public Chunk getChunkInsideOf( Entity entity ) {
         int chunkSizePX = chunkSize*tileSize;
-        return chunks.get((int) entity.getxPosition()/chunkSizePX).get((int) entity.getyPosition()/chunkSizePX);
+        return chunks.get((int) entity.getPosition().getX()/chunkSizePX).get((int) entity.getPosition().getY()/chunkSizePX);
     }
 
     public void addEntity( Entity entity ) { getChunkInsideOf(entity).addEntity(entity); }
@@ -92,8 +92,8 @@ public class ChunkManager implements TickObserver, Renderable {
 
     public ArrayList<Chunk> getChunksAround( Entity entity ) {
         ArrayList<Chunk> ret = new ArrayList<>();
-        int middlexChunk = (int) entity.getxPosition()/(chunkSize*tileSize);
-        int middleyChunk = (int) entity.getyPosition()/(chunkSize*tileSize);
+        int middlexChunk = (int) entity.getPosition().getX()/(chunkSize*tileSize);
+        int middleyChunk = (int) entity.getPosition().getY()/(chunkSize*tileSize);
         for ( int i = -1; i < 2; i++ ) {
             for ( int j = -1; j < 2; j++ ) {
                 if ( middlexChunk + i >= 0 && middlexChunk + i < chunks.size() ) {

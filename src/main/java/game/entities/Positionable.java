@@ -1,8 +1,8 @@
 package game.entities;
 
+import java.awt.Point;
+
 public interface Positionable {
-    public int getxPosition();
-    public int getyPosition();
-    public int getxSize();
-    public int getySize();
+    public Point getPosition();
+    public Point getSize();
 }

@@ -8,6 +8,7 @@ import util.parse.obj.*;
 
 import java.util.ArrayList;
 import java.nio.file.Paths;
+import java.awt.Point;
 
 /**
  * Separate entity to represent the tiles that make up the floor. This is a special entity due to the fact that its position is static and discrete within a chunk
@@ -25,10 +26,9 @@ public class TileEntity extends Entity {
     
     public static TileEntity load(X x, ParserBlock block, Chunk chunk, int chunkRow, int chunkColumn) {
         TileEntity entity = new TileEntity();
-        entity.xSize = chunk.getTileSize();
-        entity.ySize = chunk.getTileSize();
-        entity.xPosition = (chunk.getXChunkPosition()*chunk.getSizeInTiles() + chunkColumn)*entity.xSize;
-        entity.yPosition = (chunk.getYChunkPosition()*chunk.getSizeInTiles() + chunkRow)*entity.xSize;
+        entity.size = new Point(chunk.getTileSize(), chunk.getTileSize());
+        entity.position = new Point((chunk.getXChunkPosition()*chunk.getSizeInTiles() + chunkColumn)
+            *entity.size.getX(), (chunk.getYChunkPosition()*chunk.getSizeInTiles() + chunkRow)*entity.size.getX());
         entity.chunkRow = chunkRow;
         entity.chunkColumn = chunkColumn;
         entity.type = ((ParserInt) block.getProperties().get("type")).getNumber();

@@ -22,11 +22,11 @@ public class Item extends StaticEntity {
         item.x = x;
         item.name = ((ParserString) props.get("name")).toString();
         item.id = id;
-        item.xSize = ((ParserInt) x.getMainSettings().get("itemSize")).getNumber();
-        item.ySize = ((ParserInt) x.getMainSettings().get("itemSize")).getNumber();
-        item.xPosition = entity.getxPosition() + (new Random()).nextInt(entity.getxSize());
-        item.yPosition = entity.getyPosition() + entity.getySize() + (new Random()).nextInt(30);
-        item.addCollisionBox(0, item.xSize, 0, item.ySize);
+        item.size.getX() = ((ParserInt) x.getMainSettings().get("itemSize")).getNumber();
+        item.size.getY() = ((ParserInt) x.getMainSettings().get("itemSize")).getNumber();
+        item.position.getX() = entity.getPosition().getX() + (new Random()).nextInt(entity.getSize().getX());
+        item.position.getY() = entity.getPosition().getY() + entity.getSize().getY() + (new Random()).nextInt(30);
+        item.addCollisionBox(0, item.size.getX(), 0, item.size.getY());
         item.passable = true;
         item.inInventory = false;
         item.animation = new Animation(x, item, Paths.get("src/main/resources/items/"+item.id+".png"));
@@ -35,8 +35,8 @@ public class Item extends StaticEntity {
 
     public void drop() {
         inInventory = false;
-        xPosition = x.getPlayer().getxPosition() + ((int) x.getPlayer().getxSize()/2);
-        yPosition = x.getPlayer().getyPosition() + x.getPlayer().getySize();
+        position.getX() = x.getPlayer().getPosition().getX() + ((int) x.getPlayer().getSize().getX()/2);
+        position.getY() = x.getPlayer().getPosition().getY() + x.getPlayer().getSize().getY();
         x.getChunkManager().addEntity(this);
     }
 

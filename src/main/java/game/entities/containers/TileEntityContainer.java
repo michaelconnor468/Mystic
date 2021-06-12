@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.lang.Math;
+import java.awt.Point;
 
 /**
  * Stores tile entities in a simple matrix due to their discrete nature allowing such a structure to be easily indexed and queried with relation to position perameters. Since
@@ -55,11 +56,11 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
     public ArrayList<TileEntity> getEntitiesWithinRange( double minX, double maxX, double minY, double maxY ) {
         ArrayList<TileEntity> returnList = new ArrayList<>();
         for ( int i = 0; i < chunkSize; i++ ) {
-            if ( tileEntities.get(i).get(0).getyPosition() >= minY && tileEntities.get(i).get(0).getyPosition() <= maxY )
+            if ( tileEntities.get(i).get(0).getPosition().getY() >= minY && tileEntities.get(i).get(0).getPosition().getY() <= maxY )
             {
                 for ( int j = 0; j < chunkSize; j++ ) {
-                    if ( tileEntities.get(i).get(j).getxPosition() >= minX 
-                        && tileEntities.get(i).get(j).getxPosition() <= maxX ) 
+                    if ( tileEntities.get(i).get(j).getPosition().getX() >= minX 
+                        && tileEntities.get(i).get(j).getPosition().getX() <= maxX ) 
                         returnList.add( tileEntities.get(i).get(j) );
                 }
             }
@@ -81,11 +82,11 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
     }
 
     public boolean isColliding(Entity entity) {
-        int minx = entity.getxPosition() - tileSize*2;
-        int miny = entity.getyPosition() - tileSize*2;
-        int maxx = entity.getxPosition() + entity.getxSize() + tileSize*2;
-        int maxy = entity.getyPosition() + entity.getySize() + tileSize*2;
-        for ( TileEntity e : getEntitiesWithinRange(minx, maxx, miny, maxy) )
+        Point min = new Point((int) entity.getPosition().getX() - tileSize*2, 
+            (int) entity.getPosition().getY() - tileSize*2);
+        Point max = new Point((int) entity.getPosition().getX() + (int) entity.getSize().getX() + tileSize*2, 
+            (int) entity.getPosition().getY() + (int) entity.getSize().getY() + tileSize*2);
+        for ( TileEntity e : getEntitiesWithinRange(min, max) )
             if ( e.isColliding(entity) ) return true;
         return false;
     }

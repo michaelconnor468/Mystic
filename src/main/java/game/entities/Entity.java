@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Collections;
 import java.util.Iterator;
+import java.awt.Point;
 
 /**
  * Abstract class for entity within the game. To allow easy addition of future features, everything in the game is considered an entity allowing it to
@@ -23,12 +24,12 @@ import java.util.Iterator;
 public abstract class Entity implements TickObserver, Renderable, Positionable {
     protected X x;
     protected String name;
-    protected int xSize, ySize;
+    protected Point position;
+    protected Point size;
     protected int health;
     protected int maxHealth;
     protected boolean damageable;
     protected boolean passable;
-    protected double xPosition, yPosition;
     protected ArrayList<CollisionBox> collisionBoxes;
     protected ArrayList<Buff> buffs; 
     protected ArrayList<Integer> drops; 
@@ -112,10 +113,8 @@ public abstract class Entity implements TickObserver, Renderable, Positionable {
             if ( buff.getName().equals(str) ) buff.setTicksToLive(0);
     }
 
-    public int getxPosition() { return (int) xPosition; }
-    public int getyPosition() { return (int) yPosition; }
-    public int getxSize() { return xSize; } 
-    public int getySize() { return ySize; }  
+    public Point getPosition() { return new Point(position); }
+    public Point getSize() { return new Point(size); } 
     public double getHealth() { return this.health; }
     public double getMaxHealth() { return this.maxHealth; }
     public String getName() { return this.name; }
@@ -164,10 +163,10 @@ public abstract class Entity implements TickObserver, Renderable, Positionable {
         // Corners relative to position of entity
         private double xMin, xMax, yMin, yMax;
 
-        double getRealxMin() {return Entity.this.getxPosition() + xMin;}
-        double getRealxMax() {return Entity.this.getxPosition() + xMax;}
-        double getRealyMin() {return Entity.this.getyPosition() + yMin;}
-        double getRealyMax() {return Entity.this.getyPosition() + yMax;}
+        double getRealxMin() {return Entity.this.getPosition().getX() + xMin;}
+        double getRealxMax() {return Entity.this.getPosition().getX() + xMax;}
+        double getRealyMin() {return Entity.this.getPosition().getY() + yMin;}
+        double getRealyMax() {return Entity.this.getPosition().getY() + yMax;}
 
         private CollisionBox() {}
         
@@ -198,10 +197,12 @@ public abstract class Entity implements TickObserver, Renderable, Positionable {
         entity.maxHealth = ((ParserInt) loadProperty(block, template, "maxHealth")).getNumber();
         entity.health = ((ParserInt) loadProperty(block, template, "health")).getNumber();
         entity.name = ((ParserString) loadProperty(block, template, "name")).getString();
-        entity.ySize = ((ParserInt) loadProperty(block, template, "ySize")).getNumber();
-        entity.xSize = ((ParserInt) loadProperty(block, template, "xSize")).getNumber();
-        entity.xPosition = ((ParserInt) loadProperty(block, template, "xPosition")).getNumber();
-        entity.yPosition = ((ParserInt) loadProperty(block, template, "yPosition")).getNumber();
+        int xSize = ((ParserInt) loadProperty(block, template, "size.getY()")).getNumber();
+        int ySize = ((ParserInt) loadProperty(block, template, "size.getX()")).getNumber();
+        int xPosition = ((ParserInt) loadProperty(block, template, "position.getX()")).getNumber();
+        int yPosition = ((ParserInt) loadProperty(block, template, "position.getY()")).getNumber();
+        entity.position = new Point(xPosition, yPosition);
+        entity.size = new Point(xSize, ySize);
         if (loadProperty(block, template, "damageable") != null)
             entity.damageable = ((ParserInt) loadProperty(block, template, "damageable")).getNumber() == 1;
         for ( ParserObject box : ((ParserArray) loadProperty(block, template, "collisionBoxes")) )

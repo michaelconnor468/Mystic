@@ -9,6 +9,7 @@ import game.main.X;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.awt.Point;
 
 /**
  * Used to define an interface to containers that store entities. An interface is needed due to different indexing requirements for storing different types of 
@@ -28,7 +29,7 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
      */
     public void addEntity( E entity ) { 
         entities.add(entity); 
-        maxEntitySize = Math.max( maxEntitySize, Math.max(entity.getxSize(), entity.getySize()) );
+        maxEntitySize = Math.max( maxEntitySize, Math.max(entity.getSize().getX(), entity.getSize().getY()) );
         indexEntities();
     }
    
@@ -40,16 +41,16 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
      * y position of which there are not many in a given chunk making this efficient and worthwhile.
      */
     public void indexEntities() { 
-        Collections.sort(entities, (e1, e2) -> e1.getyPosition() - e2.getyPosition()); 
+        Collections.sort(entities, (e1, e2) -> e1.getPosition().getY() - e2.getPosition().getY()); 
     }
 
     public boolean isColliding(Entity entity) {
         if ( maxEntitySize == 0 ) return false;
-        int minx = entity.getxPosition() - maxEntitySize*2;
-        int miny = entity.getyPosition() - maxEntitySize*2;
-        int maxx = entity.getxPosition() + entity.getxSize() + maxEntitySize*2;
-        int maxy = entity.getyPosition() + entity.getySize() + maxEntitySize*2;
-        for ( Entity e : getEntitiesWithinRange(minx, maxx, miny, maxy) ) 
+        Point min = new Point((int) entity.getPosition().getX() - maxEntitySize*2,
+            (int) entity.getPosition().getY() - maxEntitySize*2);
+        Point max = new Point((int) entity.getPosition().getX() + (int) entity.getSize().getX() + maxEntitySize*2,
+            (int) entity.getPosition().getY() + (int) entity.getSize().getY() + maxEntitySize*2);
+        for ( Entity e : getEntitiesWithinRange(min, max) ) 
             if ( e.isColliding(entity) ) return true;
         return false;
     }
@@ -60,11 +61,11 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
         for ( int i = entities.size(); i > 0; i-- ) entities.get(i-1).render(renderer); 
     }
     public ArrayList<E> getAllEntities() { return (ArrayList<E>) entities.clone(); }
-    public ArrayList<E> getEntitiesWithinRange(double minX, double maxX, double minY, double maxY) {
+    public ArrayList<E> getEntitiesWithinRange(Point min, Point max) {
         ArrayList<E> ret = new ArrayList<E>();
-        for ( int i = binarySearchFirstIndex( minY ); i > -1 && i < entities.size() && 
-            entities.get(i).getyPosition() <= maxY; i++ )
-            if ( entities.get(i).getxPosition() >= minX && entities.get(i).getxPosition() <= maxX ) 
+        for ( int i = binarySearchFirstIndex( min.getY() ); i > -1 && i < entities.size() && 
+            entities.get(i).getPosition().getY() <= max.getY(); i++ )
+            if (entities.get(i).getPosition().getX() >= min.getX() && entities.get(i).getPosition().getX() <= max.getX()) 
                 ret.add(entities.get(i));
         return ret;
     }
@@ -75,10 +76,10 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
         int formerIndex = entities.size();
         while ( true ) {
             if ( formerIndex == currentIndex || currentIndex == 0 ) 
-                return entities.get(currentIndex).getyPosition() >= yPositionLow ? 0 : -1;
+                return entities.get(currentIndex).getPosition().getY() >= yPositionLow ? 0 : -1;
             int half = (int) Math.abs( currentIndex - formerIndex ) / 2;
             formerIndex = currentIndex;
-            currentIndex -= entities.get(currentIndex).getyPosition() >= yPositionLow ? half : -half; 
+            currentIndex -= entities.get(currentIndex).getPosition().getY() >= yPositionLow ? half : -half; 
         }
     }
 

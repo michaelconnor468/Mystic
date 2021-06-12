@@ -68,8 +68,8 @@ public class Chunk implements TickObserver, Renderable {
     public ArrayList<TileEntity> getTilesAround( Entity entity ) {
         ArrayList<TileEntity> ret = new ArrayList<>();
         for ( TileEntity tileEntity : tileEntities.getEntitiesWithinRange( 
-            entity.getxPosition(), entity.getxPosition() + entity.getxSize(), 
-                entity.getyPosition(), entity.getyPosition() + entity.getySize() ) )
+            entity.getPosition().getX(), entity.getPosition().getX() + entity.getSize().getX(), 
+                entity.getPosition().getY(), entity.getPosition().getY() + entity.getSize().getY() ) )
                     ret.add(tileEntity);
         return ret;
     }
@@ -81,8 +81,8 @@ public class Chunk implements TickObserver, Renderable {
         chunk.sizeInTiles = chunk.chunkManager.getChunkSize();
 
         HashMap<String, ParserObject> properties = ((ParserBlock) block.getProperties().get("chunk")).getProperties();
-        chunk.xChunkPosition = xPosition; 
-        chunk.yChunkPosition = yPosition;
+        chunk.xChunkPosition = position.getX(); 
+        chunk.yChunkPosition = position.getY();
 
         TileEntityContainer tileEntityContainer = new TileEntityContainer(x);
         ParserArray tileRows = (ParserArray) properties.get("tileEntities");

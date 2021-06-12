@@ -9,6 +9,7 @@ import game.main.X;
 
 import java.util.HashSet;
 import java.nio.file.Paths;
+import java.awt.Point;
 
 /**
  * Uses collisions framework to deal damage to entities based on player state. This allows any animations and
@@ -33,10 +34,8 @@ public class MeleeAttack extends StaticEntity {
         this.range = weapon.getRange();
         this.weaponId = weapon.getId();
         this.x = x;
-        this.ySize = player.getySize() + 2;
-        this.xSize = player.getxSize();
-        this.xPosition = player.getxPosition();
-        this.yPosition = player.getyPosition();
+        this.size = new Point(((int) player.getSize().getY()) + 2, (int) player.getSize().getX());
+        this.position = new Point(((int) player.getPosition().getX()), (int) player.getPosition().getY());
         this.animation = new Animation(x, this, Paths.get("src/main/resources/weapons/melee/"+weaponId+".png"));
         createCollisionBoxes();
     }
@@ -53,9 +52,8 @@ public class MeleeAttack extends StaticEntity {
     }
 
     private void createCollisionBoxes() {
-        this.xPosition = player.getxPosition();
-        this.yPosition = player.getyPosition();
-        addCollisionBox(-range, xSize + range, -range, ySize + range);
+        this.position = new Point( (int) player.getPosition().getX(), (int) player.getPosition().getX());
+        addCollisionBox(-range, ((int) size.getX()) + range, -range, ((int) size.getY()) + range);
     }
 
     public void onCollision(Entity entity) {
