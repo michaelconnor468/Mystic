@@ -29,7 +29,7 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
      */
     public void addEntity( E entity ) { 
         entities.add(entity); 
-        maxEntitySize = Math.max( maxEntitySize, Math.max(entity.getSize().getX(), entity.getSize().getY()) );
+        maxEntitySize = Math.max( maxEntitySize, Math.max((int) entity.getSize().getX(), (int) entity.getSize().getY()) );
         indexEntities();
     }
    
@@ -41,7 +41,7 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
      * y position of which there are not many in a given chunk making this efficient and worthwhile.
      */
     public void indexEntities() { 
-        Collections.sort(entities, (e1, e2) -> e1.getPosition().getY() - e2.getPosition().getY()); 
+        Collections.sort(entities, (e1, e2) -> (int) (e1.getPosition().getY() - e2.getPosition().getY())); 
     }
 
     public boolean isColliding(Entity entity) {

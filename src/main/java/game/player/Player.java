@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.nio.file.Paths;
 import javafx.scene.input.MouseEvent;
+import java.awt.Point;
 
 import game.main.render.Animation;
 import game.main.render.Renderer;
@@ -95,10 +96,10 @@ public class Player extends DynamicEntity {
         Player player = new Player();
         HashMap<String, ParserObject> map = block.getProperties();
         player.x = x;
-        player.size.getX() = ((ParserInt) map.get("size.getX()")).getNumber();
-        player.size.getY() = ((ParserInt) map.get("size.getY()")).getNumber();
-        player.position.getX() = ((ParserInt) map.get("position.getX()")).getNumber();
-        player.position.getY() = ((ParserInt) map.get("position.getY()")).getNumber();
+        player.size = new Point(((ParserInt) map.get("size.getX()")).getNumber(),
+            ((ParserInt) map.get("size.getY()")).getNumber());
+        player.position = new Point(((ParserInt) map.get("position.getX()")).getNumber(), 
+            ((ParserInt) map.get("position.getY()")).getNumber());
         player.maxHealth = ((ParserInt) map.get("maxHealth")).getNumber();
         player.health = ((ParserInt) map.get("health")).getNumber();
         player.stamina = ((ParserInt) map.get("stamina")).getNumber();

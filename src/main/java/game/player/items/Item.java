@@ -11,6 +11,7 @@ import game.main.render.Renderer;
 import java.util.HashMap;
 import java.util.Random;
 import java.nio.file.Paths;
+import java.awt.Point;
 
 public class Item extends StaticEntity {
     private int id;
@@ -22,11 +23,11 @@ public class Item extends StaticEntity {
         item.x = x;
         item.name = ((ParserString) props.get("name")).toString();
         item.id = id;
-        item.size.getX() = ((ParserInt) x.getMainSettings().get("itemSize")).getNumber();
-        item.size.getY() = ((ParserInt) x.getMainSettings().get("itemSize")).getNumber();
-        item.position.getX() = entity.getPosition().getX() + (new Random()).nextInt(entity.getSize().getX());
-        item.position.getY() = entity.getPosition().getY() + entity.getSize().getY() + (new Random()).nextInt(30);
-        item.addCollisionBox(0, item.size.getX(), 0, item.size.getY());
+        item.size = new Point(((ParserInt) x.getMainSettings().get("itemSize")).getNumber(),
+            ((ParserInt) x.getMainSettings().get("itemSize")).getNumber());
+        item.position = new Point((int) entity.getPosition().getX()+(new Random()).nextInt((int) entity.getSize().getX()),
+                (int) entity.getPosition().getY() + (int) entity.getSize().getY() + (new Random()).nextInt(30));
+        item.addCollisionBox(0, (int) item.size.getX(), 0, (int) item.size.getY());
         item.passable = true;
         item.inInventory = false;
         item.animation = new Animation(x, item, Paths.get("src/main/resources/items/"+item.id+".png"));
@@ -35,8 +36,8 @@ public class Item extends StaticEntity {
 
     public void drop() {
         inInventory = false;
-        position.getX() = x.getPlayer().getPosition().getX() + ((int) x.getPlayer().getSize().getX()/2);
-        position.getY() = x.getPlayer().getPosition().getY() + x.getPlayer().getSize().getY();
+        position = new Point((int) x.getPlayer().getPosition().getX() + ((int) x.getPlayer().getSize().getX()/2),
+            (int) (x.getPlayer().getPosition().getY() + x.getPlayer().getSize().getY()));
         x.getChunkManager().addEntity(this);
     }
 
