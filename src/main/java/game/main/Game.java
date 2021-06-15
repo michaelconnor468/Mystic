@@ -7,6 +7,11 @@ import util.parse.FileParser;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Represents abstract state of the game by listening to changes and setting the corresponding managers
+ * accordingly. Made to abstract away game states and their transitions as much as possible from the various
+ * managers.
+ */
 public class Game implements GameStateChangeListener {
     private X x;
     private Path loadFilePath;
