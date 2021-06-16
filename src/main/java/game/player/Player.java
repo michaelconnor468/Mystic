@@ -96,10 +96,10 @@ public class Player extends DynamicEntity {
         Player player = new Player();
         HashMap<String, ParserObject> map = block.getProperties();
         player.x = x;
-        player.size = new Point(((ParserInt) map.get("size.getX()")).getNumber(),
-            ((ParserInt) map.get("size.getY()")).getNumber());
-        player.position = new Point(((ParserInt) map.get("position.getX()")).getNumber(), 
-            ((ParserInt) map.get("position.getY()")).getNumber());
+        player.size = new Point(((ParserInt) map.get("xSize")).getNumber(),
+            ((ParserInt) map.get("ySize")).getNumber());
+        player.position = new Point(((ParserInt) map.get("xPosition")).getNumber(), 
+            ((ParserInt) map.get("yPosition")).getNumber());
         player.maxHealth = ((ParserInt) map.get("maxHealth")).getNumber();
         player.health = ((ParserInt) map.get("health")).getNumber();
         player.stamina = ((ParserInt) map.get("stamina")).getNumber();
