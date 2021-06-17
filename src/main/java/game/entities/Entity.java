@@ -197,10 +197,10 @@ public abstract class Entity implements TickObserver, Renderable, Positionable {
         entity.maxHealth = ((ParserInt) loadProperty(block, template, "maxHealth")).getNumber();
         entity.health = ((ParserInt) loadProperty(block, template, "health")).getNumber();
         entity.name = ((ParserString) loadProperty(block, template, "name")).getString();
-        int xSize = ((ParserInt) loadProperty(block, template, "size.getY()")).getNumber();
-        int ySize = ((ParserInt) loadProperty(block, template, "size.getX()")).getNumber();
-        int xPosition = ((ParserInt) loadProperty(block, template, "position.getX()")).getNumber();
-        int yPosition = ((ParserInt) loadProperty(block, template, "position.getY()")).getNumber();
+        int xSize = ((ParserInt) loadProperty(block, template, "xSize")).getNumber();
+        int ySize = ((ParserInt) loadProperty(block, template, "ySize")).getNumber();
+        int xPosition = ((ParserInt) loadProperty(block, template, "xPosition")).getNumber();
+        int yPosition = ((ParserInt) loadProperty(block, template, "yPosition")).getNumber();
         entity.position = new Point(xPosition, yPosition);
         entity.size = new Point(xSize, ySize);
         if (loadProperty(block, template, "damageable") != null)
