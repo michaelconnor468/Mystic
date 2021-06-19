@@ -20,14 +20,17 @@ public class CollisionBox {
     private CollisionBox() {}
 
     public CollisionBox(Collidable entity, ParserBlock block) {
-        Map<String, ParserObject> props = block.getProperties();
-        this.min = new Point(((ParserInt) props.get("xMin")).getNumber(), ((ParserInt) props.get("xMax")).getNumber());
-        this.max = new Point(((ParserInt) props.get("yMin")).getNumber(), ((ParserInt) props.get("yMax")).getNumber());
-        this.passable = ((ParserInt) props.get("passable")).getNumber() == 1; 
-        this.entity = entity;
+        this(entity, 
+            new Point(((ParserInt) block.getProperties().get("xMin")).getNumber(), 
+                ((ParserInt) block.getProperties().get("xMax")).getNumber()),
+            new Point(((ParserInt) block.getProperties().get("yMin")).getNumber(), 
+                ((ParserInt) block.getProperties().get("yMax")).getNumber()),
+            ((ParserInt) block.getProperties().get("passable")).getNumber() == 1
+        );
     }
 
     public CollisionBox(Collidable entity, Point min, Point max, boolean passable) {
+        assert min.getX() < max.getX() && min.getY() < max.getY() : "CollisionBox maximum point must be greater.";
         this.min = new Point(min);
         this.max = new Point(max);
         this.entity = entity;
@@ -75,13 +78,10 @@ public class CollisionBox {
     };
 
     public static boolean collidesWith(Collection<CollisionBox> boxes1, Collection<CollisionBox> boxes2) {
-        boolean collide = false;
-        for ( CollisionBox box1 : boxes1 ) for ( CollisionBox box2 : boxes2 ) if ( box1.collidesWith(box2) ) {
-            collide = true;
-            box1.getCollidableEntity().onCollision(box2.getCollidableEntity());
-            box2.getCollidableEntity().onCollision(box1.getCollidableEntity());
-        }
-        return collide;
+        for ( CollisionBox box1 : boxes1 ) 
+            for ( CollisionBox box2 : boxes2 ) 
+                if ( box1.collidesWith(box2) ) return true;
+        return false;
     }
 
     public Collidable getCollidableEntity() { return entity; }
