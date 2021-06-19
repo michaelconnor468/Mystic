@@ -1,4 +1,4 @@
-package game.entities;
+package game.physics;
 
 import util.parse.obj.*;
 

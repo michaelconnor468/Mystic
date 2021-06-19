@@ -6,6 +6,7 @@ import game.main.X;
 import game.entities.buffs.Buff;
 import game.player.weapons.Weapon;
 import game.player.items.Item;
+import game.physics.*;
 import util.parse.obj.*;
 import util.parse.BlockParser;
 

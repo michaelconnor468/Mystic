@@ -1,7 +1,7 @@
 package game.main.render;
 
 import game.main.X;
-import game.entities.Positionable;
+import game.physics.Positionable;
 import game.main.TickObserver;
 import util.parse.obj.*;
 
