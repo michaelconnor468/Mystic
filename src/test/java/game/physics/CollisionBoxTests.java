@@ -35,5 +35,8 @@ public class CollisionBoxTests {
 
     @Test public void initializationTest() {
         String errormsg = "Failed to correctly initialize Collision Box";
+        assertNotNull(new CollisionBox(entity1, new Point(0, 0), new Point(100, 100), false), errormsg);
+        assertNotNull(new CollisionBox(entity1, new Point(-100, -100), new Point(100, 100), false), errormsg);
+        assertNotNull(new CollisionBox(entity1, new Point(-100, -100), new Point(-10, -10), false), errormsg);
     }
 }
