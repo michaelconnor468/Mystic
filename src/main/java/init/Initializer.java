@@ -29,11 +29,13 @@ public class Initializer {
 
     public static class App extends Application {
         public void start(Stage stage) {
-            x.createTimingManager();
-            x.createWindowManagerSingleton(stage);
-            x.createGameSingleton(120);
-            x.createApplicationSingleton(this);
-            x.getGameStateManager().setState(GameStateManager.State.MainMenu);
+            try {
+                x.createTimingManager();
+                x.createWindowManagerSingleton(stage);
+                x.createGameSingleton(120);
+                x.createApplicationSingleton(this);
+                x.getGameStateManager().setState(GameStateManager.State.MainMenu);
+            } catch ( Exception e ) { e.printStackTrace(System.err); System.exit(0); }
         }
         public void stop() { onExit(); }
     }
