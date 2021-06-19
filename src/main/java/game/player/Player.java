@@ -9,6 +9,7 @@ import java.awt.Point;
 import game.main.render.Animation;
 import game.main.render.Renderer;
 import game.entities.DynamicEntity;
+import game.physics.*;
 import game.player.weapons.*;
 import game.player.items.*;
 import game.main.X;
@@ -121,7 +122,7 @@ public class Player extends DynamicEntity {
         player.direction = MovementDirection.west;
         player.stationary = true;
         player.speed = ((ParserInt) map.get("speed")).getNumber();
-        player.addCollisionBox((ParserBlock) map.get("collisionBox"));
+        player.addCollisionBox(new CollisionBox(player, (ParserBlock) map.get("collisionBox")));
         player.damageable = true;
         ParserBlock weaponBlock = ((ParserBlock) map.get("weapon"));
         if ( weaponBlock.getProperties().containsKey("melee") )

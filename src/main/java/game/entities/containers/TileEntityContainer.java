@@ -87,7 +87,7 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
         Point max = new Point((int) entity.getPosition().getX() + (int) entity.getSize().getX() + tileSize*2, 
             (int) entity.getPosition().getY() + (int) entity.getSize().getY() + tileSize*2);
         for ( TileEntity e : getEntitiesWithinRange(min, max) )
-            if ( e.isColliding(entity) ) return true;
+            if ( e.collidesWith(entity) ) return true;
         return false;
     }
 

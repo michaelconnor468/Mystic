@@ -6,6 +6,7 @@ import game.main.TickObserver;
 import game.main.render.Renderable;
 import game.main.render.Renderer;
 import game.main.ChunkManager;
+import game.physics.*;
 import game.main.X;
 
 import java.util.ArrayList;
@@ -94,7 +95,7 @@ public class Chunk implements TickObserver, Renderable {
                 TileEntity entity = TileEntity.load(x, entityBlock, chunk, i, ii);
                 if ( entityBlock.getProperties().containsKey("collisionBoxes") ) 
                     for (ParserObject obj : ((ParserArray) entityBlock.getProperties().get("collisionBoxes"))) 
-                        entity.addCollisionBox((ParserBlock) obj); 
+                        entity.addCollisionBox(new CollisionBox(entity, (ParserBlock) obj)); 
                 tileEntityContainer.addEntity(entity);
             }
         }

@@ -3,6 +3,7 @@ package game.player.weapons;
 import game.entities.StaticEntity;
 import game.entities.Entity;
 import game.player.Player;
+import game.physics.*;
 import game.main.render.Renderer;
 import game.main.render.Animation;
 import game.main.X;
@@ -53,7 +54,8 @@ public class MeleeAttack extends StaticEntity {
 
     private void createCollisionBoxes() {
         this.position = new Point( (int) player.getPosition().getX(), (int) player.getPosition().getX());
-        addCollisionBox(-range, ((int) size.getX()) + range, -range, ((int) size.getY()) + range);
+        addCollisionBox(new CollisionBox(this, new Point(-range, ((int) size.getX()) + range), 
+            new Point(-range, ((int) size.getY()) + range), false));
     }
 
     public void onCollision(Entity entity) {

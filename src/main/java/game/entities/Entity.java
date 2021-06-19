@@ -22,7 +22,7 @@ import java.awt.Point;
  * be synchronized by the tick and render timers so that any logic and animation of arbitrary features may be easily added in the future without changing 
  * the front end drivers.
  */
-public abstract class Entity implements TickObserver, Renderable, Positionable {
+public abstract class Entity implements TickObserver, Renderable, Collidable, Positionable {
     protected X x;
     protected String name;
     protected Point position;
@@ -79,26 +79,6 @@ public abstract class Entity implements TickObserver, Renderable, Positionable {
     public void removeCollisionBox(CollisionBox collisionBox) {collisionBoxes.remove(collisionBox);}
     public void removeCollisionBoxes() {collisionBoxes = new ArrayList<>();}
 
-    /**
-     * Returns a deep clone of the entity in order to ensure changes to one clone do not impact the other
-     */
-    public Object clone() {
-        try {
-            Entity clone = (Entity) super.clone();
-            ArrayList<CollisionBox> newBoxes = new ArrayList<CollisionBox>();
-            Iterator<CollisionBox> iterator = ((ArrayList<CollisionBox>) clone.getCollisionBoxes()).iterator();
-            while ( iterator.hasNext() ) {
-                newBoxes.add((CollisionBox) iterator.next().clone());
-            }
-            clone.collisionBoxes = newBoxes;
-            return clone;
-        }
-        catch (Exception e) {
-            System.err.println("Failed to make a clone of entity object" + e.toString());
-            return null;
-        }
-    }
-
     public synchronized void addBuff(Buff buff) { 
         for ( Buff currentBuff : buffs )
             if ( currentBuff.getName().equals(buff.getName()) ) return;
@@ -121,78 +101,8 @@ public abstract class Entity implements TickObserver, Renderable, Positionable {
     public String getName() { return this.name; }
     public ArrayList<CollisionBox> getCollisionBoxes() { return this.collisionBoxes; }
 
-    /**
-     * Exists instead of a static loader because non-static inner classes in java do not play well with static methods.
-     */
-    public void addCollisionBox(ParserBlock block) {
-        CollisionBox box = new CollisionBox();
-        box.xMin = ((ParserInt) block.getProperties().get("xMin")).getNumber();
-        box.yMin = ((ParserInt) block.getProperties().get("yMin")).getNumber();
-        box.xMax = ((ParserInt) block.getProperties().get("xMax")).getNumber();
-        box.yMax = ((ParserInt) block.getProperties().get("yMax")).getNumber();
-        if ( this.collisionBoxes == null )
-            this.collisionBoxes = new ArrayList<>();
-        this.collisionBoxes.add(box);
-    }
-
-    public void addCollisionBox(int xmin, int xmax, int ymin, int ymax) {
-        addCollisionBox((new BlockParser()).parse("{ xMin: "+xmin+" xMax: "+xmax+" yMin: "+ymin+" yMax: "+ymax+" }"));
-    }
-
-    public boolean isColliding(Entity entity) {
-        if ( entity.getCollisionBoxes() == null || collisionBoxes == null )
-            return false;
-        for ( CollisionBox box : collisionBoxes ) {
-            for ( CollisionBox box2 : entity.getCollisionBoxes() )
-                if ( box.collidesWith(box2) ) {
-                    onCollision(entity);
-                    entity.onCollision(this);
-                    return passable ? false : true;
-                }
-        }
-        return false; 
-    }
-
     public void onCollision(Entity entity) {}
 
-    /**
-     * Represents the collision box for the entity. This data structure allows for storage in an array giving the 
-     * ability to define multiple separate collision boxes for
-     * an entity for more fine-grained collision control
-     */
-    public class CollisionBox {
-        // Corners relative to position of entity
-        private double xMin, xMax, yMin, yMax;
-
-        double getRealxMin() {return Entity.this.getPosition().getX() + xMin;}
-        double getRealxMax() {return Entity.this.getPosition().getX() + xMax;}
-        double getRealyMin() {return Entity.this.getPosition().getY() + yMin;}
-        double getRealyMax() {return Entity.this.getPosition().getY() + yMax;}
-
-        private CollisionBox() {}
-        
-        public boolean collidesWith(CollisionBox collisionBox) {
-            return !(
-                (this.getRealxMax() < collisionBox.getRealxMin()) || 
-                (this.getRealxMin() > collisionBox.getRealxMax()) || 
-                (this.getRealyMax() < collisionBox.getRealyMin()) || 
-                (this.getRealyMin() > collisionBox.getRealyMax())
-            );
-        }
-
-        public Object clone() {
-            try {
-                return super.clone();
-            }
-            catch (Exception e) {
-                System.err.println("Failed to make a clone of collision box object" + e.toString());
-                return null;
-            }
-        }
-
-        public String toString() {return "{xMin: "+xMin+" xMax: "+xMax+" yMin: "+yMin+" yMax: "+yMax+"}";}
-    }
-    
     protected static Entity load(X x, ParserBlock block, ParserBlock template, Entity entity) {
         entity.x = x;
         entity.maxHealth = ((ParserInt) loadProperty(block, template, "maxHealth")).getNumber();
@@ -207,7 +117,7 @@ public abstract class Entity implements TickObserver, Renderable, Positionable {
         if (loadProperty(block, template, "damageable") != null)
             entity.damageable = ((ParserInt) loadProperty(block, template, "damageable")).getNumber() == 1;
         for ( ParserObject box : ((ParserArray) loadProperty(block, template, "collisionBoxes")) )
-            entity.addCollisionBox((ParserBlock) box);
+            entity.addCollisionBox(new CollisionBox(entity, (ParserBlock) box));
         entity.drops = new ArrayList<>();
         for ( ParserObject i : ((ParserArray) loadProperty(block, template, "drops")) )
             entity.drops.add(((ParserInt) i).getNumber());

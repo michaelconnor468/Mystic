@@ -3,6 +3,7 @@ package game.player.items;
 import util.parse.obj.*;
 import game.main.X;
 import game.player.Player;
+import game.physics.*;
 import game.entities.StaticEntity;
 import game.entities.Entity;
 import game.main.render.Animation;
@@ -26,8 +27,9 @@ public class Item extends StaticEntity {
         item.size = new Point(((ParserInt) x.getMainSettings().get("itemSize")).getNumber(),
             ((ParserInt) x.getMainSettings().get("itemSize")).getNumber());
         item.position = new Point((int) entity.getPosition().getX()+(new Random()).nextInt((int) entity.getSize().getX()),
-                (int) entity.getPosition().getY() + (int) entity.getSize().getY() + (new Random()).nextInt(30));
-        item.addCollisionBox(0, (int) item.size.getX(), 0, (int) item.size.getY());
+            (int) entity.getPosition().getY() + (int) entity.getSize().getY() + (new Random()).nextInt(30));
+        item.addCollisionBox(new CollisionBox(item, new Point(0, (int) item.size.getX()), 
+            new Point(0, (int) item.size.getY()), false));
         item.passable = true;
         item.inInventory = false;
         item.animation = new Animation(x, item, Paths.get("src/main/resources/items/"+item.id+".png"));
