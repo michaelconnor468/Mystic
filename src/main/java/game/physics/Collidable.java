@@ -2,6 +2,7 @@ package game.physics;
 
 import java.awt.Point;
 import java.util.Collection;
+import java.util.ArrayList;
 
 /**
  * Used by entities primarily for restricting movement between themselves and also for easily implementing
@@ -10,8 +11,8 @@ import java.util.Collection;
  * flexibility allowing for intermingling of movemente and event based collision boxes within the same entity.
  */
 public interface Collidable extends Positionable {
-    public void onCollision(Collidable entity);
-    public boolean isColliding();
-    public void addCollisionBox(Point min, Point max);
-    public Collection<CollisionBox> getCollisionBoxes();
+    default public void onCollision(Collidable entity) {}
+    default public boolean isColliding() { return false; }
+    default public void addCollisionBox(Point min, Point max) {}
+    default public Collection<CollisionBox> getCollisionBoxes() { return new ArrayList<>(); }
 }
