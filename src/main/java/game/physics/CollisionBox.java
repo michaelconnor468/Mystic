@@ -31,7 +31,8 @@ public class CollisionBox {
     }
 
     public CollisionBox(Collidable entity, Point min, Point max, boolean passable) {
-        assert min.getX() < max.getX() && min.getY() < max.getY() : "CollisionBox maximum point must be greater.";
+        assert min.getX() <= max.getX() && min.getY() <= max.getY() : 
+            "CollisionBox maximum point " + max + " must be greater than or equal to minimum point " + min;
         this.min = new Point(min);
         this.max = new Point(max);
         this.entity = entity;
