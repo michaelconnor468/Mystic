@@ -46,7 +46,7 @@ public class MeleeAttack extends StaticEntity {
     @Override public void tick(X x) {
         if ( ticksToLive == 0 ) x.getChunkManager().removeEntity(this);
         super.tick(x);
-        x.getChunkManager().isColliding(this);
+        x.getChunkManager().testCollision(this);
         removeCollisionBoxes();
         createCollisionBoxes();
         ticksToLive--;

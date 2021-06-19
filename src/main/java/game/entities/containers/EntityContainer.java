@@ -44,14 +44,14 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
         Collections.sort(entities, (e1, e2) -> (int) (e1.getPosition().getY() - e2.getPosition().getY())); 
     }
 
-    public boolean isColliding(Entity entity) {
+    public boolean testCollision(Entity entity) {
         if ( maxEntitySize == 0 ) return false;
         Point min = new Point((int) entity.getPosition().getX() - maxEntitySize*2,
             (int) entity.getPosition().getY() - maxEntitySize*2);
         Point max = new Point((int) entity.getPosition().getX() + (int) entity.getSize().getX() + maxEntitySize*2,
             (int) entity.getPosition().getY() + (int) entity.getSize().getY() + maxEntitySize*2);
         for ( Entity e : getEntitiesWithinRange(min, max) ) 
-            if ( e.collidesWith(entity) ) return true;
+            if ( e.testCollision(entity) ) return true;
         return false;
     }
 

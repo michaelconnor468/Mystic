@@ -40,7 +40,7 @@ public class CollisionBox {
     /**
      * Informs both collidable entities when collision occurs although will return false if passable is set to true.
      */
-    public boolean collidesWith(CollisionBox collisionBox) {
+    private boolean testCollisions(CollisionBox collisionBox) {
         boolean collides = !(
             this.getRealMax().getX() < collisionBox.getRealMin().getX() ||
             this.getRealMin().getX() > collisionBox.getRealMax().getX() ||
@@ -77,10 +77,10 @@ public class CollisionBox {
         return sb.toString();
     };
 
-    public static boolean collidesWith(Collection<CollisionBox> boxes1, Collection<CollisionBox> boxes2) {
+    public static boolean testCollisions(Collection<CollisionBox> boxes1, Collection<CollisionBox> boxes2) {
         for ( CollisionBox box1 : boxes1 ) 
             for ( CollisionBox box2 : boxes2 ) 
-                if ( box1.collidesWith(box2) ) return true;
+                if ( box1.testCollisions(box2) ) return true;
         return false;
     }
 

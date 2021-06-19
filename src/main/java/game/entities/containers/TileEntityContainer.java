@@ -81,13 +81,13 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
         tileEntities.get(tileEntity.getChunkRow()).add(tileEntity.getChunkColumn(), null);
     }
 
-    public boolean isColliding(Entity entity) {
+    public boolean testCollision(Entity entity) {
         Point min = new Point((int) entity.getPosition().getX() - tileSize*2, 
             (int) entity.getPosition().getY() - tileSize*2);
         Point max = new Point((int) entity.getPosition().getX() + (int) entity.getSize().getX() + tileSize*2, 
             (int) entity.getPosition().getY() + (int) entity.getSize().getY() + tileSize*2);
         for ( TileEntity e : getEntitiesWithinRange(min, max) )
-            if ( e.collidesWith(entity) ) return true;
+            if ( e.testCollision(entity) ) return true;
         return false;
     }
 

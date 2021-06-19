@@ -74,9 +74,9 @@ public class ChunkManager implements TickObserver, Renderable {
         }
     }
 
-    public boolean isColliding( Entity entity ) {
+    public boolean testCollision( Entity entity ) {
         for ( Chunk chunk : getChunksAround(entity) ) {
-            if ( chunk.isColliding(entity) )
+            if ( chunk.testCollision(entity) )
                 return true;
         }
         return false;
