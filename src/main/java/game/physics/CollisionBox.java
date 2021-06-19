@@ -3,6 +3,7 @@ package game.physics;
 import util.parse.obj.*;
 
 import java.util.Map;
+import java.util.Collection;
 import java.awt.Point;
 
 /**
@@ -72,6 +73,16 @@ public class CollisionBox {
         sb.append("}");
         return sb.toString();
     };
+
+    public static boolean collidesWith(Collection<CollisionBox> boxes1, Collection<CollisionBox> boxes2) {
+        boolean collide = false;
+        for ( CollisionBox box1 : boxes1 ) for ( CollisionBox box2 : boxes2 ) if ( box1.collidesWith(box2) ) {
+            collide = true;
+            box1.getCollidableEntity().onCollision(box2.getCollidableEntity());
+            box2.getCollidableEntity().onCollision(box1.getCollidableEntity());
+        }
+        return collide;
+    }
 
     public Collidable getCollidableEntity() { return entity; }
 }
