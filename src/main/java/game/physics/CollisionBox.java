@@ -25,7 +25,8 @@ public class CollisionBox {
                 ((ParserInt) block.getProperties().get("xMax")).getNumber()),
             new Point(((ParserInt) block.getProperties().get("yMin")).getNumber(), 
                 ((ParserInt) block.getProperties().get("yMax")).getNumber()),
-            ((ParserInt) block.getProperties().get("passable")).getNumber() == 1
+            block.getProperties().containsKey("passable") &&
+                ((ParserInt) block.getProperties().get("passable")).getNumber() == 1
         );
     }
 
