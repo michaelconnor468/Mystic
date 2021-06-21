@@ -15,7 +15,7 @@ import java.awt.Point;
  * Used to define an interface to containers that store entities. An interface is needed due to different indexing requirements for storing different types of 
  * entities efficiently, requiring each entity type to be stored within a unique data structure to most efficiently manage its query needs.
  */
-public abstract class EntityContainer implements TickObserver, Renderable {
+public abstract class EntityContainer<E extends Entity> implements TickObserver, Renderable {
     protected int entityCount, maxEntitySize;
     private boolean moving;
     private ArrayList<E> entities;
