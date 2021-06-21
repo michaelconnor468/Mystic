@@ -22,8 +22,8 @@ public class CollisionBox {
     public CollisionBox(Collidable entity, ParserBlock block) {
         this(entity, 
             new Point(((ParserInt) block.getProperties().get("xMin")).getNumber(), 
-                ((ParserInt) block.getProperties().get("xMax")).getNumber()),
-            new Point(((ParserInt) block.getProperties().get("yMin")).getNumber(), 
+                ((ParserInt) block.getProperties().get("yMin")).getNumber()),
+            new Point(((ParserInt) block.getProperties().get("xMax")).getNumber(),
                 ((ParserInt) block.getProperties().get("yMax")).getNumber()),
             block.getProperties().containsKey("passable") &&
                 ((ParserInt) block.getProperties().get("passable")).getNumber() == 1
@@ -41,8 +41,10 @@ public class CollisionBox {
 
     /**
      * Informs both collidable entities when collision occurs although will return false if passable is set to true.
+     * Entities may not collide with themselves as then this would always return true.
      */
     private boolean testCollisions(CollisionBox collisionBox) {
+        if ( this.entity == collisionBox.entity ) return false;
         boolean collides = !(
             this.getRealMax().getX() < collisionBox.getRealMin().getX() ||
             this.getRealMin().getX() > collisionBox.getRealMax().getX() ||
