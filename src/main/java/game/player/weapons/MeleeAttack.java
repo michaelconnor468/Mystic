@@ -53,7 +53,7 @@ public class MeleeAttack extends StaticEntity {
     }
 
     private void createCollisionBoxes() {
-        this.position = new Point( (int) player.getPosition().getX(), (int) player.getPosition().getX());
+        this.position = new Point( (int) player.getPosition().getX(), (int) player.getPosition().getY());
         addCollisionBox(new CollisionBox(this, new Point(-range, ((int) size.getX()) + range), 
             new Point(-range, ((int) size.getY()) + range), false));
     }
