@@ -1,6 +1,7 @@
 package game.entities.containers;
 
 import game.entities.Entity;
+import game.entities.DynamicEntity;
 import game.player.Player;
 import game.main.render.Renderable;
 import game.main.render.Renderer;
@@ -17,6 +18,7 @@ import java.awt.Point;
  */
 public abstract class EntityContainer<E extends Entity> implements TickObserver, Renderable {
     protected int entityCount, maxEntitySize;
+    private boolean moving;
     private ArrayList<E> entities;
     private X x;
 
@@ -40,7 +42,7 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
      * Sorts array indexed by y position for fast queries and drawing. Not needed except on initialization and for dynamic entities that change their
      * y position of which there are not many in a given chunk making this efficient and worthwhile.
      */
-    public void indexEntities() { 
+    private void indexEntities() { 
         Collections.sort(entities, (e1, e2) -> (int) (e1.getPosition().getY() - e2.getPosition().getY())); 
     }
 
@@ -57,7 +59,9 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
 
     public void tick(X x) { for ( int i = entities.size(); i > 0; i-- ) entities.get(i-1).tick(x); }
 
-    public void render(Renderer renderer) { 
+    public void render(Renderer renderer) {
+        if ( entities.size() == 0 ) return;
+        if ( entities.get(0) instanceof DynamicEntity ) indexEntities();
         for ( int i = entities.size(); i > 0; i-- ) entities.get(i-1).render(renderer); 
     }
     public ArrayList<E> getAllEntities() { return (ArrayList<E>) entities.clone(); }
