@@ -51,9 +51,8 @@ public class Chunk implements TickObserver, Renderable {
     public int getSizeInTiles() { return sizeInTiles; }
 
     public boolean testCollision(Entity entity) {
-        if ( tileEntities.testCollision(entity)||staticEntities.testCollision(entity)||dynamicEntities.testCollision(entity) )
-            return true;
-        return false;
+        return ( tileEntities.testCollision(entity) || staticEntities.testCollision(entity) 
+            || dynamicEntities.testCollision(entity) );
     }
 
     public void removeEntity(Entity entity) {

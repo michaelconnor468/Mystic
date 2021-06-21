@@ -1,7 +1,6 @@
 package game.entities.containers;
 
 import game.entities.Entity;
-import game.entities.DynamicEntity;
 import game.player.Player;
 import game.main.render.Renderable;
 import game.main.render.Renderer;
@@ -16,7 +15,7 @@ import java.awt.Point;
  * Used to define an interface to containers that store entities. An interface is needed due to different indexing requirements for storing different types of 
  * entities efficiently, requiring each entity type to be stored within a unique data structure to most efficiently manage its query needs.
  */
-public abstract class EntityContainer<E extends Entity> implements TickObserver, Renderable {
+public abstract class EntityContainer implements TickObserver, Renderable {
     protected int entityCount, maxEntitySize;
     private boolean moving;
     private ArrayList<E> entities;
@@ -60,12 +59,11 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
     public void tick(X x) { for ( int i = entities.size(); i > 0; i-- ) entities.get(i-1).tick(x); }
 
     public void render(Renderer renderer) {
-        if ( entities.size() == 0 ) return;
-        if ( entities.get(0) instanceof DynamicEntity ) indexEntities();
         for ( int i = entities.size(); i > 0; i-- ) entities.get(i-1).render(renderer); 
     }
     public ArrayList<E> getAllEntities() { return (ArrayList<E>) entities.clone(); }
     public ArrayList<E> getEntitiesWithinRange(Point min, Point max) {
+        indexEntities();
         ArrayList<E> ret = new ArrayList<E>();
         for ( int i = binarySearchFirstIndex( min.getY() ); i > -1 && i < entities.size() && 
             entities.get(i).getPosition().getY() <= max.getY(); i++ )
