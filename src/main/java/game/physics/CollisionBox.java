@@ -52,8 +52,8 @@ public class CollisionBox {
             this.getRealMin().getY() > collisionBox.getRealMax().getY() 
         );
         if ( collides ) {
-            entity.onCollision(collisionBox.getCollidableEntity());
-            collisionBox.getCollidableEntity().onCollision(entity);
+            this.entity.onCollision(collisionBox.entity);
+            collisionBox.entity.onCollision(this.entity);
         }
         return collides && !passable;
     }
