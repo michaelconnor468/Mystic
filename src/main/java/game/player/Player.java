@@ -59,7 +59,6 @@ public class Player extends DynamicEntity {
     
     public void addItem(Item item) { 
         item.collected();
-        x.getChunkManager().removeEntity(item);
     }
 
     public void setMovementDirection(MovementDirection direction) {

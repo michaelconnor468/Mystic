@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public interface Collidable extends Positionable {
     default public void onCollision(Collidable entity) {}
     default public boolean testCollision(Collidable entity) { 
-        return CollisionBox.testCollisions(entity.getCollisionBoxes(), getCollisionBoxes());
+        return CollisionBox.testCollisions(getCollisionBoxes(), entity.getCollisionBoxes());
     }
     default public void addCollisionBox(CollisionBox box) {}
     default public Collection<CollisionBox> getCollisionBoxes() { return new ArrayList<>(); }

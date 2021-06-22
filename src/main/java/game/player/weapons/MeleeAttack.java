@@ -22,7 +22,7 @@ public class MeleeAttack extends StaticEntity {
     private Player player;
     private int range;
     private int weaponId;
-    private HashSet<Entity> damaged;
+    private HashSet<Collidable> damaged;
     private Weapon weapon;
     private X x;
 
@@ -58,10 +58,11 @@ public class MeleeAttack extends StaticEntity {
             new Point(((int) size.getX()) + range, ((int) size.getY()) + range), false));
     }
 
-    public void onCollision(Entity entity) {
+    @Override public void onCollision(Collidable entity) {
         if ( damaged.contains(entity) ) return;
             damaged.add(entity);
-        if ( entity != player ) entity.damage(weapon);
+        // TODO make this check for damageable
+        if ( entity instanceof Entity && entity != player ) ((Entity) entity).damage(weapon);
     }
 
 }

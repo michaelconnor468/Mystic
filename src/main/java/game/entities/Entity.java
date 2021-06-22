@@ -101,7 +101,7 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
     public String getName() { return this.name; }
     public ArrayList<CollisionBox> getCollisionBoxes() { return this.collisionBoxes; }
 
-    public void onCollision(Entity entity) {}
+    public void onCollision(Collidable entity) {}
 
     protected static Entity load(X x, ParserBlock block, ParserBlock template, Entity entity) {
         entity.x = x;

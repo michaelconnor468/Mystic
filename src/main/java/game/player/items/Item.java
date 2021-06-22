@@ -43,8 +43,14 @@ public class Item extends StaticEntity {
         x.getChunkManager().addEntity(this);
     }
 
-    public void collected() { inInventory = true; }
+    public void collected() {
+        inInventory = true;
+        x.getChunkManager().removeEntity(this);
+    }
 
-    @Override public void onCollision(Entity entity) { if ( entity instanceof Player ) ((Player) entity).addItem(this); }
+    @Override public void onCollision(Collidable entity) {
+        if ( entity instanceof Player ) ((Player) entity).addItem(this);
+    }
+
     @Override public void render(Renderer renderer) { if ( !inInventory ) renderer.render(animation); }
 }
