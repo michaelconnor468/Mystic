@@ -41,10 +41,14 @@ public class Game implements GameStateChangeListener {
     public void afterStateTransition(GameStateManager.State from, GameStateManager.State to) {
         switch ( to ) {
             case Loading:
+                // TODO Thread this out and set state upon completion
                 x.getChunkManager().loadChunks(loadFilePath);
                 x.getGameStateManager().setState(GameStateManager.State.Playing);
+                break;
+            case Playing:
                 x.getTimingManager().startTiming();
                 x.getRenderManager().start();
+                break;
         }
     }
 }
