@@ -1,7 +1,7 @@
 package game.main;
 
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.ArrayList;
 
 /**
  * Stores and manages the current state of the game. Enforces game states to go through allowable transitions.
@@ -17,22 +17,22 @@ public class GameStateManager {
     }
     private State state;
     private X x;
-    private HashMap<State, HashSet<State>> canTransitionTo;
-    private HashMap<State, HashMap<State, HashSet<GameStateChangeListener>>> onTransitionTo;
-    private HashSet<GameStateChangeListener> onAnyTransition;
+    private HashMap<State, ArrayList<State>> canTransitionTo;
+    private HashMap<State, HashMap<State, ArrayList<GameStateChangeListener>>> onTransitionTo;
+    private ArrayList<GameStateChangeListener> onAnyTransition;
 
     private GameStateManager() {}
     public GameStateManager(X x) { 
         this.x = x;
         state = state.Initialization;
-        canTransitionTo = new HashMap<State, HashSet<State>>();
-        onTransitionTo = new HashMap<State, HashMap<State, HashSet<GameStateChangeListener>>>();
-        onAnyTransition = new HashSet<GameStateChangeListener>();
+        canTransitionTo = new HashMap<>();
+        onTransitionTo = new HashMap<>();
+        onAnyTransition = new ArrayList<>();
         for ( State s : State.values() ) {
-            canTransitionTo.put(s, new HashSet<State>());
-            onTransitionTo.put(s, new HashMap<State, HashSet<GameStateChangeListener>>());
+            canTransitionTo.put(s, new ArrayList<State>());
+            onTransitionTo.put(s, new HashMap<State, ArrayList<GameStateChangeListener>>());
             for ( State to : State.values() )
-                onTransitionTo.get(s).put(to, new HashSet<GameStateChangeListener>());
+                onTransitionTo.get(s).put(to, new ArrayList<GameStateChangeListener>());
         }
         canTransitionTo.get(state.Initialization).add(state.MainMenu);
         canTransitionTo.get(state.MainMenu).add(state.Loading);
