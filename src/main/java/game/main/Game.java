@@ -6,6 +6,8 @@ import util.parse.FileParser;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 
 /**
  * Represents abstract state of the game by listening to changes and setting the corresponding managers
@@ -41,8 +43,13 @@ public class Game implements GameStateChangeListener {
     public void afterStateTransition(GameStateManager.State from, GameStateManager.State to) {
         switch ( to ) {
             case Loading:
-                x.getChunkManager().loadChunks(loadFilePath);
-                x.getGameStateManager().setState(GameStateManager.State.Playing);
+                Task<Void> task = new Task<Void>() {
+                    @Override protected Void call() throws Exception {
+                        x.getChunkManager().loadChunks(loadFilePath);
+                        return null;
+                    }
+                };
+                task.setOnSucceeded((v) -> x.getGameStateManager().setState(GameStateManager.State.Playing));
                 break;
             case Playing:
                 x.getTimingManager().startTiming();
