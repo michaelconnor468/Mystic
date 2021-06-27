@@ -50,6 +50,7 @@ public class Game implements GameStateChangeListener {
                     }
                 };
                 task.setOnSucceeded((v) -> x.getGameStateManager().setState(GameStateManager.State.Playing));
+                (new Thread(task)).start();
                 break;
             case Playing:
                 x.getTimingManager().startTiming();
