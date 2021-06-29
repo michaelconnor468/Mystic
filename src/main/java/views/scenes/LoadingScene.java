@@ -18,6 +18,7 @@ public class LoadingScene {
             scene.getStylesheets().add(Paths.get("src/main/resources/styles/Common.css")
                 .toUri().toURL().toExternalForm());
         } catch ( Exception e ) { System.err.println(e); } 
+        // TODO maybe animate the dots to go . .. ... . .. ... so the user knows it's not frozen
         Text loading = new Text("Loading...");
         borderPane.setCenter(loading);
 
