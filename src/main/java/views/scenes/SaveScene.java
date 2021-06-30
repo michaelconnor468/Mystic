@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
 import javafx.geometry.Pos;
 
-public class PausedScene {
+public class SaveScene {
     private static X x;
 
     public static Scene getScene(X context) {
@@ -29,27 +29,16 @@ public class PausedScene {
                 .toUri().toURL().toExternalForm());
         } catch ( Exception e ) { System.err.println(e); } 
 
-        Text paused = new Text("Paused");
-        paused.getStyleClass().add("title");
-        borderPane.setTop(paused);
-        borderPane.setAlignment(paused, Pos.CENTER);
+        Text save = new Text("Save");
+        save.getStyleClass().add("title");
+        borderPane.setTop(save);
+        borderPane.setAlignment(save, Pos.CENTER);
 
         setCenterButtons(borderPane);
-        setupKeystrokes(scene);
 
         return scene;
     }
     
-    private static void setupKeystrokes(Scene scene) {
-        scene.setOnKeyPressed( e -> {
-            switch ( e.getCode() ) {
-                case ESCAPE:
-                    x.getGameStateManager().setState(GameStateManager.State.Playing);
-                    break;
-            }
-        });
-    }
-
     private static void setCenterButtons(BorderPane borderPane) {
         VBox vbox = new VBox();
         vbox.setSpacing(20);
@@ -58,18 +47,19 @@ public class PausedScene {
         vbox.getStyleClass().add("button-box");
 
         Button backButton = new Button("Back");
-        Button saveButton = new Button("Save");
-        Button menuButton = new Button("Quit");
+        Button save1Button = new Button("Empty");
+        Button save2Button = new Button("Empty");
+        Button save3Button = new Button("Empty");
 
-        backButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.Playing) );
-        saveButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.Save) );
-        menuButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.MainMenu) );
+        backButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.Paused) );
 
         vbox.getChildren().add(backButton);
-        vbox.getChildren().add(saveButton);
-        vbox.getChildren().add(menuButton);
+        vbox.getChildren().add(save1Button);
+        vbox.getChildren().add(save2Button);
+        vbox.getChildren().add(save3Button);
 
         borderPane.setCenter(vbox);
         borderPane.setAlignment(vbox, Pos.CENTER);
     }
 }
+
