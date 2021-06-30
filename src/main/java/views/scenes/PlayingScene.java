@@ -2,6 +2,7 @@ package views.scenes;
 
 import game.main.X;
 import game.player.Player;
+import game.main.GameStateManager;
 import game.entities.DynamicEntity;
 import game.entities.buffs.Buff;
 import util.parse.obj.*;
@@ -78,6 +79,9 @@ public class PlayingScene {
                     break;
                 case SHIFT:
                     x.getPlayer().addBuff(Buff.load(x, x.getPlayer(), "running"));
+                    break;
+                case ESCAPE:
+                    x.getGameStateManager().setState(GameStateManager.State.Paused);
             }
         });
         scene.setOnKeyReleased( e -> {
