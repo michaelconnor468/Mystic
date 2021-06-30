@@ -37,6 +37,7 @@ public class TimingManager {
 
     public void stopTiming() {
         timer.cancel();
+        timer = new Timer();
     }
 
     public void register(TickObserver o) {
