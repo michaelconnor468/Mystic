@@ -45,6 +45,7 @@ public class Game implements GameStateChangeListener {
             case Loading:
                 Task<Void> task = new Task<Void>() {
                     @Override protected Void call() throws Exception {
+                        x.createPlayer(loadFilePath);
                         x.getChunkManager().loadChunks(loadFilePath);
                         return null;
                     }
