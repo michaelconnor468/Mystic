@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
 import javafx.geometry.Pos;
 
-public class SaveScene {
+public class LoadScene {
     private static X x;
 
     public static Scene getScene(X context) {
@@ -29,7 +29,7 @@ public class SaveScene {
                 .toUri().toURL().toExternalForm());
         } catch ( Exception e ) { System.err.println(e); } 
 
-        Text save = new Text("Save");
+        Text save = new Text("Load");
         save.getStyleClass().add("title");
         borderPane.setTop(save);
         borderPane.setAlignment(save, Pos.CENTER);
@@ -51,7 +51,7 @@ public class SaveScene {
         Button save2Button = new Button("Empty");
         Button save3Button = new Button("Empty");
 
-        backButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.Paused) );
+        backButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.MainMenu) );
 
         vbox.getChildren().add(backButton);
         vbox.getChildren().add(save1Button);

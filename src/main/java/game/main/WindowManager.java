@@ -14,6 +14,7 @@ public class WindowManager implements GameStateChangeListener {
     private LoadingView loadingView;
     private PausedView pausedView;
     private SaveView saveView;
+    private LoadView loadView;
     // Do not use. Javafx does some initialization at canvas creation time for some reason so this is created.
     private Canvas _canvas; 
     private X x;
@@ -28,6 +29,7 @@ public class WindowManager implements GameStateChangeListener {
         this.loadingView = new LoadingView(x);
         this.pausedView = new PausedView(x);
         this.saveView = new SaveView(x);
+        this.loadView = new LoadView(x);
         this.x = x;
         stage.setTitle("Mystic");
         x.getGameStateManager().addGameStateChangeListener(this);
@@ -52,6 +54,9 @@ public class WindowManager implements GameStateChangeListener {
             case Save:
                 stage.setScene(saveView.deploy());
                 break;
+            case Load:
+                stage.setScene(loadView.deploy());
+                break;
         }
         switch (from) {
             case MainMenu:
@@ -68,6 +73,9 @@ public class WindowManager implements GameStateChangeListener {
                 break;
             case Save:
                 saveView.recall();
+                break;
+            case Load:
+                loadView.recall();
                 break;
         }
     }

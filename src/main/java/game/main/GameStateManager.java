@@ -14,7 +14,8 @@ public class GameStateManager {
         Loading,
         Playing,
         Paused,
-        Save
+        Save,
+        Load
     }
     private State state;
     private X x;
@@ -37,12 +38,14 @@ public class GameStateManager {
         }
         canTransitionTo.get(state.Initialization).add(state.MainMenu);
         canTransitionTo.get(state.MainMenu).add(state.Loading);
+        canTransitionTo.get(state.MainMenu).add(state.Load);
         canTransitionTo.get(state.Loading).add(state.Playing);
         canTransitionTo.get(state.Playing).add(state.Paused);
         canTransitionTo.get(state.Paused).add(state.MainMenu);
         canTransitionTo.get(state.Paused).add(state.Playing);
         canTransitionTo.get(state.Paused).add(state.Save);
         canTransitionTo.get(state.Save).add(state.Paused);
+        canTransitionTo.get(state.Load).add(state.MainMenu);
     }
     public State getState() { return state; }
     public boolean setState(State state) {

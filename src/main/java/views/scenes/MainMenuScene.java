@@ -57,6 +57,7 @@ public class MainMenuScene {
         // TODO loadGame functionality
         // TODO settings functionality
         newGameButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.Loading) );
+        loadGameButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.Load) );
         exitButton.setOnAction( e -> {try{x.getApplication().stop();} catch (Exception err) {System.exit(0);}} );
 
         vbox.getChildren().add(newGameButton);
