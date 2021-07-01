@@ -44,18 +44,28 @@ public class NumberParserTests {
 		);
 	}
 
-  @Test
-  void ParseCountTest() {
-    String errormsg = "Number parser failed to correctly count number of characters parsed";
+    @Test
+    void ParseCountTest() {
+        String errormsg = "Number parser failed to correctly count number of characters parsed";
 
-    NumberParser parser = new NumberParser();
-    parser.parse("");
-    assertEquals(0, parser.getParsedLength(), errormsg);
-    parser.parse("123");
-    assertEquals(3, parser.getParsedLength(), errormsg);
-    parser.parse("0.32");
-    assertEquals(4, parser.getParsedLength(), errormsg);
-    parser.parse("123test");
-    assertEquals(3, parser.getParsedLength(), errormsg);
-  }
+        NumberParser parser = new NumberParser();
+        parser.parse("");
+        assertEquals(0, parser.getParsedLength(), errormsg);
+        parser.parse("123");
+        assertEquals(3, parser.getParsedLength(), errormsg);
+        parser.parse("0.32");
+        assertEquals(4, parser.getParsedLength(), errormsg);
+        parser.parse("123test");
+        assertEquals(3, parser.getParsedLength(), errormsg);
+    }
+
+    @Test
+    void OutputTest() {
+        String errormsg = "Number parser objects failed to correctly stringify.";
+
+        NumberParser parser = new NumberParser();
+        assertEquals("0", ((ParserInt) parser.parse("0")).toString(), errormsg);
+        assertEquals("102", ((ParserInt) parser.parse("102")).toString(), errormsg);
+        assertEquals(0, ((ParserDouble) parser.parse(((ParserDouble) parser.parse("0.0")).toString())).getNumber());
+    }
 }

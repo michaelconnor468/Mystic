@@ -12,4 +12,5 @@ public class ParserInt implements ParserNumber {
     public int getNumber() {return number;}
     public ObjectType getType() { return ObjectType.INT; }
     public String toJSON() { return Integer.toString(number); }
+    public String toString() { return Integer.toString(number); }
 }
