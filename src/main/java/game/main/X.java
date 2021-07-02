@@ -43,25 +43,30 @@ public class X {
         if ( game == null )
             game = new Game(this, ticksPerSecond);
     }
+
     public WindowManager getWindowManager() { return windowManager; }
     public void createWindowManagerSingleton(Stage stage) { 
         if ( windowManager == null ) 
             windowManager = new WindowManager(this, stage);
     }
+
     public GameStateManager getGameStateManager() { return gameStateManager; }
     public void createGameStateManagerSingleton() {
         if ( gameStateManager == null )
             gameStateManager = new GameStateManager(this);
     }
+
     public Application getApplication() { return application; }
     public void createApplicationSingleton(Application application) {
         if ( this.application == null )
             this.application = application;
     }
+
     public ChunkManager getChunkManager() { return chunkManager; }
     public void createChunkManager(Path path) { 
         chunkManager = new ChunkManager(this, FileParser.parse(path.resolve(Paths.get("config/world.mcfg")))); 
     }
+
     public void createSettingsSingletons(Path path) {
         if ( mainSettings == null ) mainSettings = FileParser.parse(path.resolve(Paths.get("main.mcfg"))).getProperties();
         if ( buffs == null ) buffs = FileParser.parse(path.resolve(Paths.get("buffs.mcfg"))).getProperties();
@@ -95,9 +100,11 @@ public class X {
         return templates.containsKey(str) ? templates.get(str) : null;
     }
     public HashMap<String, ParserObject> getMainSettings() { return mainSettings; }
+
     public void createPlayer(Path path) { 
         player = Player.load(this, FileParser.parse(path.resolve("entities/player.msv"))); 
     }
+
     public HashMap<String, ParserObject> getBuffs() { return buffs; }
     public Player getPlayer() { return player; }
     public void createRenderManager() { renderManager = new RenderManager(this); }
