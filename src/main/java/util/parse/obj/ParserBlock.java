@@ -18,10 +18,13 @@ public class ParserBlock implements ParserObject {
 	public String toJSON() {
 		StringBuilder sb = new StringBuilder();
         sb.append("{");
-        for ( ParserObject obj : properties.values() ) {
-            sb.append(obj.toJSON());
+        for ( String obj : properties.keySet() ) {
+            sb.append(obj);
+            sb.append(": ");
+            sb.append(properties.get(obj).toJSON());
             sb.append(", ");
         }
+        if ( properties.values().size() > 0 ) sb.delete(sb.length() - 2, sb.length());
         sb.append("}");
         return sb.toString();
 	}

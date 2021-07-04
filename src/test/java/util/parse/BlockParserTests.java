@@ -49,4 +49,15 @@ public class BlockParserTests {
     assertEquals("tst", ((ParserString) (((ParserArray) (block.getProperties().get("first"))).getIndex(1))).getString(), errormsg);
     assertEquals("inside", ((ParserString) (((ParserBlock) (block.getProperties().get("third"))).getProperties().get("inner"))).getString(), errormsg);
   }
+    @Test 
+    void ToJSONTest() {
+        String errormsg = "Block object returned by parser failed to correctly output equivalent JSON";
+
+        ParserBlock block1 = (new BlockParser()).parse("{ i: 2, str: \"hello\", blk: { j: 3 } }");
+        ParserBlock block2 = (new BlockParser()).parse(block1.toString());
+
+        assertEquals(2, ((ParserInt)block2.getProperty("i")).getNumber(), errormsg);
+        assertEquals("hello", ((ParserString)block2.getProperty("str")).getString(), errormsg);
+        assertEquals(3, ((ParserInt) ((ParserBlock)block2.getProperty("blk")).getProperty("j")).getNumber(), errormsg);
+    }
 }
