@@ -45,15 +45,11 @@ public class ChunkManager implements TickObserver, Renderable {
     }
 
     public void tick(X x) {
-        for ( ArrayList<Chunk> chunkList : chunks )
-            for ( Chunk chunk : chunkList ) 
-                chunk.tick(x);
+        for ( ArrayList<Chunk> chunkList : chunks ) for ( Chunk chunk : chunkList ) chunk.tick(x);
     }
 
     public void render(Renderer r) {
-        for ( ArrayList<Chunk> chunkList : chunks )
-            for ( Chunk chunk : chunkList ) 
-                chunk.render(r);
+        for ( ArrayList<Chunk> chunkList : chunks ) for ( Chunk chunk : chunkList ) chunk.render(r);
     }
     
     public void loadChunks(Path path) {
