@@ -36,6 +36,7 @@ public class ParserArray implements ParserObject, Iterable<ParserObject> {
             sb.append(obj.toJSON());
             sb.append(", ");
         }
+        if ( array.size() > 0 ) sb.delete(sb.length() - 2, sb.length());
         sb.append("]");
         return sb.toString();
     }
