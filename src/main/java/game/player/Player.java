@@ -33,8 +33,8 @@ public class Player extends DynamicEntity {
 
     private Weapon weapon;
 
-    public Player(X x, ParserBlock block) {
-        super(x, block); // TODO refactor a lot of this to superclass constructors
+    public Player(X x, ParserBlock block, ParserBlock template) {
+        super(x, block, template); // TODO refactor a lot of this to superclass constructors
         HashMap<String, ParserObject> map = block.getProperties();
         this.stamina = ((ParserInt) map.get("stamina")).getNumber();
         this.maxStamina = ((ParserInt) map.get("maxStamina")).getNumber();

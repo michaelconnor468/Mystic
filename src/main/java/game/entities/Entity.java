@@ -37,16 +37,24 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
     protected Animation animation;
 
     public Entity() {}
-    protected Entity(X x, ParserBlock block) {
+    protected Entity(X x, ParserBlock block, ParserBlock template) {
         this.x = x;
         HashMap<String, ParserObject> map = block.getProperties();
+        HashMap<String, ParserObject> templateMap = template.getProperties();
         this.size = new Point(((ParserInt) map.get("xSize")).getNumber(), ((ParserInt) map.get("ySize")).getNumber());
         this.position = new Point(((ParserInt) map.get("xPosition")).getNumber(), 
             ((ParserInt) map.get("yPosition")).getNumber());
         this.maxHealth = ((ParserInt) map.get("maxHealth")).getNumber();
         this.health = ((ParserInt) map.get("health")).getNumber();
-        if ( map.containsKey("damageable") ) this.damageable = ((ParserInt) map.get("damageable")).getNumber() == 1;
-        if ( map.containsKey("passable") ) this.damageable = ((ParserInt) map.get("passable")).getNumber() == 1;
+        if ( templateMap.containsKey("damageable") ) 
+            this.damageable = ((ParserInt) loadProperty(block, template, "damageable")).getNumber() == 1;
+        if ( templateMap.containsKey("passable") ) 
+            this.passable = ((ParserInt) loadProperty(block, template, "passable")).getNumber() == 1;
+        for ( ParserObject box : ((ParserArray) loadProperty(block, template, "collisionBoxes")) )
+            addCollisionBox(new CollisionBox(this, (ParserBlock) box));
+        this.drops = new ArrayList<>();
+        for ( ParserObject i : ((ParserArray) loadProperty(block, template, "drops")) )
+            drops.add(((ParserInt) i).getNumber());
     }
 
     public synchronized void tick(X x) { 
@@ -108,27 +116,6 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
 
     public void onCollision(Collidable entity) {}
 
-    protected static Entity load(X x, ParserBlock block, ParserBlock template, Entity entity) {
-        entity.x = x;
-        entity.maxHealth = ((ParserInt) loadProperty(block, template, "maxHealth")).getNumber();
-        entity.health = ((ParserInt) loadProperty(block, template, "health")).getNumber();
-        entity.name = ((ParserString) loadProperty(block, template, "name")).getString();
-        int xSize = ((ParserInt) loadProperty(block, template, "xSize")).getNumber();
-        int ySize = ((ParserInt) loadProperty(block, template, "ySize")).getNumber();
-        int xPosition = ((ParserInt) loadProperty(block, template, "xPosition")).getNumber();
-        int yPosition = ((ParserInt) loadProperty(block, template, "yPosition")).getNumber();
-        entity.position = new Point(xPosition, yPosition);
-        entity.size = new Point(xSize, ySize);
-        if (loadProperty(block, template, "damageable") != null)
-            entity.damageable = ((ParserInt) loadProperty(block, template, "damageable")).getNumber() == 1;
-        for ( ParserObject box : ((ParserArray) loadProperty(block, template, "collisionBoxes")) )
-            entity.addCollisionBox(new CollisionBox(entity, (ParserBlock) box));
-        entity.drops = new ArrayList<>();
-        for ( ParserObject i : ((ParserArray) loadProperty(block, template, "drops")) )
-            entity.drops.add(((ParserInt) i).getNumber());
-        return entity;
-    }
-
     public void save(ParserBlock block) {
         HashMap<String, ParserObject> map = block.getProperties();
         map.put("xSize", new ParserInt((int) size.getX()));
@@ -139,9 +126,23 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
         map.put("maxHealth", new ParserInt(maxHealth));
         map.put("damageable", new ParserInt(damageable ? 1 : 0));
         map.put("passable", new ParserInt(passable ? 1 : 0));
+
+        ParserArray collisionArray = new ParserArray(ParserObject.ObjectType.BLOCK);
+        for ( CollisionBox box : getCollisionBoxes() ) {
+            ParserBlock boxBlock = new ParserBlock();
+            box.save(boxBlock);
+            collisionArray.add(boxBlock);
+        }
+        map.put("collisionBoxes", collisionArray);
+
+        ParserArray dropsArray = new ParserArray(ParserObject.ObjectType.INT);
+        for ( Integer i : drops ) {
+            dropsArray.add(new ParserInt(i));
+        }
+        map.put("drops", dropsArray);
     }
 
-    private static ParserObject loadProperty(ParserBlock block, ParserBlock template, String name) {
+    public static ParserObject loadProperty(ParserBlock block, ParserBlock template, String name) {
         HashMap<String, ParserObject> templateProps = template.getProperties();
         HashMap<String, ParserObject> props = block.getProperties();
         return props.containsKey(name) ? props.get(name) : templateProps.get(name);

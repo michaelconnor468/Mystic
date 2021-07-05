@@ -31,8 +31,8 @@ public abstract class DynamicEntity extends Entity {
     }
 
     protected DynamicEntity() {}
-    public DynamicEntity(X x, ParserBlock block) {
-        super(x, block);
+    public DynamicEntity(X x, ParserBlock block, ParserBlock template) {
+        super(x, block, template);
     }
 
     public void tick(X x) {

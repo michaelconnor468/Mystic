@@ -3,6 +3,7 @@ package game.physics;
 import util.parse.obj.*;
 
 import java.util.Map;
+import java.util.HashMap;
 import java.util.Collection;
 import java.awt.Point;
 
@@ -68,6 +69,14 @@ public class CollisionBox {
         Point ret = new Point(entity.getPosition()); 
         ret.translate((int) max.getX(), (int) max.getY()); 
         return ret;
+    }
+
+    public void save(ParserBlock block) {
+        HashMap<String, ParserObject> boxProps = block.getProperties();
+        boxProps.put("xMin", new ParserInt((int) min.getX()));
+        boxProps.put("yMin", new ParserInt((int) min.getY()));
+        boxProps.put("xMax", new ParserInt((int) max.getX()));
+        boxProps.put("yMax", new ParserInt((int) max.getY()));
     }
 
     public String toString() {

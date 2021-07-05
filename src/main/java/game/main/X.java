@@ -68,7 +68,8 @@ public class X {
     }
 
     public void createSettingsSingletons(Path path) {
-        if ( mainSettings == null ) mainSettings = FileParser.parse(path.resolve(Paths.get("main.mcfg"))).getProperties();
+        if ( mainSettings == null ) 
+            mainSettings = FileParser.parse(path.resolve(Paths.get("main.mcfg"))).getProperties();
         if ( buffs == null ) buffs = FileParser.parse(path.resolve(Paths.get("buffs.mcfg"))).getProperties();
     }
     public void populateTemplates(Path path) {
@@ -102,7 +103,8 @@ public class X {
     public HashMap<String, ParserObject> getMainSettings() { return mainSettings; }
 
     public void createPlayer(Path path) { 
-        player = new Player(this, FileParser.parse(path.resolve("entities/player.msv"))); 
+        player = new Player(this, FileParser.parse(path.resolve("entities/player.msv")), 
+            FileParser.parse(Paths.get("src/main/config/templates/player/player.mcfg"))); 
     }
 
     public HashMap<String, ParserObject> getBuffs() { return buffs; }
