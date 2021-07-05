@@ -27,21 +27,18 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
     protected String name;
     protected Point position;
     protected Point size;
-    protected int health;
-    protected int maxHealth;
-    protected boolean damageable;
-    protected boolean passable;
-    protected ArrayList<CollisionBox> collisionBoxes;
-    protected ArrayList<Buff> buffs; 
+    protected int health = 10;
+    protected int maxHealth = 10;
+    protected boolean damageable = false;
+    protected boolean passable = false;
+    protected ArrayList<CollisionBox> collisionBoxes = new ArrayList<>();
+    protected ArrayList<Buff> buffs = new ArrayList<>(); 
     protected ArrayList<Integer> drops; 
     protected Animation animation;
 
-    protected Entity() { 
-        this.collisionBoxes = new ArrayList<>();
-        this.buffs = new ArrayList<>(); 
-        this.damageable = false;
-        this.maxHealth = 10;
-        this.health = 10;
+    public Entity() {}
+    protected Entity(X x, ParserBlock block) {
+    
     }
 
     public synchronized void tick(X x) { 

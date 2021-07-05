@@ -4,6 +4,8 @@ import game.main.X;
 import game.main.render.Animation;
 import game.main.render.Renderable;
 import game.entities.buffs.Buff;
+import util.parse.obj.*;
+
 import java.lang.Math;
 
 /**
@@ -28,8 +30,9 @@ public abstract class DynamicEntity extends Entity {
         southwest
     }
 
-    protected DynamicEntity() {
-        super();
+    protected DynamicEntity() {}
+    public DynamicEntity(X x, ParserBlock block) {
+        super(x, block);
     }
 
     public void tick(X x) {

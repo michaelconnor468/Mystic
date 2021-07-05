@@ -9,7 +9,7 @@ import game.entities.DynamicEntity;
  * support for entity collision and animation.
  */
 public class RangedAttack extends DynamicEntity {
-    private RangedAttack() {}
+    public RangedAttack() {}
     public RangedAttack(Player player) {
 
     }
