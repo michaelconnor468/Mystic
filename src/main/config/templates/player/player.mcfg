@@ -14,10 +14,13 @@
         yMin: 90,
         xMax: 44,
         yMax: 110
-    }
+    },
     weapon: {
         id: 0,
         melee: 1
-    }
+    },
+    stationary: 1,
+    damageable: 1,
+    passable: 0
 }
 

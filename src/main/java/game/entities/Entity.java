@@ -27,8 +27,8 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
     protected String name;
     protected Point position;
     protected Point size;
-    protected int health = 10;
-    protected int maxHealth = 10;
+    protected int health;
+    protected int maxHealth;
     protected boolean damageable = false;
     protected boolean passable = false;
     protected ArrayList<CollisionBox> collisionBoxes = new ArrayList<>();
@@ -38,7 +38,15 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
 
     public Entity() {}
     protected Entity(X x, ParserBlock block) {
-    
+        this.x = x;
+        HashMap<String, ParserObject> map = block.getProperties();
+        this.size = new Point(((ParserInt) map.get("xSize")).getNumber(), ((ParserInt) map.get("ySize")).getNumber());
+        this.position = new Point(((ParserInt) map.get("xPosition")).getNumber(), 
+            ((ParserInt) map.get("yPosition")).getNumber());
+        this.maxHealth = ((ParserInt) map.get("maxHealth")).getNumber();
+        this.health = ((ParserInt) map.get("health")).getNumber();
+        if ( map.containsKey("damageable") ) this.damageable = ((ParserInt) map.get("damageable")).getNumber() == 1;
+        if ( map.containsKey("passable") ) this.damageable = ((ParserInt) map.get("passable")).getNumber() == 1;
     }
 
     public synchronized void tick(X x) { 

@@ -36,13 +36,6 @@ public class Player extends DynamicEntity {
     public Player(X x, ParserBlock block) {
         super(x, block); // TODO refactor a lot of this to superclass constructors
         HashMap<String, ParserObject> map = block.getProperties();
-        this.x = x;
-        this.size = new Point(((ParserInt) map.get("xSize")).getNumber(),
-            ((ParserInt) map.get("ySize")).getNumber());
-        this.position = new Point(((ParserInt) map.get("xPosition")).getNumber(), 
-            ((ParserInt) map.get("yPosition")).getNumber());
-        this.maxHealth = ((ParserInt) map.get("maxHealth")).getNumber();
-        this.health = ((ParserInt) map.get("health")).getNumber();
         this.stamina = ((ParserInt) map.get("stamina")).getNumber();
         this.maxStamina = ((ParserInt) map.get("maxStamina")).getNumber();
         this.walkNorthAnimation = new Animation(x, this, Paths.get("src/main/resources/player/walk_north.png"));
@@ -63,7 +56,6 @@ public class Player extends DynamicEntity {
         this.stationary = true;
         this.speed = ((ParserInt) map.get("speed")).getNumber();
         this.addCollisionBox(new CollisionBox(this, (ParserBlock) map.get("collisionBox")));
-        this.damageable = true;
         ParserBlock weaponBlock = ((ParserBlock) map.get("weapon"));
         if ( weaponBlock.getProperties().containsKey("melee") )
             this.weapon = MeleeWeapon.load(x, this, weaponBlock);
