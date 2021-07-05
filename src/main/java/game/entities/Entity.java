@@ -129,6 +129,18 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
         return entity;
     }
 
+    public void save(ParserBlock block) {
+        HashMap<String, ParserObject> map = block.getProperties();
+        map.put("xSize", new ParserInt((int) size.getX()));
+        map.put("ySize", new ParserInt((int) size.getY()));
+        map.put("xPosition", new ParserInt((int) position.getX()));
+        map.put("yPosition", new ParserInt((int) position.getY()));
+        map.put("health", new ParserInt(health));
+        map.put("maxHealth", new ParserInt(maxHealth));
+        map.put("damageable", new ParserInt(damageable ? 1 : 0));
+        map.put("passable", new ParserInt(passable ? 1 : 0));
+    }
+
     private static ParserObject loadProperty(ParserBlock block, ParserBlock template, String name) {
         HashMap<String, ParserObject> templateProps = template.getProperties();
         HashMap<String, ParserObject> props = block.getProperties();
