@@ -33,8 +33,42 @@ public class Player extends DynamicEntity {
 
     private Weapon weapon;
 
-    private Player() {
-        super();
+    private Player() {}
+    public Player(X x, ParserBlock block) {
+        super(); // TODO refactor a lot of this to superclass constructors
+        HashMap<String, ParserObject> map = block.getProperties();
+        this.x = x;
+        this.size = new Point(((ParserInt) map.get("xSize")).getNumber(),
+            ((ParserInt) map.get("ySize")).getNumber());
+        this.position = new Point(((ParserInt) map.get("xPosition")).getNumber(), 
+            ((ParserInt) map.get("yPosition")).getNumber());
+        this.maxHealth = ((ParserInt) map.get("maxHealth")).getNumber();
+        this.health = ((ParserInt) map.get("health")).getNumber();
+        this.stamina = ((ParserInt) map.get("stamina")).getNumber();
+        this.maxStamina = ((ParserInt) map.get("maxStamina")).getNumber();
+        this.walkNorthAnimation = new Animation(x, this, Paths.get("src/main/resources/player/walk_north.png"));
+        this.walkNorthWestAnimation = 
+            new Animation(x, this, Paths.get("src/main/resources/player/walk_northwest.png"));
+        this.walkNorthEastAnimation = 
+            new Animation(x, this, Paths.get("src/main/resources/player/walk_northeast.png"));
+        this.walkSouthAnimation = 
+            new Animation(x, this, Paths.get("src/main/resources/player/walk_south.png"));
+        this.walkSouthWestAnimation = 
+            new Animation(x, this, Paths.get("src/main/resources/player/walk_southwest.png"));
+        this.walkSouthEastAnimation = 
+            new Animation(x, this, Paths.get("src/main/resources/player/walk_southeast.png"));
+        this.walkWestAnimation = new Animation(x, this, Paths.get("src/main/resources/player/walk_west.png"));
+        this.walkEastAnimation = new Animation(x, this, Paths.get("src/main/resources/player/walk_east.png"));
+        this.currentAnimation = this.walkSouthEastAnimation;
+        this.direction = MovementDirection.west;
+        this.stationary = true;
+        this.speed = ((ParserInt) map.get("speed")).getNumber();
+        this.addCollisionBox(new CollisionBox(this, (ParserBlock) map.get("collisionBox")));
+        this.damageable = true;
+        ParserBlock weaponBlock = ((ParserBlock) map.get("weapon"));
+        if ( weaponBlock.getProperties().containsKey("melee") )
+            this.weapon = MeleeWeapon.load(x, this, weaponBlock);
+        x.getTimingManager().register(this);
     }
 
     public void tick(X x) { 
@@ -92,42 +126,8 @@ public class Player extends DynamicEntity {
         }
     }
 
-    public static Player load(X x, ParserBlock block) {
-        Player player = new Player();
-        HashMap<String, ParserObject> map = block.getProperties();
-        player.x = x;
-        player.size = new Point(((ParserInt) map.get("xSize")).getNumber(),
-            ((ParserInt) map.get("ySize")).getNumber());
-        player.position = new Point(((ParserInt) map.get("xPosition")).getNumber(), 
-            ((ParserInt) map.get("yPosition")).getNumber());
-        player.maxHealth = ((ParserInt) map.get("maxHealth")).getNumber();
-        player.health = ((ParserInt) map.get("health")).getNumber();
-        player.stamina = ((ParserInt) map.get("stamina")).getNumber();
-        player.maxStamina = ((ParserInt) map.get("maxStamina")).getNumber();
-        player.walkNorthAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_north.png"));
-        player.walkNorthWestAnimation = 
-            new Animation(x, player, Paths.get("src/main/resources/player/walk_northwest.png"));
-        player.walkNorthEastAnimation = 
-            new Animation(x, player, Paths.get("src/main/resources/player/walk_northeast.png"));
-        player.walkSouthAnimation = 
-            new Animation(x, player, Paths.get("src/main/resources/player/walk_south.png"));
-        player.walkSouthWestAnimation = 
-            new Animation(x, player, Paths.get("src/main/resources/player/walk_southwest.png"));
-        player.walkSouthEastAnimation = 
-            new Animation(x, player, Paths.get("src/main/resources/player/walk_southeast.png"));
-        player.walkWestAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_west.png"));
-        player.walkEastAnimation = new Animation(x, player, Paths.get("src/main/resources/player/walk_east.png"));
-        player.currentAnimation = player.walkSouthEastAnimation;
-        player.direction = MovementDirection.west;
-        player.stationary = true;
-        player.speed = ((ParserInt) map.get("speed")).getNumber();
-        player.addCollisionBox(new CollisionBox(player, (ParserBlock) map.get("collisionBox")));
-        player.damageable = true;
-        ParserBlock weaponBlock = ((ParserBlock) map.get("weapon"));
-        if ( weaponBlock.getProperties().containsKey("melee") )
-            player.weapon = MeleeWeapon.load(x, player, weaponBlock);
-        x.getTimingManager().register(player);
-        return player;
+    public ParserBlock save() {
+        return null;
     }
 
     @Override

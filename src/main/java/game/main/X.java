@@ -102,7 +102,7 @@ public class X {
     public HashMap<String, ParserObject> getMainSettings() { return mainSettings; }
 
     public void createPlayer(Path path) { 
-        player = Player.load(this, FileParser.parse(path.resolve("entities/player.msv"))); 
+        player = new Player(this, FileParser.parse(path.resolve("entities/player.msv"))); 
     }
 
     public HashMap<String, ParserObject> getBuffs() { return buffs; }
