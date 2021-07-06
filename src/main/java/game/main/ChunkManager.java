@@ -12,6 +12,7 @@ import util.parse.obj.ParserInt;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.util.stream.Stream;
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class ChunkManager implements TickObserver, Renderable {
                 }
             });
         } catch ( Exception e ) { 
-            System.err.println("Failed to read chunk files\n" + e);
+            e.printStackTrace(new java.io.PrintStream(System.err));  
             System.exit(1);
         }
     }

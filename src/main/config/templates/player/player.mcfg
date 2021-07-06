@@ -9,12 +9,12 @@
     ySize: 128,
     xPosition: 6144,
     yPosition: 6144,
-    collisionBox: {
+    collisionBoxes: [{
         xMin: 20,
         yMin: 90,
         xMax: 44,
         yMax: 110
-    },
+    }],
     weapon: {
         id: 0,
         melee: 1

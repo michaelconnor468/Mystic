@@ -55,7 +55,6 @@ public class Player extends DynamicEntity {
         this.direction = MovementDirection.west;
         this.stationary = true;
         this.speed = ((ParserInt) map.get("speed")).getNumber();
-        this.addCollisionBox(new CollisionBox(this, (ParserBlock) map.get("collisionBox")));
         ParserBlock weaponBlock = ((ParserBlock) map.get("weapon"));
         if ( weaponBlock.getProperties().containsKey("melee") )
             this.weapon = MeleeWeapon.load(x, this, weaponBlock);
