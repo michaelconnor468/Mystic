@@ -9,6 +9,7 @@ import util.parse.obj.*;
 import java.util.ArrayList;
 import java.nio.file.Paths;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
 /**
  * Separate entity to represent the tiles that make up the floor. This is a special entity due to the fact that its position is static and discrete within a chunk
@@ -27,7 +28,7 @@ public class TileEntity extends Entity {
     public static TileEntity load(X x, ParserBlock block, Chunk chunk, int chunkRow, int chunkColumn) {
         TileEntity entity = new TileEntity();
         entity.size = new Point(chunk.getTileSize(), chunk.getTileSize());
-        entity.position = new Point((chunk.getXChunkPosition()*chunk.getSizeInTiles() + chunkColumn)
+        entity.position = new Point2D.Double((chunk.getXChunkPosition()*chunk.getSizeInTiles() + chunkColumn)
             * (int) entity.size.getX(), (chunk.getYChunkPosition()*chunk.getSizeInTiles() + chunkRow)
             * (int) entity.size.getX());
         entity.chunkRow = chunkRow;

@@ -11,6 +11,7 @@ import game.main.X;
 import java.util.HashSet;
 import java.nio.file.Paths;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
 /**
  * Uses collisions framework to deal damage to entities based on player state. This allows any animations and
@@ -36,7 +37,7 @@ public class MeleeAttack extends StaticEntity {
         this.weaponId = weapon.getId();
         this.x = x;
         this.size = new Point(((int) player.getSize().getX()), (int) player.getSize().getY() + 2);
-        this.position = new Point(((int) player.getPosition().getX()), (int) player.getPosition().getY());
+        this.position = new Point2D.Double(((int) player.getPosition().getX()), (int) player.getPosition().getY());
         this.animation = new Animation(x, this, Paths.get("src/main/resources/weapons/melee/"+weaponId+".png"));
         createCollisionBoxes();
     }
@@ -53,7 +54,7 @@ public class MeleeAttack extends StaticEntity {
     }
 
     private void createCollisionBoxes() {
-        this.position = new Point( (int) player.getPosition().getX(), (int) player.getPosition().getY());
+        this.position = new Point2D.Double( (int) player.getPosition().getX(), (int) player.getPosition().getY());
         addCollisionBox(new CollisionBox(this, new Point(-range, -range),
             new Point(((int) size.getX()) + range, ((int) size.getY()) + range), false));
     }

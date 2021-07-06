@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Random;
 import java.nio.file.Paths;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
 public class Item extends StaticEntity {
     private int id;
@@ -26,7 +27,8 @@ public class Item extends StaticEntity {
         item.id = id;
         item.size = new Point(((ParserInt) x.getMainSettings().get("itemSize")).getNumber(),
             ((ParserInt) x.getMainSettings().get("itemSize")).getNumber());
-        item.position = new Point((int) entity.getPosition().getX()+(new Random()).nextInt((int) entity.getSize().getX()),
+        item.position = 
+            new Point2D.Double((int) entity.getPosition().getX()+(new Random()).nextInt((int) entity.getSize().getX()),
             (int) entity.getPosition().getY() + (int) entity.getSize().getY() + (new Random()).nextInt(30));
         item.addCollisionBox(new CollisionBox(item, new Point(0, (int) item.size.getX()), 
             new Point(0, (int) item.size.getY()), false));
@@ -38,7 +40,7 @@ public class Item extends StaticEntity {
 
     public void drop() {
         inInventory = false;
-        position = new Point((int) x.getPlayer().getPosition().getX() + ((int) x.getPlayer().getSize().getX()/2),
+        position = new Point2D.Double((int) x.getPlayer().getPosition().getX()+((int) x.getPlayer().getSize().getX()/2),
             (int) (x.getPlayer().getPosition().getY() + x.getPlayer().getSize().getY()));
         x.getChunkManager().addEntity(this);
     }

@@ -111,7 +111,7 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
             if ( buff.getName().equals(str) ) buff.setTicksToLive(0);
     }
 
-    public Point2D.Double getPosition() { return new Point(position); }
+    public Point2D.Double getPosition() { return new Point2D.Double(position.getX(), position.getY()); }
     public Point getSize() { return new Point(size); } 
     public double getHealth() { return this.health; }
     public double getMaxHealth() { return this.maxHealth; }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ public class CollisionBoxTests {
     @BeforeEach public void setup() {
         entity1 = new Collidable() {
             private ArrayList<CollisionBox> boxes = new ArrayList<>();;
-            public Point getPosition() { return new Point(100, 100); } 
+            public Point2D.Double getPosition() { return new Point2D.Double(100, 100); } 
             public Point getSize() { return new Point(100, 100); }
             public void onCollision(Collidable entity) { CollisionBoxTests.this.collided1 = true;  }
             public void addCollisionBox(Point min, Point max) { boxes.add(new CollisionBox(this, min, max, false)); }
@@ -23,7 +24,7 @@ public class CollisionBoxTests {
         };
         entity2 = new Collidable() {
             private ArrayList<CollisionBox> boxes = new ArrayList<>();;
-            public Point getPosition() { return new Point(150, 150); }
+            public Point2D.Double getPosition() { return new Point2D.Double(150, 150); } 
             public Point getSize() { return new Point(100, 100); }
             public void onCollision(Collidable entity) { CollisionBoxTests.this.collided2 = true;  }
             public void addCollisionBox(Point min, Point max) { boxes.add(new CollisionBox(this, min, max, false)); }

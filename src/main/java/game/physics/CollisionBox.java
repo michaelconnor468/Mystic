@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collection;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
 /**
  * For entities implementing collidable. Relatively situated within an entity for easy saving and loading and to reduce
@@ -59,16 +60,12 @@ public class CollisionBox {
         return collides && !passable;
     }
 
-    public Point getRealMin() { 
-        Point ret = new Point(entity.getPosition()); 
-        ret.translate((int) min.getX(), (int) min.getY()); 
-        return ret;
+    public Point2D.Double getRealMin() { 
+        return new Point2D.Double(entity.getPosition().getX() + min.getX(), entity.getPosition().getY() + min.getY()); 
     }
 
-    public Point getRealMax() { 
-        Point ret = new Point(entity.getPosition()); 
-        ret.translate((int) max.getX(), (int) max.getY()); 
-        return ret;
+    public Point2D.Double getRealMax() { 
+        return new Point2D.Double(entity.getPosition().getX() + max.getX(), entity.getPosition().getY() + max.getY()); 
     }
 
     public void save(ParserBlock block) {
