@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Collections;
 import java.util.Iterator;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
 /**
  * Abstract class for entity within the game. To allow easy addition of future features, everything in the game is considered an entity allowing it to
@@ -25,7 +26,7 @@ import java.awt.Point;
 public abstract class Entity implements TickObserver, Renderable, Collidable, Positionable {
     protected X x;
     protected String name;
-    protected Point position;
+    protected Point2D.Double position;
     protected Point size;
     protected int health;
     protected int maxHealth;
@@ -43,7 +44,7 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
         HashMap<String, ParserObject> templateMap = template.getProperties();
         this.size = new Point(((ParserInt) loadProperty(block, template, "xSize")).getNumber(), 
             ((ParserInt) loadProperty(block, template, "ySize")).getNumber());
-        this.position = new Point(((ParserInt) map.get("xPosition")).getNumber(), 
+        this.position = new Point2D.Double(((ParserInt) map.get("xPosition")).getNumber(), 
             ((ParserInt) map.get("yPosition")).getNumber());
         this.maxHealth = ((ParserInt) loadProperty(block, template, "maxHealth")).getNumber();
         this.health = ((ParserInt) loadProperty(block, template, "health")).getNumber();
@@ -110,7 +111,7 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
             if ( buff.getName().equals(str) ) buff.setTicksToLive(0);
     }
 
-    public Point getPosition() { return new Point(position); }
+    public Point2D.Double getPosition() { return new Point(position); }
     public Point getSize() { return new Point(size); } 
     public double getHealth() { return this.health; }
     public double getMaxHealth() { return this.maxHealth; }
