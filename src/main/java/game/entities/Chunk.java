@@ -105,7 +105,7 @@ public class Chunk implements TickObserver, Renderable {
 
         for ( int i = 0; i < staticEntityArray.getLength(); i++ ) {
             ParserBlock staticBlock = (ParserBlock) staticEntityArray.getIndex(i);
-            StaticEntity staticEntity = StaticEntity.load(x, staticBlock);
+            StaticEntity staticEntity = new StaticEntity(x, staticBlock);
             staticEntityContainer.addEntity(staticEntity);
         }
 
