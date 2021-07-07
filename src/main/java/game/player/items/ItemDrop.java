@@ -32,11 +32,12 @@ public class ItemDrop extends StaticEntity {
 
     public ItemDrop(X x, int id, Entity entity) { 
         ParserBlock block = x.getTemplates("items").get(id);
+        this.x = x;
         this.item = new Item(x, ((ParserInt) block.getProperty("type")).getNumber());
         HashMap<String, ParserObject> props = block.getProperties();
-        this.animation = new Animation(x, this, Paths.get("src/main/resources/items/"+item.getId()+".png"));
         this.size = new Point(((ParserInt) props.get("xSize")).getNumber(), 
             ((ParserInt) props.get("ySize")).getNumber());
+        this.animation = new Animation(x, this, Paths.get("src/main/resources/items/"+item.getId()+".png"));
         this.passable = true;
         this.saveable = false;
         this.position = 
