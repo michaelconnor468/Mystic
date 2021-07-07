@@ -39,6 +39,7 @@ public class MeleeAttack extends StaticEntity {
         this.size = new Point(((int) player.getSize().getX()), (int) player.getSize().getY() + 2);
         this.position = new Point2D.Double(((int) player.getPosition().getX()), (int) player.getPosition().getY());
         this.animation = new Animation(x, this, Paths.get("src/main/resources/weapons/melee/"+weaponId+".png"));
+        this.saveable = false;
         createCollisionBoxes();
     }
 

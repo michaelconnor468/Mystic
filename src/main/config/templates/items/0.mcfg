@@ -1,3 +1,5 @@
 {
-    name: "stick"
+    name: "stick",
+    xSize: 32,
+    ySize: 32
 }

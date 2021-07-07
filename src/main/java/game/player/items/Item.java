@@ -15,44 +15,16 @@ import java.nio.file.Paths;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 
-public class Item extends StaticEntity {
+public class Item {
+    private X x;
+    private String name;
     private int id;
     private boolean inInventory;
-
-    public static void drop(X x, int id, Entity entity) {
-        Item item = new Item();
-        HashMap<String, ParserObject> props = x.getTemplates("items").get(id).getProperties();
-        item.x = x;
-        item.name = ((ParserString) props.get("name")).toString();
-        item.id = id;
-        item.size = new Point(((ParserInt) x.getMainSettings().get("itemSize")).getNumber(),
-            ((ParserInt) x.getMainSettings().get("itemSize")).getNumber());
-        item.position = 
-            new Point2D.Double((int) entity.getPosition().getX()+(new Random()).nextInt((int) entity.getSize().getX()),
-            (int) entity.getPosition().getY() + (int) entity.getSize().getY() + (new Random()).nextInt(30));
-        item.addCollisionBox(new CollisionBox(item, new Point(0, (int) item.size.getX()), 
-            new Point(0, (int) item.size.getY()), false));
-        item.passable = true;
-        item.inInventory = false;
-        item.animation = new Animation(x, item, Paths.get("src/main/resources/items/"+item.id+".png"));
-        x.getChunkManager().addEntity(item);
+    private Item() {}
+    
+    public Item(X x, int id) {
+        this.x = x;
+        this.id = id;
+        this.name = ((ParserString) x.getTemplates("items").get(id).getProperty("name")).toString();
     }
-
-    public void drop() {
-        inInventory = false;
-        position = new Point2D.Double((int) x.getPlayer().getPosition().getX()+((int) x.getPlayer().getSize().getX()/2),
-            (int) (x.getPlayer().getPosition().getY() + x.getPlayer().getSize().getY()));
-        x.getChunkManager().addEntity(this);
-    }
-
-    public void collected() {
-        inInventory = true;
-        x.getChunkManager().removeEntity(this);
-    }
-
-    @Override public void onCollision(Collidable entity) {
-        if ( entity instanceof Player ) ((Player) entity).addItem(this);
-    }
-
-    @Override public void render(Renderer renderer) { if ( !inInventory ) renderer.render(animation); }
 }

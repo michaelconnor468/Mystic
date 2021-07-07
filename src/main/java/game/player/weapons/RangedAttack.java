@@ -11,6 +11,6 @@ import game.entities.DynamicEntity;
 public class RangedAttack extends DynamicEntity {
     public RangedAttack() {}
     public RangedAttack(Player player) {
-
+        this.saveable = false;
     }
 }

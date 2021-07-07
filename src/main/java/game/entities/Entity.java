@@ -32,6 +32,7 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
     protected int maxHealth;
     protected boolean damageable = false;
     protected boolean passable = false;
+    protected boolean saveable = true;
     protected ArrayList<CollisionBox> collisionBoxes = new ArrayList<>();
     protected ArrayList<Buff> buffs = new ArrayList<>(); 
     protected ArrayList<Integer> drops; 
