@@ -1,5 +1,6 @@
 {
     name: "stick",
+    type: 0,
     xSize: 32,
     ySize: 32
 }

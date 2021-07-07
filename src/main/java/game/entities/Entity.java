@@ -5,7 +5,7 @@ import game.main.render.*;
 import game.main.X;
 import game.entities.buffs.Buff;
 import game.player.weapons.Weapon;
-import game.player.items.Item;
+import game.player.items.ItemDrop;
 import game.physics.*;
 import util.parse.obj.*;
 import util.parse.BlockParser;
@@ -35,7 +35,7 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
     protected boolean saveable = true;
     protected ArrayList<CollisionBox> collisionBoxes = new ArrayList<>();
     protected ArrayList<Buff> buffs = new ArrayList<>(); 
-    protected ArrayList<Integer> drops; 
+    protected ArrayList<Integer> drops = new ArrayList<>(); 
     protected Animation animation;
 
     public Entity() {}
@@ -55,7 +55,6 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
             this.passable = ((ParserInt) loadProperty(block, template, "passable")).getNumber() == 1;
         for ( ParserObject box : ((ParserArray) loadProperty(block, template, "collisionBoxes")) )
             addCollisionBox(new CollisionBox(this, (ParserBlock) box));
-        this.drops = new ArrayList<>();
         ParserArray dropsArray = ((ParserArray) loadProperty(block, template, "drops"));
         if ( dropsArray != null )
             for ( ParserObject i : dropsArray )
@@ -89,7 +88,7 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
     }
 
     public void onDestroy() {
-        for ( int drop : drops ) Item.drop(x, drop, this);
+        for ( int drop : drops ) x.getChunkManager().addEntity(new ItemDrop(x, drop, this));
         x.getChunkManager().getChunkInsideOf(this).removeEntity(this);
     }
 

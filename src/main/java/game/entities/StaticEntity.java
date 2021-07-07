@@ -18,6 +18,11 @@ public class StaticEntity extends Entity {
         this.type = ((ParserInt) block.getProperties().get("type")).getNumber();
         animation = new Animation(x, this, Paths.get("src/main/resources/sentity/"+type+".png"));
     }
+    public StaticEntity(X x, ParserBlock block, ParserBlock template) {
+        super(x, block, template);
+        this.type = ((ParserInt) block.getProperties().get("type")).getNumber();
+        animation = new Animation(x, this, Paths.get("src/main/resources/sentity/"+type+".png"));
+    }
 
     public void tick(X x) {}
     public void render(Renderer renderer) { renderer.render(animation); }

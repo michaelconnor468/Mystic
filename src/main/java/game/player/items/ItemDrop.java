@@ -24,16 +24,16 @@ public class ItemDrop extends StaticEntity {
 
     public ItemDrop(X x, ParserBlock block) {
         super(x, block, block);
-        this.item = new Item(x, ((ParserInt) block.getProperty("id")).getNumber());
+        this.item = new Item(x, ((ParserInt) block.getProperty("type")).getNumber());
         this.animation = new Animation(x, this, Paths.get("src/main/resources/items/"+item.getId()+".png"));
         this.passable = true;
         this.saveable = false;
     }
 
     public ItemDrop(X x, int id, Entity entity) { 
-        ParserBlock block = x.getTemplates("items");
-        this.item = new Item(x, ((ParserInt) block.getProperty("id")).getNumber());
-        HashMap<String, ParserObject> props = x.getTemplates("items").get(item.getId()).getProperties();
+        ParserBlock block = x.getTemplates("items").get(id);
+        this.item = new Item(x, ((ParserInt) block.getProperty("type")).getNumber());
+        HashMap<String, ParserObject> props = block.getProperties();
         this.animation = new Animation(x, this, Paths.get("src/main/resources/items/"+item.getId()+".png"));
         this.size = new Point(((ParserInt) props.get("xSize")).getNumber(), 
             ((ParserInt) props.get("ySize")).getNumber());
@@ -44,7 +44,6 @@ public class ItemDrop extends StaticEntity {
             (int) entity.getPosition().getY() + (int) entity.getSize().getY() + (new Random()).nextInt(30));
         this.addCollisionBox(new CollisionBox(this, new Point(0, (int) this.size.getX()), 
             new Point(0, (int) this.size.getY()), false));
-        x.getChunkManager().addEntity(this);
     }
     
     @Override public void onCollision(Collidable entity) {

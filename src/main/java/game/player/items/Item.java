@@ -27,4 +27,6 @@ public class Item {
         this.id = id;
         this.name = ((ParserString) x.getTemplates("items").get(id).getProperty("name")).toString();
     }
+
+    public int getId() { return this.id; }
 }
