@@ -24,20 +24,17 @@ public class TileEntity extends Entity {
     private TileSpawnManager spawnManager;
 
     private TileEntity () {}
-    
-    public static TileEntity load(X x, ParserBlock block, Chunk chunk, int chunkRow, int chunkColumn) {
-        TileEntity entity = new TileEntity();
-        entity.size = new Point(chunk.getTileSize(), chunk.getTileSize());
-        entity.position = new Point2D.Double((chunk.getXChunkPosition()*chunk.getSizeInTiles() + chunkColumn)
-            * (int) entity.size.getX(), (chunk.getYChunkPosition()*chunk.getSizeInTiles() + chunkRow)
-            * (int) entity.size.getX());
-        entity.chunkRow = chunkRow;
-        entity.chunkColumn = chunkColumn;
-        entity.type = ((ParserInt) block.getProperties().get("type")).getNumber();
-        entity.liquid = block.getProperties().containsKey("liquid") ? 
+    public TileEntity(X x, ParserBlock block, Chunk chunk, int chunkRow, int chunkColumn) {
+        this.size = new Point(chunk.getTileSize(), chunk.getTileSize());
+        this.position = new Point2D.Double((chunk.getXChunkPosition()*chunk.getSizeInTiles() + chunkColumn)
+            * (int) this.size.getX(), (chunk.getYChunkPosition()*chunk.getSizeInTiles() + chunkRow)
+            * (int) this.size.getX());
+        this.chunkRow = chunkRow;
+        this.chunkColumn = chunkColumn;
+        this.type = ((ParserInt) block.getProperties().get("type")).getNumber();
+        this.liquid = block.getProperties().containsKey("liquid") ? 
             ((ParserInt) block.getProperties().get("liquid")).getNumber() == 1 : false;
-        entity.animation = new Animation(x, entity, Paths.get("src/main/resources/tiles/" + entity.type + ".png"));
-        return entity;
+        this.animation = new Animation(x, this, Paths.get("src/main/resources/tiles/" + this.type + ".png"));
     }
 
     public void tick(X x) {

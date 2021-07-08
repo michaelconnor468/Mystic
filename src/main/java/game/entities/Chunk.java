@@ -26,7 +26,6 @@ public class Chunk implements TickObserver, Renderable {
     private int tileSize;
     private ChunkManager chunkManager;
 
-    // Use load method to instantiate object
     private Chunk() {}
     public Chunk(X x, ParserBlock block, int xPosition, int yPosition) {
         this.chunkManager = x.getChunkManager();
@@ -43,7 +42,7 @@ public class Chunk implements TickObserver, Renderable {
             ParserArray tileColumn = (ParserArray) tileRows.getIndex(i);
             for ( int ii = 0; ii < tileColumn.getLength(); ii++ ) { 
                 ParserBlock entityBlock = (ParserBlock) tileColumn.getIndex(ii);
-                TileEntity entity = TileEntity.load(x, entityBlock, this, i, ii);
+                TileEntity entity = new TileEntity(x, entityBlock, this, i, ii);
                 if ( entityBlock.getProperties().containsKey("collisionBoxes") ) 
                     for (ParserObject obj : ((ParserArray) entityBlock.getProperties().get("collisionBoxes"))) 
                         entity.addCollisionBox(new CollisionBox(entity, (ParserBlock) obj)); 
