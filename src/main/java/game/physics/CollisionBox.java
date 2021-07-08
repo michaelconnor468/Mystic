@@ -68,12 +68,13 @@ public class CollisionBox {
         return new Point2D.Double(entity.getPosition().getX() + max.getX(), entity.getPosition().getY() + max.getY()); 
     }
 
-    public void save(ParserBlock block) {
+    public ParserBlock save(ParserBlock block) {
         HashMap<String, ParserObject> boxProps = block.getProperties();
         boxProps.put("xMin", new ParserInt((int) min.getX()));
         boxProps.put("yMin", new ParserInt((int) min.getY()));
         boxProps.put("xMax", new ParserInt((int) max.getX()));
         boxProps.put("yMax", new ParserInt((int) max.getY()));
+        return block;
     }
 
     public String toString() {

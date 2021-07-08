@@ -4,6 +4,7 @@ import game.main.render.Renderer;
 import game.main.render.Animation;
 import game.main.X;
 import game.main.TickObserver;
+import game.physics.*;
 import util.parse.obj.*;
 
 import java.util.ArrayList;
@@ -31,10 +32,13 @@ public class TileEntity extends Entity {
             * (int) this.size.getX());
         this.chunkRow = chunkRow;
         this.chunkColumn = chunkColumn;
-        this.type = ((ParserInt) block.getProperties().get("type")).getNumber();
+        this.type = ((ParserInt) block.getProperty("type")).getNumber();
         this.liquid = block.getProperties().containsKey("liquid") ? 
-            ((ParserInt) block.getProperties().get("liquid")).getNumber() == 1 : false;
+            ((ParserInt) block.getProperty("liquid")).getNumber() == 1 : false;
         this.animation = new Animation(x, this, Paths.get("src/main/resources/tiles/" + this.type + ".png"));
+        if ( block.getProperties().containsKey("collisionBoxes") ) 
+            for (ParserObject obj : ((ParserArray) block.getProperty("collisionBoxes"))) 
+                this.addCollisionBox(new CollisionBox(this, (ParserBlock) obj)); 
     }
 
     public void tick(X x) {
@@ -54,11 +58,15 @@ public class TileEntity extends Entity {
     public int getChunkColumn() { return chunkColumn; }
     public boolean isLiquid() { return liquid; }
 
-    public static ParserBlock save(TileEntity tile) {
-        ParserBlock block = new ParserBlock();
+    public ParserBlock save(ParserBlock block) {
+        block.addProperty(new ParserProperty("type", new ParserInt(type)));
+        block.addProperty(new ParserProperty("liquid", new ParserInt(liquid ? 1 : 0)));
+        ParserArray collisionBoxes = new ParserArray(ParserObject.ObjectType.BLOCK);
+        for ( CollisionBox box : getCollisionBoxes() )
+            collisionBoxes.add(box.save(new ParserBlock()));
+        block.addProperty(new ParserProperty("collisionBoxes", collisionBoxes));
         return block;
     }
-
 
     /**
      * Decides whether any entities should be created in a location within this tile on each tick. 

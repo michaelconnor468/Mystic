@@ -114,12 +114,11 @@ public class Player extends DynamicEntity {
         }
     }
 
-    public ParserBlock save() {
-        return null;
+    @Override public ParserBlock save(ParserBlock block) {
+        return block;
     }
 
-    @Override
-    public void setStationary(boolean stationary) {
+    @Override public void setStationary(boolean stationary) {
         currentAnimation.setStill(stationary);
         this.stationary = stationary;
     }

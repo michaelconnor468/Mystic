@@ -40,24 +40,15 @@ public class Chunk implements TickObserver, Renderable {
         ParserArray tileRows = (ParserArray) properties.get("tileEntities");
         for ( int i = 0; i < tileRows.getLength(); i++ ) {
             ParserArray tileColumn = (ParserArray) tileRows.getIndex(i);
-            for ( int ii = 0; ii < tileColumn.getLength(); ii++ ) { 
-                ParserBlock entityBlock = (ParserBlock) tileColumn.getIndex(ii);
-                TileEntity entity = new TileEntity(x, entityBlock, this, i, ii);
-                if ( entityBlock.getProperties().containsKey("collisionBoxes") ) 
-                    for (ParserObject obj : ((ParserArray) entityBlock.getProperties().get("collisionBoxes"))) 
-                        entity.addCollisionBox(new CollisionBox(entity, (ParserBlock) obj)); 
-                tileEntityContainer.addEntity(entity);
-            }
+            for ( int ii = 0; ii < tileColumn.getLength(); ii++ ) 
+                tileEntityContainer.addEntity(new TileEntity(x, (ParserBlock) tileColumn.getIndex(ii), this, i, ii));
         }
         this.tileEntities = tileEntityContainer;
 
         StaticEntityContainer staticEntityContainer = new StaticEntityContainer(x);
         ParserArray staticEntityArray = (ParserArray) properties.get("staticEntities");
-        for ( int i = 0; i < staticEntityArray.getLength(); i++ ) {
-            ParserBlock staticBlock = (ParserBlock) staticEntityArray.getIndex(i);
-            StaticEntity staticEntity = new StaticEntity(x, staticBlock);
-            staticEntityContainer.addEntity(staticEntity);
-        }
+        for ( int i = 0; i < staticEntityArray.getLength(); i++ ) 
+            staticEntityContainer.addEntity(new StaticEntity(x, (ParserBlock) staticEntityArray.getIndex(i)));
         this.staticEntities = staticEntityContainer;
 
         DynamicEntityContainer dynamicEntityContainer = new DynamicEntityContainer(x);

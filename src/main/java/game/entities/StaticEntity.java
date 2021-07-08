@@ -27,8 +27,8 @@ public class StaticEntity extends Entity {
     public void tick(X x) {}
     public void render(Renderer renderer) { renderer.render(animation); }
 
-    public void save(ParserBlock block) {
+    public ParserBlock save(ParserBlock block) {
         block.getProperties().put("type", new ParserInt(type));
-        super.save(block);
+        return super.save(block);
     }
 }

@@ -23,7 +23,7 @@ import java.awt.geom.Point2D;
  * be synchronized by the tick and render timers so that any logic and animation of arbitrary features may be easily added in the future without changing 
  * the front end drivers.
  */
-public abstract class Entity implements TickObserver, Renderable, Collidable, Positionable {
+public abstract class Entity implements TickObserver, Renderable, Collidable, Positionable, Saveable {
     protected X x;
     protected String name;
     protected Point2D.Double position;
@@ -120,7 +120,7 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
 
     public void onCollision(Collidable entity) {}
 
-    public void save(ParserBlock block) {
+    public ParserBlock save(ParserBlock block) {
         HashMap<String, ParserObject> map = block.getProperties();
         map.put("xSize", new ParserInt((int) size.getX()));
         map.put("ySize", new ParserInt((int) size.getY()));
@@ -144,6 +144,7 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
             dropsArray.add(new ParserInt(i));
         }
         map.put("drops", dropsArray);
+        return block;
     }
 
     public static ParserObject loadProperty(ParserBlock block, ParserBlock template, String name) {
