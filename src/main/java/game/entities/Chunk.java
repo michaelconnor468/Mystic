@@ -28,6 +28,42 @@ public class Chunk implements TickObserver, Renderable {
 
     // Use load method to instantiate object
     private Chunk() {}
+    public Chunk(X x, ParserBlock block, int xPosition, int yPosition) {
+        this.chunkManager = x.getChunkManager();
+        this.tileSize = this.chunkManager.getTileSize();
+        this.sizeInTiles = this.chunkManager.getChunkSize();
+        this.xChunkPosition = xPosition; 
+        this.yChunkPosition = yPosition;
+        
+        HashMap<String, ParserObject> properties = ((ParserBlock) block.getProperties().get("chunk")).getProperties();
+        
+        TileEntityContainer tileEntityContainer = new TileEntityContainer(x);
+        ParserArray tileRows = (ParserArray) properties.get("tileEntities");
+        for ( int i = 0; i < tileRows.getLength(); i++ ) {
+            ParserArray tileColumn = (ParserArray) tileRows.getIndex(i);
+            for ( int ii = 0; ii < tileColumn.getLength(); ii++ ) { 
+                ParserBlock entityBlock = (ParserBlock) tileColumn.getIndex(ii);
+                TileEntity entity = TileEntity.load(x, entityBlock, this, i, ii);
+                if ( entityBlock.getProperties().containsKey("collisionBoxes") ) 
+                    for (ParserObject obj : ((ParserArray) entityBlock.getProperties().get("collisionBoxes"))) 
+                        entity.addCollisionBox(new CollisionBox(entity, (ParserBlock) obj)); 
+                tileEntityContainer.addEntity(entity);
+            }
+        }
+        this.tileEntities = tileEntityContainer;
+
+        StaticEntityContainer staticEntityContainer = new StaticEntityContainer(x);
+        ParserArray staticEntityArray = (ParserArray) properties.get("staticEntities");
+        for ( int i = 0; i < staticEntityArray.getLength(); i++ ) {
+            ParserBlock staticBlock = (ParserBlock) staticEntityArray.getIndex(i);
+            StaticEntity staticEntity = new StaticEntity(x, staticBlock);
+            staticEntityContainer.addEntity(staticEntity);
+        }
+        this.staticEntities = staticEntityContainer;
+
+        DynamicEntityContainer dynamicEntityContainer = new DynamicEntityContainer(x);
+        this.dynamicEntities = dynamicEntityContainer;
+    }
 
     private TileEntityContainer tileEntities;
     private StaticEntityContainer staticEntities;
@@ -74,48 +110,6 @@ public class Chunk implements TickObserver, Renderable {
         return ret;
     }
     
-    public static Chunk load(X x, ParserBlock block, int xPosition, int yPosition) {
-        Chunk chunk = new Chunk();
-        chunk.chunkManager = x.getChunkManager();
-        chunk.tileSize = chunk.chunkManager.getTileSize();
-        chunk.sizeInTiles = chunk.chunkManager.getChunkSize();
-
-        HashMap<String, ParserObject> properties = ((ParserBlock) block.getProperties().get("chunk")).getProperties();
-        chunk.xChunkPosition = xPosition; 
-        chunk.yChunkPosition = yPosition;
-
-        TileEntityContainer tileEntityContainer = new TileEntityContainer(x);
-        ParserArray tileRows = (ParserArray) properties.get("tileEntities");
-
-        for ( int i = 0; i < tileRows.getLength(); i++ ) {
-            ParserArray tileColumn = (ParserArray) tileRows.getIndex(i);
-            for ( int ii = 0; ii < tileColumn.getLength(); ii++ ) { 
-                ParserBlock entityBlock = (ParserBlock) tileColumn.getIndex(ii);
-                TileEntity entity = TileEntity.load(x, entityBlock, chunk, i, ii);
-                if ( entityBlock.getProperties().containsKey("collisionBoxes") ) 
-                    for (ParserObject obj : ((ParserArray) entityBlock.getProperties().get("collisionBoxes"))) 
-                        entity.addCollisionBox(new CollisionBox(entity, (ParserBlock) obj)); 
-                tileEntityContainer.addEntity(entity);
-            }
-        }
-        chunk.tileEntities = tileEntityContainer;
-
-        StaticEntityContainer staticEntityContainer = new StaticEntityContainer(x);
-        ParserArray staticEntityArray = (ParserArray) properties.get("staticEntities");
-
-        for ( int i = 0; i < staticEntityArray.getLength(); i++ ) {
-            ParserBlock staticBlock = (ParserBlock) staticEntityArray.getIndex(i);
-            StaticEntity staticEntity = new StaticEntity(x, staticBlock);
-            staticEntityContainer.addEntity(staticEntity);
-        }
-
-        chunk.staticEntities = staticEntityContainer;
-
-        DynamicEntityContainer dynamicEntityContainer = new DynamicEntityContainer(x);
-        chunk.dynamicEntities = dynamicEntityContainer;
-        return chunk;
-    }
-
     public static ParserBlock save(Chunk chunk) {
         // TODO
         ParserBlock block = new ParserBlock();

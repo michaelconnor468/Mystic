@@ -62,7 +62,7 @@ public class ChunkManager implements TickObserver, Renderable {
                     assert matcher.group().length() == 10;
                     int column = Integer.parseInt(matcher.group().substring(0,3));
                     int row = Integer.parseInt(matcher.group().substring(3,6));
-                    chunks.get(column).set(row, Chunk.load(x, FileParser.parse(f), column, row));
+                    chunks.get(column).set(row, new Chunk(x, FileParser.parse(f), column, row));
                 }
             });
         } catch ( Exception e ) { 
