@@ -55,11 +55,12 @@ public class LoadScene {
        
         ArrayList<Path> savePaths = new ArrayList<>(Collections.nCopies(3, null));
         Pattern pattern = Pattern.compile("^[0-2]{1}$");
-        try ( Stream<Path> paths = Files.walk(Paths.get("src/main/saves")) ) {
+        try ( Stream<Path> paths = Files.walk(Paths.get("src/main/saves"), 1) ) {
             paths.forEach(f -> {
-                Matcher matcher = pattern.matcher(f.toString());
-                if ( matcher.find() ) {
-                    savePaths.set(Integer.parseInt(matcher.group()), f);
+                if ( f.toString().length() > 0 ) {
+                    Matcher matcher = pattern.matcher(f.toString().substring(f.toString().length() - 1));
+                    if ( matcher.find() )
+                        savePaths.set(Integer.parseInt(f.toString().substring(f.toString().length() - 1)), f);
                 }
             });
         } catch ( Exception e ) { 
@@ -73,15 +74,18 @@ public class LoadScene {
         Button save3Button = new Button(savePaths.get(2) == null ? "Empty" : "Slot 3");
 
         backButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.MainMenu) );
-        save1Button.setOnAction( e -> { 
+        save1Button.setOnAction( e -> {
+            if ( savePaths.get(0) == null ) return;
             x.getGame().setLoadFilePath(savePaths.get(0));
             x.getGameStateManager().setState(GameStateManager.State.Loading);
         });
         save2Button.setOnAction( e -> { 
+            if ( savePaths.get(1) == null ) return;
             x.getGame().setLoadFilePath(savePaths.get(1));
             x.getGameStateManager().setState(GameStateManager.State.Loading);
         });
         save3Button.setOnAction( e -> { 
+            if ( savePaths.get(2) == null ) return;
             x.getGame().setLoadFilePath(savePaths.get(2));
             x.getGameStateManager().setState(GameStateManager.State.Loading);
         });

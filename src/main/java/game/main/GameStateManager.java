@@ -46,6 +46,7 @@ public class GameStateManager {
         canTransitionTo.get(state.Paused).add(state.Save);
         canTransitionTo.get(state.Save).add(state.Paused);
         canTransitionTo.get(state.Load).add(state.MainMenu);
+        canTransitionTo.get(state.Load).add(state.Loading);
     }
     public State getState() { return state; }
     public boolean setState(State state) {
