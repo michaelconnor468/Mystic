@@ -1,0 +1,5 @@
+{
+    chunkSize: 64,
+    chunkGridSize: 3,
+    tileSize: 64
+}
