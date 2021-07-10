@@ -32,6 +32,11 @@ public class Game implements GameStateChangeListener {
         x.createChunkManager(loadFilePath);
         x.createPlayer(loadFilePath);
     }
+    
+    public void load(Path loadFilePath) {
+        x.createChunkManager(loadFilePath);
+        x.createPlayer(loadFilePath);
+    }
 
     public void beforeStateTransition(GameStateManager.State from, GameStateManager.State to) {
         switch ( from ) {
@@ -58,5 +63,9 @@ public class Game implements GameStateChangeListener {
                 x.getRenderManager().start();
                 break;
         }
+    }
+
+    public void save(Path path) {
+
     }
 }
