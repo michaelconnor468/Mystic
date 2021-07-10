@@ -106,4 +106,11 @@ public class TileEntityContainer extends EntityContainer<TileEntity> {
             }
         }
     }
+
+    public ParserBlock save(ParserBlock block) {
+        ParserArray array = new ParserArray(ParserObject.ObjectType.BLOCK);
+        for ( Entity e : getAllEntities() ) if ( e.isSaveable() ) array.add(e.save(new ParserBlock()));
+        block.addProperty(new ParserProperty("tileEntities", array));
+        return block;
+    }
 }

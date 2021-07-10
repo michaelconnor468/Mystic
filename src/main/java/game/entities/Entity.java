@@ -117,6 +117,7 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
     public double getMaxHealth() { return this.maxHealth; }
     public String getName() { return this.name; }
     public ArrayList<CollisionBox> getCollisionBoxes() { return this.collisionBoxes; }
+    public boolean isSaveable() { return this.saveable; }
 
     public void onCollision(Collidable entity) {}
 

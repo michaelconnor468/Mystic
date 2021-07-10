@@ -17,9 +17,8 @@ import java.awt.Point;
  */
 public abstract class EntityContainer<E extends Entity> implements TickObserver, Renderable {
     protected int entityCount, maxEntitySize;
-    private boolean moving;
-    private ArrayList<E> entities;
-    private X x;
+    protected ArrayList<E> entities;
+    protected X x;
 
     protected EntityContainer() { this.entities = new ArrayList<>(); }
     public EntityContainer(X x) { this(); this.x = x; }

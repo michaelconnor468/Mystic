@@ -100,9 +100,13 @@ public class Chunk implements TickObserver, Renderable {
         return ret;
     }
     
-    public static ParserBlock save(Chunk chunk) {
-        // TODO
-        ParserBlock block = new ParserBlock();
+    public ParserBlock save(ParserBlock block) {
+        ParserBlock chunkBlock = new ParserBlock();
+
+        tileEntities.save(chunkBlock);
+        staticEntities.save(chunkBlock);
+
+        block.addProperty(new ParserProperty("chunk", chunkBlock));
         return block;
     }
 }
