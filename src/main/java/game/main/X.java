@@ -63,8 +63,8 @@ public class X {
     }
 
     public ChunkManager getChunkManager() { return chunkManager; }
-    public void createChunkManager(Path path) { 
-        chunkManager = new ChunkManager(this, FileParser.parse(path.resolve(Paths.get("config/world.mcfg")))); 
+    public void createChunkManager() { 
+        chunkManager = new ChunkManager(this); 
     }
 
     public void createSettingsSingletons(Path path) {
@@ -103,7 +103,7 @@ public class X {
     public HashMap<String, ParserObject> getMainSettings() { return mainSettings; }
 
     public void createPlayer(Path path) { 
-        player = new Player(this, FileParser.parse(path.resolve("entities/player.msv")), 
+        player = new Player(this, FileParser.parse(path.resolve("player/player.msv")), 
             FileParser.parse(Paths.get("src/main/config/templates/player/player.mcfg"))); 
     }
 

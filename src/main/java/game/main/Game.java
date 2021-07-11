@@ -29,7 +29,7 @@ public class Game implements GameStateChangeListener {
     }
 
     public void load() {
-        x.createChunkManager(loadFilePath);
+        x.createChunkManager();
         x.createPlayer(loadFilePath);
     }
     

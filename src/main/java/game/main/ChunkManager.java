@@ -28,19 +28,19 @@ import java.util.regex.Pattern;
 public class ChunkManager implements TickObserver, Renderable {
     private X x;
     private ArrayList<ArrayList<Chunk>> chunks;
-    private int chunkSize, tileSize, chunkGridSize, chunkLoadDiameter;
+    private int chunkSize, tileSize, chunkLoadDiameter;
 
     private ChunkManager() {}
 
-    public ChunkManager(X x, ParserBlock worldSettings) {
+    public ChunkManager(X x) {
         this.x = x;
-        this.chunkSize = ((ParserInt) worldSettings.getProperties().get("chunkSize")).getNumber();
-        this.tileSize = ((ParserInt) worldSettings.getProperties().get("tileSize")).getNumber();
-        this.chunkGridSize = ((ParserInt) worldSettings.getProperties().get("chunkGridSize")).getNumber();
+        int j = 0;
+        this.chunkSize = ((ParserInt) x.getMainSettings().get("chunkSize")).getNumber();
+        this.tileSize = ((ParserInt) x.getMainSettings().get("tileSize")).getNumber();
         this.chunkLoadDiameter = ((ParserInt) x.getMainSettings().get("chunkLoadDiameter")).getNumber(); 
         this.chunks = new ArrayList<ArrayList<Chunk>>();
-        for ( int i = 0; i < this.chunkGridSize; i++ )
-            this.chunks.add(new ArrayList<Chunk>(Collections.nCopies(chunkGridSize, null)));
+        for ( int i = 0; i < this.chunkLoadDiameter; i++ )
+            this.chunks.add(new ArrayList<Chunk>(Collections.nCopies(chunkLoadDiameter, null)));
         x.getTimingManager().register(this);
         x.getRenderManager().register(this);
     }
@@ -112,7 +112,6 @@ public class ChunkManager implements TickObserver, Renderable {
     
     public int getChunkSize() { return chunkSize; }
     public int getTileSize() { return tileSize; }
-    public int getChunkGridSize() { return chunkGridSize; }
     public int getChunkLoadDiameter() { return chunkLoadDiameter; }
     public ArrayList<ArrayList<Chunk>> getChunks() { return chunks; }
     public ArrayList<ArrayList<Chunk>> getActiveChunks() { return chunks; }

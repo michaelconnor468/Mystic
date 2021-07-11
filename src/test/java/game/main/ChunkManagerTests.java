@@ -20,7 +20,7 @@ public class ChunkManagerTests {
         x.createSettingsSingletons(Paths.get("src/test/config/settings"));
         x.createTimingManager();
         x.createRenderManager();
-        x.createChunkManager(Paths.get("src/test/config/worlds/default"));
+        x.createChunkManager();
         x.getChunkManager().loadChunks(Paths.get("src/test/config/worlds/default"));
     }
 
@@ -28,7 +28,6 @@ public class ChunkManagerTests {
     public void chunksLoadedTest() {
         assertEquals(64, x.getChunkManager().getChunkSize(), "Incorrect chunk size setting loaded");
         assertEquals(64, x.getChunkManager().getTileSize(), "Incorrect tile size setting loaded");
-        assertEquals(3, x.getChunkManager().getChunkGridSize(), "Incorrect chunk grid size setting loaded");
         assertEquals(3, x.getChunkManager().getChunkLoadDiameter(), "Incorrect chunk load diameter setting loaded");
         
         assertEquals(3, x.getChunkManager().getChunks().size(), "Incorrect number of chunks in chunk collection");
