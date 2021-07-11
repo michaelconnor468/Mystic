@@ -75,5 +75,6 @@ public class Game implements GameStateChangeListener {
                 x.getPlayer().save(new ParserBlock()).toString().getBytes());
         } catch(Exception e) { System.err.println("Unable to save player."); }
         x.getChunkManager().saveChunks(path.resolve(Paths.get("chunks")));
+        x.getGameStateManager().setState(GameStateManager.State.MainMenu);
     }
 }
