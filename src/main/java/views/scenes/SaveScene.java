@@ -74,6 +74,9 @@ public class SaveScene {
         Button save3Button = new Button(savePaths.get(2) == null ? "Empty" : "Slot 3");
 
         backButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.Paused) );
+        save1Button.setOnAction( e -> x.getGame().save(Paths.get("src/main/saves/0")) );
+        save2Button.setOnAction( e -> x.getGame().save(Paths.get("src/main/saves/1")) );
+        save3Button.setOnAction( e -> x.getGame().save(Paths.get("src/main/saves/2")) );
 
         vbox.getChildren().add(backButton);
         vbox.getChildren().add(save1Button);

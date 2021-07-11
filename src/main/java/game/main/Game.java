@@ -6,7 +6,10 @@ import util.parse.FileParser;
 
 import java.nio.file.Path;
 import java.nio.file.Files;
+import java.io.File;
 import java.nio.file.Paths;
+import java.util.stream.Stream;
+import java.util.Comparator;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 
@@ -64,7 +67,10 @@ public class Game implements GameStateChangeListener {
     public void setLoadFilePath(Path path) { this.loadFilePath = path; }
 
     public void save(Path path) {
-        try {
+        try (Stream<Path> walk = Files.walk(path)) {
+            walk.sorted(Comparator.reverseOrder())
+                .map(Path::toFile)
+                .forEach(File::delete);
             Files.write(path.resolve(Paths.get("player/player.msv")), 
                 x.getPlayer().save(new ParserBlock()).toString().getBytes());
         } catch(Exception e) { System.err.println("Unable to save player."); }
