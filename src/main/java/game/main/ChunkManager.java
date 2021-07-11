@@ -16,6 +16,7 @@ import java.io.PrintStream;
 import java.nio.file.Files;
 import java.util.stream.Stream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -109,10 +110,23 @@ public class ChunkManager implements TickObserver, Renderable {
                 ret.add(tileEntity);
         return ret;
     }
+
+    public List<Chunk> getChunks() { 
+        ArrayList<Chunk> ret = new ArrayList<>();
+        for ( ArrayList<Chunk> lst : chunks ) for ( Chunk chunk : lst ) ret.add(chunk);
+        return ret;
+    }
+
+    public void saveChunks(Path path) { for ( Chunk chunk : getChunks() ) saveChunk(path, chunk); }
+    public void saveChunk(Path path, Chunk chunk) {
+        try {
+            Files.write(path.resolve(Paths.get("chunk"+chunk.getXChunkPosition()+""+chunk.getYChunkPosition()+".msv")),
+                chunk.save(new ParserBlock()).toString().getBytes());
+        } catch (Exception e) { System.err.println("Unable to save chunk."); }
+    }
     
     public int getChunkSize() { return chunkSize; }
     public int getTileSize() { return tileSize; }
     public int getChunkLoadDiameter() { return chunkLoadDiameter; }
-    public ArrayList<ArrayList<Chunk>> getChunks() { return chunks; }
     public ArrayList<ArrayList<Chunk>> getActiveChunks() { return chunks; }
 }
