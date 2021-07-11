@@ -5,6 +5,13 @@ import game.main.GameStateManager;
 import util.parse.obj.ParserInt;
 
 import java.nio.file.Paths;
+import java.util.stream.Stream;
+import java.nio.file.Path;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Collections;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
@@ -45,11 +52,26 @@ public class SaveScene {
         vbox.prefWidthProperty().bind(borderPane.widthProperty());
         vbox.setAlignment(Pos.CENTER);
         vbox.getStyleClass().add("button-box");
+        
+        ArrayList<Path> savePaths = new ArrayList<>(Collections.nCopies(3, null));
+        Pattern pattern = Pattern.compile("^[0-2]{1}$");
+        try ( Stream<Path> paths = Files.walk(Paths.get("src/main/saves"), 1) ) {
+            paths.forEach(f -> {
+                if ( f.toString().length() > 0 ) {
+                    Matcher matcher = pattern.matcher(f.toString().substring(f.toString().length() - 1));
+                    if ( matcher.find() )
+                        savePaths.set(Integer.parseInt(f.toString().substring(f.toString().length() - 1)), f);
+                }
+            });
+        } catch ( Exception e ) { 
+            e.printStackTrace(new java.io.PrintStream(System.err));  
+            System.exit(1);
+        }
 
         Button backButton = new Button("Back");
-        Button save1Button = new Button("Empty");
-        Button save2Button = new Button("Empty");
-        Button save3Button = new Button("Empty");
+        Button save1Button = new Button(savePaths.get(0) == null ? "Empty" : "Slot 1");
+        Button save2Button = new Button(savePaths.get(1) == null ? "Empty" : "Slot 2");
+        Button save3Button = new Button(savePaths.get(2) == null ? "Empty" : "Slot 3");
 
         backButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.Paused) );
 
