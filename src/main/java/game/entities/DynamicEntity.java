@@ -155,4 +155,12 @@ public abstract class DynamicEntity extends Entity {
     public boolean isStationary() { return stationary; }
     public void toggleStationary() { stationary = !stationary; }
     public void setStationary(boolean stationary) { this.stationary = stationary; }
+
+    public ParserBlock save(ParserBlock block) {
+        super.save(block);
+        block.addProperty(new ParserProperty("stamina", new ParserInt((int) this.stamina)));
+        block.addProperty(new ParserProperty("maxStamina", new ParserInt((int) this.maxStamina)));
+        block.addProperty(new ParserProperty("speed", new ParserInt((int) this.speed)));
+        return block;
+    }
 }

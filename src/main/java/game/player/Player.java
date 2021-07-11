@@ -87,6 +87,8 @@ public class Player extends DynamicEntity {
     }
 
     @Override public ParserBlock save(ParserBlock block) {
+        super.save(block);
+        this.weapon.save(block);
         return block;
     }
 

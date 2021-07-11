@@ -31,7 +31,7 @@ public class MeleeAttack extends StaticEntity {
     public MeleeAttack(X x, Player player) {
         this.weapon = player.getWeapon();
         this.damaged = new HashSet<>();
-        this.ticksToLive = weapon.getSpeed();
+        this.ticksToLive = (int) weapon.getSpeed() != 0 ? (int) weapon.getSpeed() : 1;
         this.player = weapon.getPlayer();
         this.range = weapon.getRange();
         this.weaponId = weapon.getId();

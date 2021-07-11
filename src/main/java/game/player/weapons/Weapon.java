@@ -11,10 +11,11 @@ public class Weapon {
     protected Player player;
     protected String name;
     protected int id;
-    protected double physicalDamage;
+    protected int physicalDamage;
     protected int durability;
     protected int maxDurability;
-    protected int range, speed; // distance to damage away from edge of player and ticks to do damage for
+    protected int range;
+    protected double speed; // distance to damage away from edge of player and ticks to do damage for
 
     protected Weapon() {}
     public static Weapon load(X x, Player player, ParserBlock block, Weapon weapon) {
@@ -25,11 +26,12 @@ public class Weapon {
         HashMap<String, ParserObject> template = x.getTemplates("melee").get(weapon.id).getProperties();
         weapon.name = ((ParserString) template.get("name")).getString(); 
         weapon.physicalDamage = props.containsKey("physicalDamage") ? 
-            ((ParserDouble) props.get("physicalDamage")).getNumber() : 
-            ((ParserDouble) template.get("physicalDamage")).getNumber(); 
+            ((ParserInt) props.get("physicalDamage")).getNumber() : 
+            ((ParserInt) template.get("physicalDamage")).getNumber(); 
         weapon.durability = props.containsKey("durability") ? ((ParserInt) props.get("durability")).getNumber() :
             ((ParserInt) template.get("durability")).getNumber();
-        weapon.maxDurability = props.containsKey("maxDurability") ? ((ParserInt) props.get("maxDurability")).getNumber() :
+        weapon.maxDurability = props.containsKey("maxDurability") ? 
+            ((ParserInt) props.get("maxDurability")).getNumber() :
             ((ParserInt) template.get("maxDurability")).getNumber();
         weapon.range = props.containsKey("range") ? ((ParserInt) props.get("range")).getNumber() : 
             ((ParserInt) template.get("range")).getNumber();
@@ -51,5 +53,17 @@ public class Weapon {
     public double getPhysicalDamage() { return physicalDamage; }
     public Player getPlayer() { return player; }
     public int getRange() { return range; }
-    public int getSpeed() { return speed; }
+    public double getSpeed() { return speed; }
+    public ParserBlock save(ParserBlock block) {
+        ParserBlock weaponBlock = new ParserBlock();
+        weaponBlock.addProperty(new ParserProperty("id", new ParserInt(id)));
+        weaponBlock.addProperty(new ParserProperty("physicalDamage", new ParserInt(physicalDamage)));
+        weaponBlock.addProperty(new ParserProperty("durability", new ParserInt(durability)));
+        weaponBlock.addProperty(new ParserProperty("maxDurability", new ParserInt(maxDurability)));
+        weaponBlock.addProperty(new ParserProperty("range", new ParserInt(range)));
+        weaponBlock.addProperty(new ParserProperty("speed", new ParserDouble(speed)));
+        weaponBlock.addProperty(new ParserProperty("melee", new ParserInt(this instanceof MeleeWeapon ? 1 : 0)));
+        block.addProperty(new ParserProperty("weapon", weaponBlock));
+        return block;
+    }
 }
