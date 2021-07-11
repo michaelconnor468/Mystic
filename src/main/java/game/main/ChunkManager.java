@@ -120,9 +120,14 @@ public class ChunkManager implements TickObserver, Renderable {
     public void saveChunks(Path path) { for ( Chunk chunk : getChunks() ) saveChunk(path, chunk); }
     public void saveChunk(Path path, Chunk chunk) {
         try {
-            Files.write(path.resolve(Paths.get("chunk"+chunk.getXChunkPosition()+""+chunk.getYChunkPosition()+".msv")),
+            Files.write(path.resolve(Paths.get("chunk"+String.format("%03d", chunk.getXChunkPosition())
+                + String.format("%03d", chunk.getYChunkPosition())+".msv")),
                 chunk.save(new ParserBlock()).toString().getBytes());
-        } catch (Exception e) { System.err.println("Unable to save chunk."); }
+        } catch (Exception e) { 
+            System.err.println("Unable to save chunk."); // TODO advise player opertaion failed
+//            e.printStackTrace(new java.io.PrintStream(System.err));  
+        }
+            
     }
     
     public int getChunkSize() { return chunkSize; }

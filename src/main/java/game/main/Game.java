@@ -67,13 +67,22 @@ public class Game implements GameStateChangeListener {
     public void setLoadFilePath(Path path) { this.loadFilePath = path; }
 
     public void save(Path path) {
+        try {
+            Files.createDirectories(path.resolve(Paths.get("player")));
+            Files.createDirectories(path.resolve(Paths.get("chunks")));
+        } catch (Exception e) {}
         try (Stream<Path> walk = Files.walk(path)) {
             walk.sorted(Comparator.reverseOrder())
                 .map(Path::toFile)
                 .forEach(File::delete);
+            Files.createDirectories(path.resolve(Paths.get("player")));
+            Files.createDirectories(path.resolve(Paths.get("chunks")));
             Files.write(path.resolve(Paths.get("player/player.msv")), 
                 x.getPlayer().save(new ParserBlock()).toString().getBytes());
-        } catch(Exception e) { System.err.println("Unable to save player."); }
+        } catch(Exception e) { 
+            System.err.println("Unable to save player."); 
+            e.printStackTrace(new java.io.PrintStream(System.err));  
+        } // TODO advise user
         x.getChunkManager().saveChunks(path.resolve(Paths.get("chunks")));
         x.getGameStateManager().setState(GameStateManager.State.MainMenu);
     }
