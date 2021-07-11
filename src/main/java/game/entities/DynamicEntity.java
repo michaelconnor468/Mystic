@@ -7,12 +7,22 @@ import game.entities.buffs.Buff;
 import util.parse.obj.*;
 
 import java.lang.Math;
+import java.nio.file.Paths;
 
 /**
  * Entities that are able to move. Movement conversion biases favor higher movement speed to prevent any edge cases where very slow entities stagnate. Movement
  * comprises of setting properties which are used to calculate moves per tick in order to simplify logic and keep movement functionality contained to class.
  */
 public abstract class DynamicEntity extends Entity {
+    protected Animation walkNorthAnimation;
+    protected Animation walkNorthWestAnimation;
+    protected Animation walkNorthEastAnimation;
+    protected Animation walkSouthAnimation;
+    protected Animation walkSouthWestAnimation;
+    protected Animation walkSouthEastAnimation;
+    protected Animation walkWestAnimation;
+    protected Animation walkEastAnimation;
+
     protected double directionAngle;
     protected double speed; 
     protected double stamina;
@@ -33,6 +43,28 @@ public abstract class DynamicEntity extends Entity {
     protected DynamicEntity() {}
     public DynamicEntity(X x, ParserBlock block, ParserBlock template) {
         super(x, block, template);
+        this.stamina = ((ParserInt) loadProperty(block, template, "stamina")).getNumber();
+        this.maxStamina = ((ParserInt) loadProperty(block, template, "maxStamina")).getNumber();
+        this.direction = MovementDirection.west;
+        this.stationary = true;
+        this.speed = ((ParserInt) loadProperty(block, template, "speed")).getNumber();
+        this.walkNorthAnimation = 
+            new Animation(x, this, Paths.get("src/main/resources/dentity/" + type + "/walk_north.png"));
+        this.walkNorthWestAnimation = 
+            new Animation(x, this, Paths.get("src/main/resources/dentity/" + type + "/walk_northwest.png"));
+        this.walkNorthEastAnimation = 
+            new Animation(x, this, Paths.get("src/main/resources/dentity/" + type + "/walk_northeast.png"));
+        this.walkSouthAnimation = 
+            new Animation(x, this, Paths.get("src/main/resources/dentity/" + type + "/walk_south.png"));
+        this.walkSouthWestAnimation = 
+            new Animation(x, this, Paths.get("src/main/resources/dentity/" + type + "/walk_southwest.png"));
+        this.walkSouthEastAnimation = 
+            new Animation(x, this, Paths.get("src/main/resources/dentity/" + type + "/walk_southeast.png"));
+        this.walkWestAnimation = 
+            new Animation(x, this, Paths.get("src/main/resources/dentity/" + type + "/walk_west.png"));
+        this.walkEastAnimation = 
+            new Animation(x, this, Paths.get("src/main/resources/dentity/" + type + "/walk_east.png"));
+        this.animation = this.walkSouthEastAnimation;
     }
 
     public void tick(X x) {

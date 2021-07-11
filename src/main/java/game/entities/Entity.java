@@ -25,6 +25,7 @@ import java.awt.geom.Point2D;
  */
 public abstract class Entity implements TickObserver, Renderable, Collidable, Positionable, Saveable {
     protected X x;
+    protected int type;
     protected String name;
     protected Point2D.Double position;
     protected Point size;
@@ -43,6 +44,7 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
         this.x = x;
         HashMap<String, ParserObject> map = block.getProperties();
         HashMap<String, ParserObject> templateMap = template.getProperties();
+        this.type = ((ParserInt) block.getProperty("type")).getNumber();
         this.size = new Point(((ParserInt) loadProperty(block, template, "xSize")).getNumber(), 
             ((ParserInt) loadProperty(block, template, "ySize")).getNumber());
         this.position = new Point2D.Double(((ParserInt) map.get("xPosition")).getNumber(), 
@@ -148,7 +150,7 @@ public abstract class Entity implements TickObserver, Renderable, Collidable, Po
         return block;
     }
 
-    public static ParserObject loadProperty(ParserBlock block, ParserBlock template, String name) {
+    protected static ParserObject loadProperty(ParserBlock block, ParserBlock template, String name) {
         HashMap<String, ParserObject> templateProps = template.getProperties();
         HashMap<String, ParserObject> props = block.getProperties();
         return props.containsKey(name) ? props.get(name) : templateProps.get(name);

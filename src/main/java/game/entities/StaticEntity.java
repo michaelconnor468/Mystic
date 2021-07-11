@@ -9,13 +9,11 @@ import java.util.HashMap;
 import java.nio.file.Paths;
 
 public class StaticEntity extends Entity {
-    private int type;
-
     public StaticEntity() {}
     public StaticEntity(X x, ParserBlock block) {
         super(x, block, 
             x.getTemplates("staticEntities").get(((ParserInt) block.getProperties().get("type")).getNumber()));
-        this.type = ((ParserInt) block.getProperties().get("type")).getNumber();
+        this.type = ((ParserInt) block.getProperty("type")).getNumber();
         animation = new Animation(x, this, Paths.get("src/main/resources/sentity/"+type+".png"));
     }
     public StaticEntity(X x, ParserBlock block, ParserBlock template) {

@@ -1,5 +1,6 @@
 {
     maxHealth: 100,
+    type: 0,
     health: 100,
     stamina: 10,
     maxStamina: 10,

@@ -21,40 +21,12 @@ import util.parse.obj.*;
  * be loaded separately from all other entities and will not belong to a particular class.
  */
 public class Player extends DynamicEntity {
-    private Animation currentAnimation;
-    private Animation walkNorthAnimation;
-    private Animation walkNorthWestAnimation;
-    private Animation walkNorthEastAnimation;
-    private Animation walkSouthAnimation;
-    private Animation walkSouthWestAnimation;
-    private Animation walkSouthEastAnimation;
-    private Animation walkWestAnimation;
-    private Animation walkEastAnimation;
-
     private Weapon weapon;
+    private Player() {}
 
     public Player(X x, ParserBlock block, ParserBlock template) {
-        super(x, block, template); // TODO refactor a lot of this to superclass constructors
+        super(x, block, template); 
         HashMap<String, ParserObject> map = block.getProperties();
-        this.stamina = ((ParserInt) map.get("stamina")).getNumber();
-        this.maxStamina = ((ParserInt) map.get("maxStamina")).getNumber();
-        this.walkNorthAnimation = new Animation(x, this, Paths.get("src/main/resources/player/walk_north.png"));
-        this.walkNorthWestAnimation = 
-            new Animation(x, this, Paths.get("src/main/resources/player/walk_northwest.png"));
-        this.walkNorthEastAnimation = 
-            new Animation(x, this, Paths.get("src/main/resources/player/walk_northeast.png"));
-        this.walkSouthAnimation = 
-            new Animation(x, this, Paths.get("src/main/resources/player/walk_south.png"));
-        this.walkSouthWestAnimation = 
-            new Animation(x, this, Paths.get("src/main/resources/player/walk_southwest.png"));
-        this.walkSouthEastAnimation = 
-            new Animation(x, this, Paths.get("src/main/resources/player/walk_southeast.png"));
-        this.walkWestAnimation = new Animation(x, this, Paths.get("src/main/resources/player/walk_west.png"));
-        this.walkEastAnimation = new Animation(x, this, Paths.get("src/main/resources/player/walk_east.png"));
-        this.currentAnimation = this.walkSouthEastAnimation;
-        this.direction = MovementDirection.west;
-        this.stationary = true;
-        this.speed = ((ParserInt) map.get("speed")).getNumber();
         ParserBlock weaponBlock = ((ParserBlock) map.get("weapon"));
         if ( weaponBlock.getProperties().containsKey("melee") )
             this.weapon = MeleeWeapon.load(x, this, weaponBlock);
@@ -63,10 +35,10 @@ public class Player extends DynamicEntity {
 
     public void tick(X x) { 
         super.tick(x); 
-        currentAnimation.tick(x); 
+        animation.tick(x); 
     }
     
-    public void render(Renderer r) { r.render(currentAnimation); }
+    public void render(Renderer r) { r.render(animation); }
 
     public void onClick(MouseEvent e) {
         double mouseX = e.getX() - ((ParserInt) x.getMainSettings().get("resolutionx")).getNumber()/2;
@@ -85,31 +57,31 @@ public class Player extends DynamicEntity {
 
     public void setMovementDirection(MovementDirection direction) {
         super.setMovementDirection(direction);
-        currentAnimation.setStill(false);
+        animation.setStill(false);
         switch ( direction ) {
             case north:
-                currentAnimation = walkNorthAnimation; 
+                animation = walkNorthAnimation; 
                 break;
             case northwest:
-                currentAnimation = walkNorthWestAnimation;
+                animation = walkNorthWestAnimation;
                 break;
             case northeast:
-                currentAnimation = walkNorthEastAnimation;
+                animation = walkNorthEastAnimation;
                 break;
             case south:
-                currentAnimation = walkSouthAnimation;
+                animation = walkSouthAnimation;
                 break;
             case southwest:
-                currentAnimation = walkSouthWestAnimation;
+                animation = walkSouthWestAnimation;
                 break;
             case southeast:
-                currentAnimation = walkSouthEastAnimation;
+                animation = walkSouthEastAnimation;
                 break;
             case east:
-                currentAnimation = walkEastAnimation;
+                animation = walkEastAnimation;
                 break;
             case west:
-                currentAnimation = walkWestAnimation;
+                animation = walkWestAnimation;
                 break;
         }
     }
@@ -119,11 +91,7 @@ public class Player extends DynamicEntity {
     }
 
     @Override public void setStationary(boolean stationary) {
-        currentAnimation.setStill(stationary);
+        animation.setStill(stationary);
         this.stationary = stationary;
-    }
-
-    public static ParserBlock save(Player player) {
-        return null;
     }
 }
