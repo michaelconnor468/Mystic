@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.nio.file.Files;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import javafx.scene.Scene;
@@ -17,6 +18,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.geometry.Pos;
 
 public class SaveScene {
@@ -69,19 +72,21 @@ public class SaveScene {
         }
 
         Button backButton = new Button("Back");
-        Button save1Button = new Button(savePaths.get(0) == null ? "Empty" : "Slot 1");
-        Button save2Button = new Button(savePaths.get(1) == null ? "Empty" : "Slot 2");
-        Button save3Button = new Button(savePaths.get(2) == null ? "Empty" : "Slot 3");
-
         backButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.Paused) );
-        save1Button.setOnAction( e -> x.getGame().save(Paths.get("src/main/saves/0")) );
-        save2Button.setOnAction( e -> x.getGame().save(Paths.get("src/main/saves/1")) );
-        save3Button.setOnAction( e -> x.getGame().save(Paths.get("src/main/saves/2")) );
-
         vbox.getChildren().add(backButton);
-        vbox.getChildren().add(save1Button);
-        vbox.getChildren().add(save2Button);
-        vbox.getChildren().add(save3Button);
+
+        for ( int i = 0; i < 3; i++ ) {
+            Button saveButton = new Button(savePaths.get(i) == null ? "Empty" : "Slot " + (i+1));
+            final int j = i;
+            saveButton.setOnAction( e -> { 
+                try { x.getGame().save(Paths.get("src/main/saves/" + j)); }
+                catch ( IOException exception ) { 
+                    new Alert(Alert.AlertType.CONFIRMATION, "An error occured when trying to save.", ButtonType.OK)
+                        .showAndWait();
+                }
+            });
+            vbox.getChildren().add(saveButton);
+        }
 
         borderPane.setCenter(vbox);
         borderPane.setAlignment(vbox, Pos.CENTER);

@@ -7,6 +7,7 @@ import util.parse.FileParser;
 import java.nio.file.Path;
 import java.nio.file.Files;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 import java.util.Comparator;
@@ -66,11 +67,9 @@ public class Game implements GameStateChangeListener {
 
     public void setLoadFilePath(Path path) { this.loadFilePath = path; }
 
-    public void save(Path path) {
-        try {
-            Files.createDirectories(path.resolve(Paths.get("player")));
-            Files.createDirectories(path.resolve(Paths.get("chunks")));
-        } catch (Exception e) {}
+    public void save(Path path) throws IOException {
+        Files.createDirectories(path.resolve(Paths.get("player")));
+        Files.createDirectories(path.resolve(Paths.get("chunks")));
         try (Stream<Path> walk = Files.walk(path)) {
             walk.sorted(Comparator.reverseOrder())
                 .map(Path::toFile)
@@ -79,11 +78,12 @@ public class Game implements GameStateChangeListener {
             Files.createDirectories(path.resolve(Paths.get("chunks")));
             Files.write(path.resolve(Paths.get("player/player.msv")), 
                 x.getPlayer().save(new ParserBlock()).toString().getBytes());
+            x.getChunkManager().saveChunks(path.resolve(Paths.get("chunks")));
+            x.getGameStateManager().setState(GameStateManager.State.MainMenu);
         } catch(Exception e) { 
-            System.err.println("Unable to save player."); 
-            e.printStackTrace(new java.io.PrintStream(System.err));  
-        } // TODO advise user
-        x.getChunkManager().saveChunks(path.resolve(Paths.get("chunks")));
-        x.getGameStateManager().setState(GameStateManager.State.MainMenu);
+            System.err.println("Unable to save game."); 
+            e.printStackTrace(new java.io.PrintStream(System.err));
+            throw new IOException(e);
+        }
     }
 }
