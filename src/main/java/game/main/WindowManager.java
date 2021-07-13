@@ -12,6 +12,7 @@ public class WindowManager implements GameStateChangeListener {
     private MainMenuView mainMenuView;
     private PlayingView playingView;
     private LoadingView loadingView;
+    private SavingView savingView;
     private PausedView pausedView;
     private SaveView saveView;
     private LoadView loadView;
@@ -27,6 +28,7 @@ public class WindowManager implements GameStateChangeListener {
         this.mainMenuView = new MainMenuView(x);
         this.playingView = new PlayingView(x);
         this.loadingView = new LoadingView(x);
+        this.savingView = new SavingView(x);
         this.pausedView = new PausedView(x);
         this.saveView = new SaveView(x);
         this.loadView = new LoadView(x);
@@ -54,6 +56,9 @@ public class WindowManager implements GameStateChangeListener {
             case Save:
                 stage.setScene(saveView.deploy());
                 break;
+            case Saving:
+                stage.setScene(savingView.deploy());
+                break;
             case Load:
                 stage.setScene(loadView.deploy());
                 break;
@@ -64,6 +69,9 @@ public class WindowManager implements GameStateChangeListener {
                 break;
             case Loading:
                 loadingView.recall();
+                break;
+            case Saving:
+                savingView.recall();
                 break;
             case Playing:
                 playingView.recall();

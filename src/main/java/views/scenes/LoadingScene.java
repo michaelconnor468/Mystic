@@ -9,7 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 
 public class LoadingScene {
-    public static Scene getScene(X x) {
+    public static Scene getScene(X x, String text) {
         BorderPane borderPane = new BorderPane();
         int width = ((ParserInt) x.getMainSettings().get("resolutionx")).getNumber();
         int height = ((ParserInt) x.getMainSettings().get("resolutiony")).getNumber();
@@ -18,8 +18,7 @@ public class LoadingScene {
             scene.getStylesheets().add(Paths.get("src/main/resources/styles/Common.css")
                 .toUri().toURL().toExternalForm());
         } catch ( Exception e ) { System.err.println(e); } 
-        // TODO maybe animate the dots to go . .. ... . .. ... so the user knows it's not frozen
-        Text loading = new Text("Loading...");
+        Text loading = new Text(text + "...");
         borderPane.setCenter(loading);
 
         return scene;
