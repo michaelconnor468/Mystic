@@ -77,10 +77,16 @@ public class Game implements GameStateChangeListener {
             Files.createDirectories(path.resolve(Paths.get("player")));
             Files.createDirectories(path.resolve(Paths.get("chunks")));
             x.getGameStateManager().setState(GameStateManager.State.Saving);
-            Files.write(path.resolve(Paths.get("player/player.msv")), 
-                x.getPlayer().save(new ParserBlock()).toString().getBytes());
-            x.getChunkManager().saveChunks(path.resolve(Paths.get("chunks")));
-            x.getGameStateManager().setState(GameStateManager.State.Save);
+            Task<Void> task = new Task<Void>() {
+                @Override protected Void call() throws Exception {
+                    Files.write(path.resolve(Paths.get("player/player.msv")), 
+                        x.getPlayer().save(new ParserBlock()).toString().getBytes());
+                    x.getChunkManager().saveChunks(path.resolve(Paths.get("chunks")));
+                    return null;
+                }
+            };
+            task.setOnSucceeded((v) -> x.getGameStateManager().setState(GameStateManager.State.Save));
+            (new Thread(task)).start();
         } catch(Exception e) { 
             System.err.println("Unable to save game."); 
             e.printStackTrace(new java.io.PrintStream(System.err));
