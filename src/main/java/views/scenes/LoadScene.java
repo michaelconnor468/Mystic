@@ -69,32 +69,20 @@ public class LoadScene {
         }
 
         Button backButton = new Button("Back");
-        Button save1Button = new Button(savePaths.get(0) == null ? "Empty" : "Slot 1");
-        Button save2Button = new Button(savePaths.get(1) == null ? "Empty" : "Slot 2");
-        Button save3Button = new Button(savePaths.get(2) == null ? "Empty" : "Slot 3");
-
-        backButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.MainMenu) );
-        save1Button.setOnAction( e -> {
-            if ( savePaths.get(0) == null ) return;
-            x.getGame().setLoadFilePath(savePaths.get(0));
-            x.getGameStateManager().setState(GameStateManager.State.Loading);
-        });
-        save2Button.setOnAction( e -> { 
-            if ( savePaths.get(1) == null ) return;
-            x.getGame().setLoadFilePath(savePaths.get(1));
-            x.getGameStateManager().setState(GameStateManager.State.Loading);
-        });
-        save3Button.setOnAction( e -> { 
-            if ( savePaths.get(2) == null ) return;
-            x.getGame().setLoadFilePath(savePaths.get(2));
-            x.getGameStateManager().setState(GameStateManager.State.Loading);
-        });
-
         vbox.getChildren().add(backButton);
-        vbox.getChildren().add(save1Button);
-        vbox.getChildren().add(save2Button);
-        vbox.getChildren().add(save3Button);
+        backButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.MainMenu) );
 
+        for ( int i = 0; i < 2; i++ ) {
+            Button button = new Button(savePaths.get(i) == null ? "Empty" : "Slot " + (i+1));
+            final int j = i;
+            button.setOnAction( e -> {
+                if ( savePaths.get(j) == null ) return;
+                x.getGame().setLoadFilePath(savePaths.get(j));
+                x.getGameStateManager().setState(GameStateManager.State.Loading);
+            });
+            vbox.getChildren().add(button);
+        }
+        
         borderPane.setCenter(vbox);
         borderPane.setAlignment(vbox, Pos.CENTER);
     }
