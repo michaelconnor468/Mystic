@@ -5,7 +5,7 @@ import game.entities.Entity;
 import game.entities.TileEntity;
 import game.main.render.Renderable;
 import game.main.render.Renderer;
-import util.parse.FileParser;
+import util.parse.BlockParser;
 import util.parse.obj.ParserBlock;
 import util.parse.obj.ParserInt;
 
@@ -16,6 +16,7 @@ import java.io.PrintStream;
 import java.nio.file.Files;
 import java.util.stream.Stream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Collections;
 import java.util.regex.Matcher;
@@ -29,6 +30,7 @@ import java.util.regex.Pattern;
 public class ChunkManager implements TickObserver, Renderable {
     private X x;
     private ArrayList<ArrayList<Chunk>> chunks;
+    private HashMap<String, String> chunkJSON = new HashMap<>();
     private int chunkSize, tileSize, chunkLoadDiameter;
 
     private ChunkManager() {}
@@ -63,13 +65,22 @@ public class ChunkManager implements TickObserver, Renderable {
                     assert matcher.group().length() == 10;
                     int column = Integer.parseInt(matcher.group().substring(0,3));
                     int row = Integer.parseInt(matcher.group().substring(3,6));
-                    chunks.get(column).set(row, new Chunk(x, FileParser.parse(f), column, row));
+                    try {
+                        chunkJSON.put(column+":"+row, Files.readString(f));
+                    } catch ( IOException e ) { 
+                        e.printStackTrace(new java.io.PrintStream(System.err));  
+                        System.exit(1);
+                    }
                 }
             });
         } catch ( Exception e ) { 
             e.printStackTrace(new java.io.PrintStream(System.err));  
             System.exit(1);
         }
+        for ( int i = (int) -(chunkLoadDiameter - 1)/2; i <= (int) (chunkLoadDiameter - 1)/2; i++) 
+            for ( int j = (int) -(chunkLoadDiameter - 1)/2; j <= (int) (chunkLoadDiameter - 1)/2; j++) 
+                chunks.get(i).set(j, new Chunk(x, 
+                    (new BlockParser()).parse(chunkJSON.get((i+getCenterChunkX())+":"+(j+getCenterChunkY()))), i, j));
     }
 
     public boolean testCollision( Entity entity ) {
@@ -81,9 +92,12 @@ public class ChunkManager implements TickObserver, Renderable {
     }
 
     public Chunk getChunkInsideOf( Entity entity ) {
-        int chunkSizePX = chunkSize*tileSize;
-        return chunks.get((int) entity.getPosition().getX()/chunkSizePX).get((int) entity.getPosition().getY()/chunkSizePX);
+        return chunks.get((int) entity.getPosition().getX()/(chunkSize*tileSize))
+            .get((int) entity.getPosition().getY()/(chunkSize*tileSize));
     }
+
+    public int getCenterChunkX() { return (int) x.getPlayer().getPosition().getX()/(chunkSize*tileSize); }
+    public int getCenterChunkY() { return (int) x.getPlayer().getPosition().getY()/(chunkSize*tileSize); }
 
     public void addEntity( Entity entity ) { getChunkInsideOf(entity).addEntity(entity); }
     public void removeEntity( Entity entity ) { getChunkInsideOf(entity).removeEntity(entity); }
