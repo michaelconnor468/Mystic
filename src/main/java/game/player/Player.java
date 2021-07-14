@@ -25,7 +25,7 @@ public class Player extends DynamicEntity {
     private Player() {}
 
     public Player(X x, ParserBlock block, ParserBlock template) {
-        super(x, block, template); 
+        super(x, block, template);
         HashMap<String, ParserObject> map = block.getProperties();
         ParserBlock weaponBlock = ((ParserBlock) map.get("weapon"));
         if ( weaponBlock.getProperties().containsKey("melee") )

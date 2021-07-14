@@ -72,7 +72,7 @@ public class LoadScene {
         vbox.getChildren().add(backButton);
         backButton.setOnAction( e -> x.getGameStateManager().setState(GameStateManager.State.MainMenu) );
 
-        for ( int i = 0; i < 2; i++ ) {
+        for ( int i = 0; i < 3; i++ ) {
             Button button = new Button(savePaths.get(i) == null ? "Empty" : "Slot " + (i+1));
             final int j = i;
             button.setOnAction( e -> {
