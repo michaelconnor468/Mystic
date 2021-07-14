@@ -61,10 +61,6 @@ public class TileEntity extends Entity {
     public ParserBlock save(ParserBlock block) {
         block.addProperty(new ParserProperty("type", new ParserInt(type)));
         block.addProperty(new ParserProperty("liquid", new ParserInt(liquid ? 1 : 0)));
-        ParserArray collisionBoxes = new ParserArray(ParserObject.ObjectType.BLOCK);
-        for ( CollisionBox box : getCollisionBoxes() )
-            collisionBoxes.add(box.save(new ParserBlock()));
-        block.addProperty(new ParserProperty("collisionBoxes", collisionBoxes));
         return block;
     }
 
