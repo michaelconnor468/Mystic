@@ -79,7 +79,7 @@ public class ChunkManager implements TickObserver, Renderable {
         }
         for ( int i = (int) -(chunkLoadDiameter - 1)/2; i <= (int) (chunkLoadDiameter - 1)/2; i++) 
             for ( int j = (int) -(chunkLoadDiameter - 1)/2; j <= (int) (chunkLoadDiameter - 1)/2; j++) 
-                chunks.get(i).set(j, new Chunk(x, 
+                chunks.get(i+1).set(j+1, new Chunk(x, 
                     (new BlockParser()).parse(chunkJSON.get((i+getCenterChunkX())+":"+(j+getCenterChunkY()))), i, j));
     }
 

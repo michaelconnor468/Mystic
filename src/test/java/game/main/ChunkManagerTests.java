@@ -21,6 +21,7 @@ public class ChunkManagerTests {
         x.createTimingManager();
         x.createRenderManager();
         x.createChunkManager();
+        x.createPlayer(Paths.get("src/test/config/worlds/default"));
         x.getChunkManager().loadChunks(Paths.get("src/test/config/worlds/default"));
     }
 

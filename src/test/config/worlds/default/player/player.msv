@@ -1,10 +1,23 @@
 {
-    player: {
-        maxHealth: 100,
-        health: 100,
-        xSize: 20,
-        ySize: 60,
-        xPosition: 6144,
-        yPosition: 6144
+    maxHealth: 100,
+    type: 0,
+    health: 100,
+    stamina: 10,
+    maxStamina: 10,
+    speed: 1,
+    speedModifier: 1,
+    xSize: 64,
+    ySize: 128,
+    xPosition: 6144,
+    yPosition: 6144,
+    collisionBox: {
+        xMin: 20,
+        yMin: 90,
+        xMax: 44,
+        yMax: 110
+    }
+    weapon: {
+        id: 0,
+        melee: 1
     }
 }
