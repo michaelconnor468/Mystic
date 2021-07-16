@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.awt.Point;
 
 /**
  * Represents an interface for the collection of discrete abstract units known as chunks which hold all of the objects that funtion and
@@ -31,6 +32,7 @@ public class ChunkManager implements TickObserver, Renderable {
     private X x;
     private ArrayList<ArrayList<Chunk>> chunks;
     private HashMap<String, String> chunkJSON = new HashMap<>();
+    private Point center;
     private int chunkSize, tileSize, chunkLoadDiameter;
 
     private ChunkManager() {}
@@ -44,12 +46,14 @@ public class ChunkManager implements TickObserver, Renderable {
         this.chunks = new ArrayList<ArrayList<Chunk>>();
         for ( int i = 0; i < this.chunkLoadDiameter*2 + 1; i++ )
             this.chunks.add(new ArrayList<Chunk>(Collections.nCopies(chunkLoadDiameter*2 + 1, null)));
+        this.center = new Point(getCenterChunkX(), getCenterChunkY());
         x.getTimingManager().register(this);
         x.getRenderManager().register(this);
     }
 
     public void tick(X x) {
         for ( ArrayList<Chunk> chunkList : chunks ) for ( Chunk chunk : chunkList ) chunk.tick(x);
+        refreshChunks();
     }
 
     public void render(Renderer r) {
@@ -86,6 +90,31 @@ public class ChunkManager implements TickObserver, Renderable {
             }
     }
 
+    // TODO set new row after shifting
+    // TODO save row being shifted away
+    private void refreshChunks() {
+        if ( center.getX() != getCenterChunkX() ) {
+            if ( getCenterChunkX() - center.getX() > 0 ) {
+                for ( int i = chunkLoadDiameter*2; i > 0; i-- ) chunks.set(i, chunks.get(i-1));
+            }
+            else {
+                for ( int i = 0; i < chunkLoadDiameter*2; i++ ) chunks.set(i, chunks.get(i+1));
+            }
+        }
+        else if ( center.getY() != getCenterChunkY() ) {
+            if ( getCenterChunkY() - center.getY() > 0 ) {
+                for ( int i = 0; i < chunkLoadDiameter*2 + 1; i++ )
+                    for ( int j = chunkLoadDiameter*2; j > 0; j-- ) 
+                        chunks.get(i).set(j, chunks.get(i).get(j-1));
+            }
+            else {
+                for ( int i = 0; i < chunkLoadDiameter*2 + 1; i++ )
+                    for ( int j = 0 ; j < chunkLoadDiameter*2; j++ ) 
+                        chunks.get(i).set(j, chunks.get(i).get(j+1));
+            }
+        }
+    }
+
     public boolean testCollision( Entity entity ) {
         for ( Chunk chunk : getChunksAround(entity) ) {
             if ( chunk.testCollision(entity) )
@@ -99,8 +128,8 @@ public class ChunkManager implements TickObserver, Renderable {
             .get((int) entity.getPosition().getY()/(chunkSize*tileSize));
     }
 
-    public int getCenterChunkX() { return (int) x.getPlayer().getPosition().getX()/(chunkSize*tileSize); }
-    public int getCenterChunkY() { return (int) x.getPlayer().getPosition().getY()/(chunkSize*tileSize); }
+    private int getCenterChunkX() { return (int) x.getPlayer().getPosition().getX()/(chunkSize*tileSize); }
+    private int getCenterChunkY() { return (int) x.getPlayer().getPosition().getY()/(chunkSize*tileSize); }
 
     public void addEntity( Entity entity ) { getChunkInsideOf(entity).addEntity(entity); }
     public void removeEntity( Entity entity ) { getChunkInsideOf(entity).removeEntity(entity); }
