@@ -91,23 +91,26 @@ public class ChunkManager implements TickObserver, Renderable {
     }
 
     // TODO set new row after shifting
-    // TODO save row being shifted away
     private void refreshChunks() {
         if ( center.getX() != getCenterChunkX() ) {
             if ( getCenterChunkX() - center.getX() > 0 ) {
+                for ( int j = 0; j < chunkLoadDiameter*2+1; j++ ) saveChunk(chunks.get(chunkLoadDiameter*2).get(j));
                 for ( int i = chunkLoadDiameter*2; i > 0; i-- ) chunks.set(i, chunks.get(i-1));
             }
             else {
+                for ( int j = 0; j < chunkLoadDiameter*2+1; j++ ) saveChunk(chunks.get(0).get(j));
                 for ( int i = 0; i < chunkLoadDiameter*2; i++ ) chunks.set(i, chunks.get(i+1));
             }
         }
         else if ( center.getY() != getCenterChunkY() ) {
             if ( getCenterChunkY() - center.getY() > 0 ) {
+                for ( int i = 0; i < chunkLoadDiameter*2+1; i++ ) saveChunk(chunks.get(i).get(chunkLoadDiameter*2));
                 for ( int i = 0; i < chunkLoadDiameter*2 + 1; i++ )
                     for ( int j = chunkLoadDiameter*2; j > 0; j-- ) 
                         chunks.get(i).set(j, chunks.get(i).get(j-1));
             }
             else {
+                for ( int i = 0; i < chunkLoadDiameter*2+1; i++ ) saveChunk(chunks.get(chunkLoadDiameter*2).get(i));
                 for ( int i = 0; i < chunkLoadDiameter*2 + 1; i++ )
                     for ( int j = 0 ; j < chunkLoadDiameter*2; j++ ) 
                         chunks.get(i).set(j, chunks.get(i).get(j+1));
