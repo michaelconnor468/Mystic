@@ -35,7 +35,7 @@ public class Chunk implements TickObserver, Renderable {
         this.yChunkPosition = yPosition;
         
         HashMap<String, ParserObject> properties = ((ParserBlock) block.getProperties().get("chunk")).getProperties();
-        
+
         TileEntityContainer tileEntityContainer = new TileEntityContainer(x);
         ParserArray tileRows = (ParserArray) properties.get("tileEntities");
         for ( int i = 0; i < tileRows.getLength(); i++ ) {

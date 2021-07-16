@@ -42,7 +42,7 @@ public class ChunkManager implements TickObserver, Renderable {
         this.tileSize = ((ParserInt) x.getMainSettings().get("tileSize")).getNumber();
         this.chunkLoadDiameter = ((ParserInt) x.getMainSettings().get("chunkLoadDiameter")).getNumber(); 
         this.chunks = new ArrayList<ArrayList<Chunk>>();
-        for ( int i = 0; i < this.chunkLoadDiameter; i++ )
+        for ( int i = 0; i < this.chunkLoadDiameter*2 + 1; i++ )
             this.chunks.add(new ArrayList<Chunk>(Collections.nCopies(chunkLoadDiameter*2 + 1, null)));
         x.getTimingManager().register(this);
         x.getRenderManager().register(this);
@@ -79,9 +79,10 @@ public class ChunkManager implements TickObserver, Renderable {
         }
         for ( int i = -chunkLoadDiameter; i <= chunkLoadDiameter; i++) 
             for ( int j = -chunkLoadDiameter; j <= chunkLoadDiameter; j++) {
-                chunks.get(i+1).set(j+1, new Chunk(x, 
-                    (new BlockParser()).parse(chunkJSON.get((i+getCenterChunkX())+":"+(j+getCenterChunkY()))), 
-                        (i+getCenterChunkX()), (j+getCenterChunkY())));
+                String json = chunkJSON.get((i+getCenterChunkX())+":"+(j+getCenterChunkY()));
+                ParserBlock block = (new BlockParser()).parse(json);
+                Chunk chunk = new Chunk(x, block, i+1, j+1);
+                chunks.get(i+1).set(j+1, chunk);
             }
     }
 
