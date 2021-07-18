@@ -97,10 +97,35 @@ public class ChunkManager implements TickObserver, Renderable {
             if ( getCenterChunkX() - center.getX() > 0 ) {
                 for ( int j = 0; j < chunkLoadDiameter*2+1; j++ ) cacheChunk(chunks.get(chunkLoadDiameter*2).get(j));
                 for ( int i = chunkLoadDiameter*2; i > 0; i-- ) chunks.set(i, chunks.get(i-1));
+                chunks.set(0, new ArrayList<Chunk>());
+                for ( int j = 0; j < chunkLoadDiameter*2*1; j++ ) {
+                    final int k = j;
+                    final Task<Object> task = new Task<Object>() {
+                        @Override protected Object call() throws Exception {
+                            int row = (getCenterChunkX()-chunkLoadDiameter);
+                            int col = (getCenterChunkY()-chunkLoadDiameter+k);
+                            return new Chunk(x, (new BlockParser()).parse(chunkJSON.get(row+":"+col)), row, col);
+                        }
+                    };
+                    task.setOnSucceeded((v) -> chunks.get(0).set(k, (Chunk) task.getValue()));
+                    (new Thread(task)).start();
+                }
             }
             else {
                 for ( int j = 0; j < chunkLoadDiameter*2+1; j++ ) cacheChunk(chunks.get(0).get(j));
                 for ( int i = 0; i < chunkLoadDiameter*2; i++ ) chunks.set(i, chunks.get(i+1));
+                for ( int j = 0; j < chunkLoadDiameter*2*1; j++ ) {
+                    final int k = j;
+                    final Task<Object> task = new Task<Object>() {
+                        @Override protected Object call() throws Exception {
+                            int row = (getCenterChunkX()+chunkLoadDiameter);
+                            int col = (getCenterChunkY()-chunkLoadDiameter+k);
+                            return new Chunk(x, (new BlockParser()).parse(chunkJSON.get(row+":"+col)), row, col);
+                        }
+                    };
+                    task.setOnSucceeded((v) -> chunks.get(chunkLoadDiameter*2).set(k, (Chunk) task.getValue()));
+                    (new Thread(task)).start();
+                }
             }
         }
         else if ( center.getY() != getCenterChunkY() ) {
