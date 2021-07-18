@@ -34,8 +34,8 @@ public class Game implements GameStateChangeListener {
     }
 
     public void load() {
-        x.createChunkManager();
         x.createPlayer(loadFilePath);
+        x.createChunkManager();
     }
     
     public void beforeStateTransition(GameStateManager.State from, GameStateManager.State to) {
