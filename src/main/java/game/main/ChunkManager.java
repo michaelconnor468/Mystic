@@ -35,6 +35,8 @@ public class ChunkManager implements TickObserver, Renderable {
     private HashMap<String, String> chunkJSON = new HashMap<>();
     private Point center;
     private int chunkSize, tileSize, chunkLoadDiameter;
+    private int maxX = 0;
+    private int maxY = 0;
 
     private ChunkManager() {}
 
@@ -53,12 +55,12 @@ public class ChunkManager implements TickObserver, Renderable {
     }
 
     public void tick(X x) {
-        for ( ArrayList<Chunk> chunkList : chunks ) for ( Chunk chunk : chunkList ) chunk.tick(x);
+        for ( ArrayList<Chunk> chunkList : chunks ) for ( Chunk chunk : chunkList ) if (chunk != null) chunk.tick(x);
         refreshChunks();
     }
 
     public void render(Renderer r) {
-        for ( ArrayList<Chunk> chunkList : chunks ) for ( Chunk chunk : chunkList ) chunk.render(r);
+        for ( ArrayList<Chunk> chunkList : chunks ) for ( Chunk chunk : chunkList ) if (chunk != null) chunk.render(r);
     }
     
     public void loadChunks(Path path) {
@@ -94,9 +96,7 @@ public class ChunkManager implements TickObserver, Renderable {
     private void refreshChunks() {
         if ( center.getX() != getCenterChunkX() ) {
             if ( getCenterChunkX() - center.getX() > 0 ) {
-                for ( int j = 0; j < chunkLoadDiameter*2+1; j++ ) cacheChunk(chunks.get(chunkLoadDiameter*2).get(j));
-                for ( int i = chunkLoadDiameter*2; i > 0; i-- ) chunks.set(i, chunks.get(i-1));
-                chunks.set(0, new ArrayList<Chunk>());
+                ArrayList<Chunk> newList = new ArrayList<Chunk>(Collections.nCopies(chunkLoadDiameter*2+1, null));
                 for ( int j = 0; j < chunkLoadDiameter*2*1; j++ ) {
                     final int k = j;
                     final Task<Object> task = new Task<Object>() {
@@ -106,13 +106,15 @@ public class ChunkManager implements TickObserver, Renderable {
                             return new Chunk(x, (new BlockParser()).parse(chunkJSON.get(row+":"+col)), row, col);
                         }
                     };
-                    task.setOnSucceeded((v) -> chunks.get(0).set(k, (Chunk) task.getValue()));
+                    task.setOnSucceeded((v) -> newList.set(k, (Chunk) task.getValue()));
                     (new Thread(task)).start();
                 }
+                for ( int j = 0; j < chunkLoadDiameter*2+1; j++ ) cacheChunk(chunks.get(chunkLoadDiameter*2).get(j));
+                for ( int i = chunkLoadDiameter*2; i > 0; i-- ) chunks.set(i, chunks.get(i-1));
+                chunks.set(0, newList);
             }
             else {
-                for ( int j = 0; j < chunkLoadDiameter*2+1; j++ ) cacheChunk(chunks.get(0).get(j));
-                for ( int i = 0; i < chunkLoadDiameter*2; i++ ) chunks.set(i, chunks.get(i+1));
+                ArrayList<Chunk> newList = new ArrayList<Chunk>(Collections.nCopies(chunkLoadDiameter*2+1, null));
                 for ( int j = 0; j < chunkLoadDiameter*2*1; j++ ) {
                     final int k = j;
                     final Task<Object> task = new Task<Object>() {
@@ -122,9 +124,12 @@ public class ChunkManager implements TickObserver, Renderable {
                             return new Chunk(x, (new BlockParser()).parse(chunkJSON.get(row+":"+col)), row, col);
                         }
                     };
-                    task.setOnSucceeded((v) -> chunks.get(chunkLoadDiameter*2).set(k, (Chunk) task.getValue()));
+                    task.setOnSucceeded((v) -> newList.set(k, (Chunk) task.getValue()));
                     (new Thread(task)).start();
                 }
+                for ( int j = 0; j < chunkLoadDiameter*2+1; j++ ) cacheChunk(chunks.get(0).get(j));
+                for ( int i = 0; i < chunkLoadDiameter*2; i++ ) chunks.set(i, chunks.get(i+1));
+                chunks.set(chunkLoadDiameter*2, newList);
             }
             center = new Point((int) getCenterChunkX(), (int) center.getY());
         }
@@ -171,6 +176,7 @@ public class ChunkManager implements TickObserver, Renderable {
 
     public boolean testCollision( Entity entity ) {
         for ( Chunk chunk : getChunksAround(entity) ) {
+            if ( chunk == null ) continue;
             if ( chunk.testCollision(entity) )
                 return true;
         }
@@ -205,9 +211,11 @@ public class ChunkManager implements TickObserver, Renderable {
 
     public ArrayList<TileEntity> getTilesAround( Entity entity ) {
         ArrayList<TileEntity> ret = new ArrayList<>();
-        for ( Chunk chunk : getChunksAround(entity) ) 
+        for ( Chunk chunk : getChunksAround(entity) ) {
+            if ( chunk == null ) continue;
             for ( TileEntity tileEntity : chunk.getTilesAround(entity) )
                 ret.add(tileEntity);
+        }
         return ret;
     }
 
@@ -234,12 +242,14 @@ public class ChunkManager implements TickObserver, Renderable {
         }
     }
     public void saveChunk(Path path, Chunk chunk) throws IOException {
+        if ( chunk == null ) return;
         cacheChunk(chunk);
         Files.write(path.resolve(Paths.get("chunk"+String.format("%03d", chunk.getXChunkPosition())
             + String.format("%03d", chunk.getYChunkPosition())+".msv")),
             chunk.save(new ParserBlock()).toString().getBytes());
     }
     private void cacheChunk(Chunk chunk) {
+        if ( chunk == null ) return;
         chunkJSON.put(chunk.getXChunkPosition()+":"+chunk.getYChunkPosition(), 
             chunk.save(new ParserBlock()).toString()); 
     }
