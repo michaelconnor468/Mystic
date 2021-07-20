@@ -84,13 +84,14 @@ public class ChunkManager implements TickObserver, Renderable {
             e.printStackTrace(new java.io.PrintStream(System.err));  
             System.exit(1);
         }
-        for ( int i = 0; i < chunkLoadDiameter*2+1; i++) 
+        for ( int i = 0; i < chunkLoadDiameter*2+1; i++) {
             for ( int j = 0; j < chunkLoadDiameter*2+1; j++) {
                 int chunkRow =  i-chunkLoadDiameter+getCenterChunkX();
                 int chunkColumn = j-chunkLoadDiameter+getCenterChunkY();
                 ParserBlock block = (new BlockParser()).parse(chunkJSON.get(chunkRow+":"+chunkColumn));
                 chunks.get(i).set(j, (new Chunk(x, block, chunkRow, chunkColumn)));
             }
+        }
     }
 
     private void refreshChunks() {
@@ -186,6 +187,22 @@ public class ChunkManager implements TickObserver, Renderable {
     public Chunk getChunkInsideOf( Entity entity ) {
         return chunks.get((int) entity.getPosition().getX()/(chunkSize*tileSize))
             .get((int) entity.getPosition().getY()/(chunkSize*tileSize));
+    }
+
+    private void printActiveChunks() {
+        System.out.println("*** Chunks ***");
+        for ( int i = 0; i < chunkLoadDiameter*2 + 1; i++ ) {
+            System.out.print("[");
+            for ( int k = 0; k < chunkLoadDiameter*2 + 1; k++ ) {
+                if ( chunks.get(k) != null && chunks.get(k).get(i) != null )
+                    System.out.print(chunks.get(k).get(i).getXChunkPosition() + ":" 
+                        + chunks.get(k).get(i).getYChunkPosition() + ", ");
+                else
+                    System.out.print(" null,");
+            }
+            System.out.print("]\n");
+        }
+        System.out.println("*************");
     }
 
     private int getCenterChunkX() { return (int) x.getPlayer().getPosition().getX()/(chunkSize*tileSize); }
