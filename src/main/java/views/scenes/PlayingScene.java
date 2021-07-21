@@ -6,13 +6,15 @@ import game.main.GameStateManager;
 import game.entities.DynamicEntity;
 import game.entities.buffs.Buff;
 import util.parse.obj.*;
+import views.scenes.components.*;
 
 import java.nio.file.Paths;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-import javafx.scene.Group;
 import javafx.scene.canvas.*;
+import javafx.geometry.Pos;
 
 public class PlayingScene {
     public static X x;
@@ -21,10 +23,16 @@ public class PlayingScene {
         x = context;
         int width = ((ParserInt) x.getMainSettings().get("resolutionx")).getNumber();
         int height = ((ParserInt) x.getMainSettings().get("resolutiony")).getNumber();
-        Group root = new Group();
+        StackPane pane = new StackPane();
+        Scene scene = new Scene(pane, width, height);
         Canvas canvas = new Canvas(width, height);
-        Scene scene = new Scene(root, width, height);
-        root.getChildren().add(canvas);
+
+        BorderPane componentHolder = new BorderPane();
+        InventoryComponent inventoryComponent = new InventoryComponent(x);
+        componentHolder.setBottom(inventoryComponent.getComponent());
+        componentHolder.setAlignment(inventoryComponent.getComponent(), Pos.CENTER);
+
+        pane.getChildren().add(canvas);
         x.getRenderManager().updateGraphicsContext(canvas.getGraphicsContext2D());
         setupKeystrokes(scene);
 
@@ -32,6 +40,8 @@ public class PlayingScene {
             scene.getStylesheets().add(Paths.get("src/main/resources/styles/Common.css")
                 .toUri().toURL().toExternalForm());
             scene.getStylesheets().add(Paths.get("src/main/resources/styles/Playing.css")
+                .toUri().toURL().toExternalForm());
+            scene.getStylesheets().add(Paths.get("src/main/resources/styles/Components.css")
                 .toUri().toURL().toExternalForm());
         } catch ( Exception e ) { System.err.println(e); } 
 
