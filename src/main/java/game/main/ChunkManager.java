@@ -92,13 +92,15 @@ public class ChunkManager implements TickObserver, Renderable {
                 chunks.get(i).set(j, (new Chunk(x, block, chunkRow, chunkColumn)));
             }
         }
+        printActiveChunks();
     }
 
     private void refreshChunks() {
+            printActiveChunks();
         if ( center.getX() != getCenterChunkX() ) {
-            if ( getCenterChunkX() - center.getX() > 0 ) {
+            if ( getCenterChunkX() - center.getX() < 0 ) {
                 ArrayList<Chunk> newList = new ArrayList<Chunk>(Collections.nCopies(chunkLoadDiameter*2+1, null));
-                for ( int j = 0; j < chunkLoadDiameter*2*1; j++ ) {
+                for ( int j = 0; j < chunkLoadDiameter*2 + 1; j++ ) {
                     final int k = j;
                     final Task<Object> task = new Task<Object>() {
                         @Override protected Object call() throws Exception {
@@ -116,7 +118,7 @@ public class ChunkManager implements TickObserver, Renderable {
             }
             else {
                 ArrayList<Chunk> newList = new ArrayList<Chunk>(Collections.nCopies(chunkLoadDiameter*2+1, null));
-                for ( int j = 0; j < chunkLoadDiameter*2*1; j++ ) {
+                for ( int j = 0; j < chunkLoadDiameter*2 + 1; j++ ) {
                     final int k = j;
                     final Task<Object> task = new Task<Object>() {
                         @Override protected Object call() throws Exception {
@@ -135,7 +137,7 @@ public class ChunkManager implements TickObserver, Renderable {
             center = new Point((int) getCenterChunkX(), (int) center.getY());
         }
         if ( center.getY() != getCenterChunkY() ) {
-            if ( getCenterChunkY() - center.getY() > 0 ) {
+            if ( getCenterChunkY() - center.getY() < 0 ) {
                 for ( int i = 0; i < chunkLoadDiameter*2+1; i++ ) cacheChunk(chunks.get(i).get(chunkLoadDiameter*2));
                 for ( int i = 0; i < chunkLoadDiameter*2 + 1; i++ )
                     for ( int j = chunkLoadDiameter*2; j > 0; j-- ) 
