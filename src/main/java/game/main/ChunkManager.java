@@ -94,49 +94,28 @@ public class ChunkManager implements TickObserver, Renderable {
         }
     }
 
+    /**
+     * Dynamically loads and saves chunks in and out of the active chunks to reduce the games resource footprint
+     * and allow for near infinite maps.
+     */
     private void refreshChunks() {
         if ( center.getX() != getCenterChunkX() ) {
-            if ( getCenterChunkX() - center.getX() < 0 ) {
-                ArrayList<Chunk> newList = new ArrayList<Chunk>(Collections.nCopies(chunkLoadDiameter*2+1, null));
-                for ( int j = 0; j < chunkLoadDiameter*2 + 1; j++ ) {
-                    final int k = j;
-                    final Task<Object> task = new Task<Object>() {
-                        @Override protected Object call() throws Exception {
-                            int row = (getCenterChunkX()-chunkLoadDiameter);
-                            int col = (getCenterChunkY()-chunkLoadDiameter+k);
-                            if ( col < 0 || row < 0 ) return null;
-                            return new Chunk(x, (new BlockParser()).parse(chunkJSON.get(row+":"+col)), row, col);
-                        }
-                    };
-                    task.setOnSucceeded((v) -> newList.set(k, (Chunk) task.getValue()));
-                    (new Thread(task)).start();
-                }
-                for ( int j = 0; j < chunkLoadDiameter*2+1; j++ ) cacheChunk(chunks.get(chunkLoadDiameter*2).get(j));
+            int columnOffset = getCenterChunkX() < center.getX() ? - chunkLoadDiameter : chunkLoadDiameter;
+            ArrayList<Chunk> newList = new ArrayList<Chunk>(Collections.nCopies(chunkLoadDiameter*2+1, null));
+            for ( int j = 0; j < chunkLoadDiameter*2 + 1; j++ ) {
+                final int k = j;
+                runLoadChunkTask(columnOffset, - chunkLoadDiameter + k, c -> newList.set(k, c));
+                cacheChunk(chunks.get(getCenterChunkX() < center.getX() ? chunkLoadDiameter*2 : 0).get(j));
+            }
+            if ( getCenterChunkX() < center.getX() )
                 for ( int i = chunkLoadDiameter*2; i > 0; i-- ) chunks.set(i, chunks.get(i-1));
-                chunks.set(0, newList);
-            }
-            else {
-                ArrayList<Chunk> newList = new ArrayList<Chunk>(Collections.nCopies(chunkLoadDiameter*2+1, null));
-                for ( int j = 0; j < chunkLoadDiameter*2 + 1; j++ ) {
-                    final int k = j;
-                    final Task<Object> task = new Task<Object>() {
-                        @Override protected Object call() throws Exception {
-                            int row = (getCenterChunkX()+chunkLoadDiameter);
-                            int col = (getCenterChunkY()-chunkLoadDiameter+k);
-                            if ( col < 0 || row < 0 ) return null;
-                            return new Chunk(x, (new BlockParser()).parse(chunkJSON.get(row+":"+col)), row, col);
-                        }
-                    };
-                    task.setOnSucceeded((v) -> newList.set(k, (Chunk) task.getValue()));
-                    (new Thread(task)).start();
-                }
-                for ( int j = 0; j < chunkLoadDiameter*2+1; j++ ) cacheChunk(chunks.get(0).get(j));
+            else
                 for ( int i = 0; i < chunkLoadDiameter*2; i++ ) chunks.set(i, chunks.get(i+1));
-                chunks.set(chunkLoadDiameter*2, newList);
-            }
+            chunks.set(getCenterChunkX() < center.getX() ? 0 : chunkLoadDiameter*2, newList);
             center = new Point((int) getCenterChunkX(), (int) center.getY());
         }
         if ( center.getY() != getCenterChunkY() ) {
+            int rowOffset = getCenterChunkY() < center.getY() ? -chunkLoadDiameter : chunkLoadDiameter;
             if ( getCenterChunkY() - center.getY() < 0 ) {
                 for ( int i = 0; i < chunkLoadDiameter*2+1; i++ ) cacheChunk(chunks.get(i).get(chunkLoadDiameter*2));
                 for ( int i = 0; i < chunkLoadDiameter*2 + 1; i++ )
@@ -144,16 +123,7 @@ public class ChunkManager implements TickObserver, Renderable {
                         chunks.get(i).set(j, chunks.get(i).get(j-1));
                 for ( int i = 0; i < chunkLoadDiameter*2 + 1; i++ ) {
                     final int k = i;
-                    final Task<Object> task = new Task<Object>() {
-                        @Override protected Object call() throws Exception {
-                            int row = (getCenterChunkX()-chunkLoadDiameter+k);
-                            int col = (getCenterChunkY()-chunkLoadDiameter);
-                            if ( col < 0 || row < 0 ) return null;
-                            return new Chunk(x, (new BlockParser()).parse(chunkJSON.get(row+":"+col)), row, col);
-                        }
-                    };
-                    task.setOnSucceeded((v) -> chunks.get(k).set(0, (Chunk) task.getValue()));
-                    (new Thread(task)).start();
+                    runLoadChunkTask(-chunkLoadDiameter+k, rowOffset, c -> chunks.get(k).set(0, c));
                 }
             }
             else {
@@ -163,23 +133,37 @@ public class ChunkManager implements TickObserver, Renderable {
                         chunks.get(i).set(j, chunks.get(i).get(j+1));
                 for ( int i = 0; i < chunkLoadDiameter*2 + 1; i++ ) {
                     final int k = i;
-                    final Task<Object> task = new Task<Object>() {
-                        @Override protected Object call() throws Exception {
-                            int row = (getCenterChunkX()-chunkLoadDiameter+k);
-                            int col = (getCenterChunkY()+chunkLoadDiameter);
-                            if ( col > chunkLoadDiameter*2 || row < 0 ) return null;
-                            return new Chunk(x, (new BlockParser()).parse(chunkJSON.get(row+":"+col)), row, col);
-                        }
-                    };
-                    task.setOnSucceeded((v) -> chunks.get(k).set(chunkLoadDiameter*2, (Chunk) task.getValue()));
-                    (new Thread(task)).start();
+                    runLoadChunkTask(-chunkLoadDiameter+k, rowOffset, c -> chunks.get(k).set(chunkLoadDiameter*2, c));
                 }
             }
             center = new Point((int) center.getX(), (int) getCenterChunkY());
         }
     }
+   
+    /**
+     * Helper function for refreshing chunks.
+     * Loads in a chunk in a separate thread with the given offset from the player and runs it through the given
+     * consumer.
+     */
+    private void runLoadChunkTask(int colOffset, int rowOffset, java.util.function.Consumer<Chunk> onSuccess) {
+        final Task<Object> task = new Task<Object>() {
+            @Override protected Object call() throws Exception {
+                int col = (getCenterChunkX()+colOffset);
+                int row = (getCenterChunkY()+rowOffset);
+                if ( chunkJSON.get(row+":"+col) == null ) return null;
+                return new Chunk(x, (new BlockParser()).parse(chunkJSON.get(col+":"+row)), col, row);
+            }
+        };
+        task.setOnSucceeded(v -> onSuccess.accept((Chunk) task.getValue()));
+        (new Thread(task)).start();
+    }
 
-    public boolean testCollision( Entity entity ) {
+    /**
+     *  Synchronized collision testing to allow for easy multithreading of arbitrary entities without rare
+     *  race conditions related to moving entities popping up. Since collisions are only tested for nearby
+     *  entities, the performance impact of synchrnization is negligible.
+     */
+    public synchronized boolean testCollision( Entity entity ) {
         for ( Chunk chunk : getChunksAround(entity) ) {
             if ( chunk == null ) continue;
             if ( chunk.testCollision(entity) )
