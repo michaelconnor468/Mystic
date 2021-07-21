@@ -92,11 +92,9 @@ public class ChunkManager implements TickObserver, Renderable {
                 chunks.get(i).set(j, (new Chunk(x, block, chunkRow, chunkColumn)));
             }
         }
-        printActiveChunks();
     }
 
     private void refreshChunks() {
-            printActiveChunks();
         if ( center.getX() != getCenterChunkX() ) {
             if ( getCenterChunkX() - center.getX() < 0 ) {
                 ArrayList<Chunk> newList = new ArrayList<Chunk>(Collections.nCopies(chunkLoadDiameter*2+1, null));
@@ -106,6 +104,7 @@ public class ChunkManager implements TickObserver, Renderable {
                         @Override protected Object call() throws Exception {
                             int row = (getCenterChunkX()-chunkLoadDiameter);
                             int col = (getCenterChunkY()-chunkLoadDiameter+k);
+                            if ( col < 0 || row < 0 ) return null;
                             return new Chunk(x, (new BlockParser()).parse(chunkJSON.get(row+":"+col)), row, col);
                         }
                     };
@@ -124,6 +123,7 @@ public class ChunkManager implements TickObserver, Renderable {
                         @Override protected Object call() throws Exception {
                             int row = (getCenterChunkX()+chunkLoadDiameter);
                             int col = (getCenterChunkY()-chunkLoadDiameter+k);
+                            if ( col < 0 || row < 0 ) return null;
                             return new Chunk(x, (new BlockParser()).parse(chunkJSON.get(row+":"+col)), row, col);
                         }
                     };
@@ -148,6 +148,7 @@ public class ChunkManager implements TickObserver, Renderable {
                         @Override protected Object call() throws Exception {
                             int row = (getCenterChunkX()-chunkLoadDiameter+k);
                             int col = (getCenterChunkY()-chunkLoadDiameter);
+                            if ( col < 0 || row < 0 ) return null;
                             return new Chunk(x, (new BlockParser()).parse(chunkJSON.get(row+":"+col)), row, col);
                         }
                     };
@@ -156,7 +157,7 @@ public class ChunkManager implements TickObserver, Renderable {
                 }
             }
             else {
-                for ( int i = 0; i < chunkLoadDiameter*2+1; i++ ) cacheChunk(chunks.get(chunkLoadDiameter*2).get(i));
+                for ( int i = 0; i < chunkLoadDiameter*2 + 1; i++ ) cacheChunk(chunks.get(chunkLoadDiameter*2).get(i));
                 for ( int i = 0; i < chunkLoadDiameter*2 + 1; i++ )
                     for ( int j = 0 ; j < chunkLoadDiameter*2; j++ ) 
                         chunks.get(i).set(j, chunks.get(i).get(j+1));
@@ -165,7 +166,8 @@ public class ChunkManager implements TickObserver, Renderable {
                     final Task<Object> task = new Task<Object>() {
                         @Override protected Object call() throws Exception {
                             int row = (getCenterChunkX()-chunkLoadDiameter+k);
-                            int col = (getCenterChunkY()-chunkLoadDiameter);
+                            int col = (getCenterChunkY()+chunkLoadDiameter);
+                            if ( col > chunkLoadDiameter*2 || row < 0 ) return null;
                             return new Chunk(x, (new BlockParser()).parse(chunkJSON.get(row+":"+col)), row, col);
                         }
                     };
