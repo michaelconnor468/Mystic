@@ -22,6 +22,7 @@ import util.parse.obj.*;
  */
 public class Player extends DynamicEntity {
     private Weapon weapon;
+    private Inventory inventory;
     private Player() {}
 
     public Player(X x, ParserBlock block, ParserBlock template) {
@@ -30,6 +31,11 @@ public class Player extends DynamicEntity {
         ParserBlock weaponBlock = ((ParserBlock) map.get("weapon"));
         if ( weaponBlock.getProperties().containsKey("melee") )
             this.weapon = MeleeWeapon.load(x, this, weaponBlock);
+        ParserArray inventoryArray = ((ParserArray) map.get("inventory"));
+        for ( ParserObject object : inventoryArray ) {
+            ParserBlock item = (ParserBlock) object;
+            // TODO unload
+        }
         x.getTimingManager().register(this);
     }
 
@@ -89,6 +95,7 @@ public class Player extends DynamicEntity {
     @Override public ParserBlock save(ParserBlock block) {
         super.save(block);
         this.weapon.save(block);
+        this.inventory.save(block);
         return block;
     }
 

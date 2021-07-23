@@ -1,9 +1,12 @@
 package views.scenes.components;
 
 import game.main.X;
+import game.player.Inventory;
 import util.parse.obj.*;
 
 import java.util.ArrayList;
+import java.util.Observer;
+import java.util.Observable;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.net.MalformedURLException;
@@ -15,7 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.geometry.Pos;
 
-public class InventoryComponent implements Component {
+public class InventoryComponent implements Component, Observer {
     private ArrayList<ImageView> items = new ArrayList<>();
     private ArrayList<ImageView> backgrounds = new ArrayList<>();
     private HBox box;
@@ -24,8 +27,7 @@ public class InventoryComponent implements Component {
     
     private InventoryComponent() {}
     public InventoryComponent(X x) {
-        this.size = ((ParserInt) x.getMainSettings().get("inventorySize")).getNumber();
-        this.height = ((ParserInt) x.getMainSettings().get("inventoryHeight")).getNumber();
+        this.size = ((ParserInt) x.getMainSettings().get("inventorySlots")).getNumber();
         this.items = new ArrayList<>();
         this.box = new HBox();
 
@@ -49,5 +51,10 @@ public class InventoryComponent implements Component {
 
     public Pane getComponent() {
         return box;
+    }
+
+    @Override public void update(Observable inventory, Object arg) {
+        if ( !(inventory instanceof Inventory) ) return;
+        Inventory inv = (Inventory) inventory;
     }
 }
