@@ -6,23 +6,26 @@ import game.player.items.ItemStack;
 import game.player.items.ItemDrop;
 import game.entities.Saveable;
 import util.parse.obj.*;
+import util.Observable;
+import util.Observer;
 
-import java.util.Observable;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Inventory extends Observable implements Saveable  {
+public class Inventory implements Saveable, Observable {
     private X x;
     private int slots;
     private int stackSize;
     private ArrayList<ItemStack> items;
+    private ArrayList<Observer> observers;
 
     private Inventory() {}
     public Inventory(X x, ParserBlock inventory) {
         this.x = x;
         this.slots = ((ParserInt) x.getMainSettings().get("inventorySlots")).getNumber();
         this.items = new ArrayList<>(Collections.nCopies(slots, null));
+        this.observers = new ArrayList<>();
         for ( ParserObject object : (ParserArray) inventory.getProperty("items") )
             items.add(new ItemStack(x, (ParserBlock) object));
     }
@@ -55,4 +58,5 @@ public class Inventory extends Observable implements Saveable  {
     }
 
     public List<ItemStack> getItemStacks() { return this.items; }
+    @Override public List<Observer> getObservers() { return observers; }
 }

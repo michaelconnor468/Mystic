@@ -4,16 +4,17 @@ import game.main.X;
 import game.player.Inventory;
 import game.player.items.ItemStack;
 import util.parse.obj.*;
+import util.Observer;
+import util.Observable;
 
 import java.util.ArrayList;
-import java.util.Observer;
-import java.util.Observable;
 import java.util.Collections;
 import java.util.List;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.net.MalformedURLException;
 import javafx.scene.layout.StackPane;
+import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.HBox;
@@ -54,18 +55,18 @@ public class InventoryComponent implements Component, Observer {
             }
         }
 
+        this.box = new HBox();
         render();
     }
 
     public void render() {
-        this.box = new HBox();
+        box.getChildren().clear();
         box.setAlignment(Pos.CENTER);
         for ( int i = 0; i < size; i++ ) {
             StackPane stackPane = new StackPane();
             stackPane.getChildren().add(backgrounds.get(i));
             box.getChildren().add(stackPane);
             if ( items.get(i) != null ) {
-                System.out.println("Rendering Item");
                 stackPane.getChildren().add(items.get(i));
             }
         }
@@ -75,8 +76,7 @@ public class InventoryComponent implements Component, Observer {
         return box;
     }
 
-    @Override public void update(Observable inventory, Object arg) {
-        System.out.println("Update");
+    @Override public void update(Observable inventory) {
         if ( !(inventory instanceof Inventory) ) return;
         List<ItemStack> inv = ((Inventory) inventory).getItemStacks();
         for ( int i = 0; i < inv.size(); i++ ) {
@@ -85,6 +85,6 @@ public class InventoryComponent implements Component, Observer {
                 itemCounts.set(i, inv.get(i).getSize());
             }
         }
-        render();
+        Platform.runLater(() -> render());
     }
 }
