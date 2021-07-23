@@ -20,5 +20,7 @@
         id: 0,
         melee: 1
     },
-    inventory: []
+    inventory: {
+        items: []
+    }
 }

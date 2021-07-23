@@ -31,11 +31,7 @@ public class Player extends DynamicEntity {
         ParserBlock weaponBlock = ((ParserBlock) map.get("weapon"));
         if ( weaponBlock.getProperties().containsKey("melee") )
             this.weapon = MeleeWeapon.load(x, this, weaponBlock);
-        ParserArray inventoryArray = ((ParserArray) map.get("inventory"));
-        for ( ParserObject object : inventoryArray ) {
-            ParserBlock item = (ParserBlock) object;
-            // TODO unload
-        }
+        this.inventory = new Inventory(x, ((ParserBlock) map.get("inventory")));
         x.getTimingManager().register(this);
     }
 
@@ -103,4 +99,6 @@ public class Player extends DynamicEntity {
         animation.setStill(stationary);
         this.stationary = stationary;
     }
+
+    public Inventory getInventory() { return this.inventory; }
 }
