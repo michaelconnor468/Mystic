@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.geometry.Pos;
 
 public class InventoryComponent implements Component, Observer {
+    private X x;
     private ArrayList<ImageView> items = new ArrayList<>();
     private ArrayList<ImageView> backgrounds = new ArrayList<>();
     private HBox box;
@@ -30,6 +31,8 @@ public class InventoryComponent implements Component, Observer {
         this.size = ((ParserInt) x.getMainSettings().get("inventorySlots")).getNumber();
         this.items = new ArrayList<>();
         this.box = new HBox();
+        this.x = x;
+        x.getPlayer().getInventory().addObserver(this);
 
         try {
             for ( int i = 0; i < size; i++ ) {

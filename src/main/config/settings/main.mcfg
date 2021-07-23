@@ -8,5 +8,6 @@
     framesPerSecond: 60,
     chunkSize: 64,
     tileSize: 64,
-    inventorySlots: 24
+    inventorySlots: 24,
+    itemStackSize: 64
 }
