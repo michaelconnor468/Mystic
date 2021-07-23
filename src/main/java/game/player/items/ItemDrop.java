@@ -35,8 +35,8 @@ public class ItemDrop extends StaticEntity {
         this.x = x;
         this.item = new Item(x, ((ParserInt) block.getProperty("type")).getNumber());
         HashMap<String, ParserObject> props = block.getProperties();
-        this.size = new Point(((ParserInt) props.get("xSize")).getNumber(), 
-            ((ParserInt) props.get("ySize")).getNumber());
+        int itemSize = ((ParserInt) x.getMainSettings().get("itemSize")).getNumber();
+        this.size = new Point(itemSize, itemSize);
         this.animation = new Animation(x, this, Paths.get("src/main/resources/items/"+item.getId()+".png"));
         this.passable = true;
         this.saveable = false;
@@ -49,7 +49,7 @@ public class ItemDrop extends StaticEntity {
     
     @Override public void onCollision(Collidable entity) {
         if ( entity instanceof Player ) {
-            ((Player) entity).addItem(item);
+            if ( !((Player) entity).getInventory().addItem(item) ) return;
             x.getChunkManager().removeEntity(this);
         }
     }

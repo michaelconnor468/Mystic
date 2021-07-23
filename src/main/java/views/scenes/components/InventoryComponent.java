@@ -64,7 +64,10 @@ public class InventoryComponent implements Component, Observer {
             StackPane stackPane = new StackPane();
             stackPane.getChildren().add(backgrounds.get(i));
             box.getChildren().add(stackPane);
-            //if ( items.get(i) != null ) stackPane.getChildren().add(items.get(i));
+            if ( items.get(i) != null ) {
+                System.out.println("Rendering Item");
+                stackPane.getChildren().add(items.get(i));
+            }
         }
     }
 
@@ -73,7 +76,15 @@ public class InventoryComponent implements Component, Observer {
     }
 
     @Override public void update(Observable inventory, Object arg) {
+        System.out.println("Update");
         if ( !(inventory instanceof Inventory) ) return;
-        Inventory inv = (Inventory) inventory;
+        List<ItemStack> inv = ((Inventory) inventory).getItemStacks();
+        for ( int i = 0; i < inv.size(); i++ ) {
+            if ( inv.get(i) != null ) {
+                items.set(i, new ImageView(inv.get(i).getImage()));
+                itemCounts.set(i, inv.get(i).getSize());
+            }
+        }
+        render();
     }
 }

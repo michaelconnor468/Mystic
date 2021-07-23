@@ -9,5 +9,6 @@
     chunkSize: 64,
     tileSize: 64,
     inventorySlots: 24,
+    itemSize: 32,
     itemStackSize: 64
 }

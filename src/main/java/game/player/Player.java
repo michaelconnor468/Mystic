@@ -55,8 +55,6 @@ public class Player extends DynamicEntity {
     public void unequip() { this.weapon = null; }
     public Weapon getWeapon() { return this.weapon; }
     
-    public void addItem(Item item) {}
-
     public void setMovementDirection(MovementDirection direction) {
         super.setMovementDirection(direction);
         animation.setStill(false);

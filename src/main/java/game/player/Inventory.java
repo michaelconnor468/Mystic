@@ -29,10 +29,10 @@ public class Inventory extends Observable implements Saveable  {
 
     public boolean addItem(Item item) {
         for ( ItemStack stack : items ) {
-            if ( item.getId() == stack.getId() && !stack.isFull() ) {
-               stack.addItem();
-               notifyObservers();
-               return true;
+            if ( stack != null && item.getId() == stack.getId() && !stack.isFull() ) {
+                stack.addItem();
+                notifyObservers();
+                return true;
             }
         }
         for ( int i = 0; i < items.size(); i++ ) {
