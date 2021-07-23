@@ -15,12 +15,12 @@ public class ItemStack implements Saveable {
     private Image image;
     
     private ItemStack() {}
-    private ItemStack(X x, Item item) { this(x, item, 1); }
-    private ItemStack(X x, ParserBlock block) {
+    public ItemStack(X x, Item item) { this(x, item, 1); }
+    public ItemStack(X x, ParserBlock block) {
         this(x, new Item(x, ((ParserInt) block.getProperty("id")).getNumber()), 
             ((ParserInt) block.getProperty("size")).getNumber());
     }
-    private ItemStack(X x, Item item, int size) {
+    public ItemStack(X x, Item item, int size) {
         this.x = x;
         this.maxSize = ((ParserInt) x.getMainSettings().get("itemStackSize")).getNumber(); 
         this.size = Math.max(maxSize, size);
@@ -31,11 +31,13 @@ public class ItemStack implements Saveable {
         } catch ( Exception e ) { System.err.println(e.getMessage()); }
     }
 
-    public boolean isFull() { return size >= maxSize; }
     public Image getImage() { return image; }
     public int getSize() { return size; }
     public int getId() { return item.getId(); }
-    public void setSize(int size) { this.size = Math.max(size, maxSize); }
+    public boolean isFull() { return size == maxSize; }
+    public boolean isEmpty() { return size == 0; }
+    public void addItem() { size = size == maxSize ? size : size + 1; }
+    public void removeItem() { size = size == 0 ? 0 : size + 1; }
 
     @Override public ParserBlock save(ParserBlock block) {
         block.addProperty(new ParserProperty("id", new ParserInt(item.getId())));

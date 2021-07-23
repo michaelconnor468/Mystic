@@ -10,18 +10,39 @@ import util.parse.obj.*;
 import java.util.Observable;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Inventory extends Observable implements Saveable  {
     private X x;
+    private int slots;
+    private int stackSize;
     private ArrayList<ItemStack> items;
 
     private Inventory() {}
     public Inventory(X x, ParserBlock inventory) {
-        for ( ParserObject object : (ParserArray) inventory.getProperty("items") ) {
-            ParserBlock item = (ParserBlock) object;
-            // TODO unload
-        }
         this.x = x;
+        this.slots = ((ParserInt) x.getMainSettings().get("inventorySlots")).getNumber();
+        this.items = new ArrayList<>(Collections.nCopies(slots, null));
+        for ( ParserObject object : (ParserArray) inventory.getProperty("items") )
+            items.add(new ItemStack(x, (ParserBlock) object));
+    }
+
+    public boolean addItem(Item item) {
+        for ( ItemStack stack : items ) {
+            if ( item.getId() == stack.getId() && !stack.isFull() ) {
+               stack.addItem();
+               notifyObservers();
+               return true;
+            }
+        }
+        for ( int i = 0; i < items.size(); i++ ) {
+            if ( items.get(i) == null ) {
+                items.set(i, new ItemStack(x, item));
+                notifyObservers();
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override public ParserBlock save(ParserBlock block) {

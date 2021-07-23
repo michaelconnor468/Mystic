@@ -19,14 +19,16 @@ public class Item {
     private X x;
     private String name;
     private int id;
-    private boolean inInventory;
+    private int stackSize;
     private Item() {}
     
     public Item(X x, int id) {
         this.x = x;
         this.id = id;
         this.name = ((ParserString) x.getTemplates("items").get(id).getProperty("name")).toString();
+        this.stackSize = ((ParserInt) x.getTemplates("items").get(id).getProperty("stackSize")).getNumber();
     }
 
     public int getId() { return this.id; }
+    public int getStackSize() { return this.stackSize; }
 }
