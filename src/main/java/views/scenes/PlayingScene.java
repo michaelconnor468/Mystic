@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.geometry.Insets;
 import javafx.scene.text.Text;
 import javafx.scene.canvas.*;
 import javafx.geometry.Pos;
@@ -31,8 +32,10 @@ public class PlayingScene {
         InventoryComponent inventoryComponent = new InventoryComponent(x);
         componentHolder.setBottom(inventoryComponent.getComponent());
         componentHolder.setAlignment(inventoryComponent.getComponent(), Pos.CENTER);
+        componentHolder.setMargin(inventoryComponent.getComponent(), new Insets(12,12,12,12));
 
         pane.getChildren().add(canvas);
+        pane.getChildren().add(componentHolder);
         x.getRenderManager().updateGraphicsContext(canvas.getGraphicsContext2D());
         setupKeystrokes(scene);
 
