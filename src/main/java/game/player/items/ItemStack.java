@@ -23,7 +23,7 @@ public class ItemStack implements Saveable {
     public ItemStack(X x, Item item, int size) {
         this.x = x;
         this.maxSize = ((ParserInt) x.getMainSettings().get("itemStackSize")).getNumber(); 
-        this.size = 0;
+        this.size = 1;
         this.item = item;
         try {
             this.image = 

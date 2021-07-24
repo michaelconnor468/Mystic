@@ -17,16 +17,19 @@ import javafx.scene.layout.StackPane;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 
 public class InventoryComponent implements Component, Observer {
     private X x;
-    private ArrayList<ImageView> items;
-    private ArrayList<Integer> itemCounts;
     private ArrayList<ImageView> backgrounds;
+    private List<ItemStack> items;
     private HBox box;
     private int size;
     private int height;
@@ -35,25 +38,15 @@ public class InventoryComponent implements Component, Observer {
     public InventoryComponent(X x) {
         this.x = x;
         this.size = ((ParserInt) x.getMainSettings().get("inventorySlots")).getNumber();
-        this.items = new ArrayList<>(Collections.nCopies(size, null));
-        this.itemCounts = new ArrayList<>(Collections.nCopies(size, null));
+        this.items = x.getPlayer().getInventory().getItemStacks();
         this.backgrounds = new ArrayList<>(Collections.nCopies(size, null));
         x.getPlayer().getInventory().addObserver(this);
 
         Path path = Paths.get("src/main/resources/misc/InventorySlot.png");
         try {
-            for ( int i = 0; i < size; i++ ) 
+            for ( int i = 0; i < size; i++ )
                 backgrounds.set(i, new ImageView(new Image(path.toUri().toURL().toString())));
         } catch ( MalformedURLException e ) { System.err.println("I should never happen."); }
-        
-
-        List<ItemStack> inventory = x.getPlayer().getInventory().getItemStacks();
-        for ( int i = 0; i < inventory.size(); i++ ) {
-            if ( inventory.get(i) != null ) {
-                items.set(i, new ImageView(inventory.get(i).getImage()));
-                itemCounts.set(i, inventory.get(i).getSize());
-            }
-        }
 
         this.box = new HBox();
         render();
@@ -67,7 +60,14 @@ public class InventoryComponent implements Component, Observer {
             stackPane.getChildren().add(backgrounds.get(i));
             box.getChildren().add(stackPane);
             if ( items.get(i) != null ) {
-                stackPane.getChildren().add(items.get(i));
+                stackPane.getChildren().add(new ImageView(items.get(i).getImage()));
+                BorderPane bp = new BorderPane();
+                Text count = new Text(String.valueOf(items.get(i).getSize()));
+                count.setFill(Color.WHITE);
+                count.setStyle("-fx-font-size: 12px; -fx-font-weight: bold;");
+                bp.setBottom(count);
+                bp.setMargin(count, new Insets(0,0,0,4));
+                stackPane.getChildren().add(bp);
             }
         }
     }
@@ -78,13 +78,7 @@ public class InventoryComponent implements Component, Observer {
 
     @Override public void update(Observable inventory) {
         if ( !(inventory instanceof Inventory) ) return;
-        List<ItemStack> inv = ((Inventory) inventory).getItemStacks();
-        for ( int i = 0; i < inv.size(); i++ ) {
-            if ( inv.get(i) != null ) {
-                items.set(i, new ImageView(inv.get(i).getImage()));
-                itemCounts.set(i, inv.get(i).getSize());
-            }
-        }
+        this.items = x.getPlayer().getInventory().getItemStacks();
         Platform.runLater(() -> render());
     }
 }
