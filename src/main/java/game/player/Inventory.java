@@ -27,7 +27,8 @@ public class Inventory implements Saveable, Observable {
         this.items = new ArrayList<>(Collections.nCopies(slots, null));
         this.observers = new ArrayList<>();
         for ( ParserObject object : (ParserArray) inventory.getProperty("items") )
-            items.add(new ItemStack(x, (ParserBlock) object));
+            items.set(((ParserInt) ((ParserBlock) object).getProperty("slot")).getNumber(), 
+                new ItemStack(x, (ParserBlock) object));
     }
 
     public boolean addItem(Item item) {
@@ -51,7 +52,12 @@ public class Inventory implements Saveable, Observable {
     @Override public ParserBlock save(ParserBlock block) {
         ParserBlock inventoryBlock = new ParserBlock();
         ParserArray parserArray = new ParserArray(ParserObject.ObjectType.BLOCK);
-        for ( ItemStack item : items ) if ( item != null ) parserArray.add(item.save(new ParserBlock()));
+        for ( int i = 0; i < items.size(); i++ ) {
+            if ( items.get(i) == null ) continue;
+            ParserBlock block2 = new ParserBlock();
+            block2.addProperty(new ParserProperty("slot", new ParserInt(i)));
+            parserArray.add(items.get(i).save(block2));
+        }
         inventoryBlock.addProperty(new ParserProperty("items", parserArray));
         block.addProperty(new ParserProperty("inventory", inventoryBlock));
         return block;

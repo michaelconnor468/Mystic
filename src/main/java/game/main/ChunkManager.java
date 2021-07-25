@@ -236,7 +236,7 @@ public class ChunkManager implements TickObserver, Renderable {
         for ( String pos : chunkJSON.keySet() ) {
             int x = Integer.parseInt(pos.split(":")[0]);
             int y = Integer.parseInt(pos.split(":")[1]);
-            Files.write(path.resolve(Paths.get("chunk"+String.format("%03d", x) + String.format("%03d", y)+ ".msv")), 
+            Files.write(path.resolve(Paths.get("chunk"+String.format("%03d", x) + String.format("%03d", y)+ ".msv")),
                 chunkJSON.get(pos).getBytes());
         }
     }
