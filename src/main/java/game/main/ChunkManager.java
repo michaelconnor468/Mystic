@@ -234,17 +234,10 @@ public class ChunkManager implements TickObserver, Renderable {
     public void saveChunks(Path path) throws IOException  { 
         for ( Chunk chunk : getChunks() ) cacheChunk(chunk); 
         for ( String pos : chunkJSON.keySet() ) {
-            Task<Void> task = new Task<Void>() {
-                @Override protected Void call() throws Exception {
-                    int x = Integer.parseInt(pos.split(":", 1)[0]);
-                    int y = Integer.parseInt(pos.split(":", 1)[1]);
-                    Files.write(path.resolve(Paths.get("chunk"+String.format("%03d", x + String.format("%03d", y)+
-                        ".msv"))), chunkJSON.get(pos).getBytes());
-                    return null;
-                }
-            };
-            task.setOnSucceeded((v) -> x.getGameStateManager().setState(GameStateManager.State.Save));
-            (new Thread(task)).start();
+            int x = Integer.parseInt(pos.split(":")[0]);
+            int y = Integer.parseInt(pos.split(":")[1]);
+            Files.write(path.resolve(Paths.get("chunk"+String.format("%03d", x) + String.format("%03d", y)+ ".msv")), 
+                chunkJSON.get(pos).getBytes());
         }
     }
     public void saveChunk(Path path, Chunk chunk) throws IOException {
