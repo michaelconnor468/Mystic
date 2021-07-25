@@ -1,13 +1,11 @@
 # Priority 1
-- Add inventory functionality
+- Add build menu and functionality for tiles
 
 ## Priority 2
-- Add build menu and functionality for tiles
-- Fix issue with swimming too close to land
 - Fix issue with items not being easily picked up
 
 ### Priority 3
-- Refactor chunk constructor into helper method
+- Add ability to drop items from inventory
 
 ### To Investigate
 
