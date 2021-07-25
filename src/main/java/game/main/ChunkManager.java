@@ -173,8 +173,8 @@ public class ChunkManager implements TickObserver, Renderable {
     }
 
     public Chunk getChunkInsideOf( Entity entity ) {
-        return chunks.get((int) entity.getPosition().getX()/(chunkSize*tileSize))
-            .get((int) entity.getPosition().getY()/(chunkSize*tileSize));
+        return chunks.get((int) entity.getPosition().getX()/(chunkSize*tileSize) - getLeftmostChunk())
+            .get((int) entity.getPosition().getY()/(chunkSize*tileSize) - getTopmostChunk());
     }
 
     private void printActiveChunks() {
@@ -195,14 +195,16 @@ public class ChunkManager implements TickObserver, Renderable {
 
     private int getCenterChunkX() { return (int) x.getPlayer().getPosition().getX()/(chunkSize*tileSize); }
     private int getCenterChunkY() { return (int) x.getPlayer().getPosition().getY()/(chunkSize*tileSize); }
+    private int getLeftmostChunk() { return getCenterChunkX() - chunkLoadDiameter; }
+    private int getTopmostChunk() { return getCenterChunkY() - chunkLoadDiameter; }
 
     public void addEntity( Entity entity ) { getChunkInsideOf(entity).addEntity(entity); }
     public void removeEntity( Entity entity ) { getChunkInsideOf(entity).removeEntity(entity); }
 
     public ArrayList<Chunk> getChunksAround( Entity entity ) {
         ArrayList<Chunk> ret = new ArrayList<>();
-        int middlexChunk = (int) entity.getPosition().getX()/(chunkSize*tileSize);
-        int middleyChunk = (int) entity.getPosition().getY()/(chunkSize*tileSize);
+        int middlexChunk = (int) entity.getPosition().getX()/(chunkSize*tileSize) - getLeftmostChunk();
+        int middleyChunk = (int) entity.getPosition().getY()/(chunkSize*tileSize) - getTopmostChunk();
         for ( int i = -1; i < 2; i++ ) {
             for ( int j = -1; j < 2; j++ ) {
                 if ( middlexChunk + i >= 0 && middlexChunk + i < chunks.size() ) {
@@ -218,8 +220,7 @@ public class ChunkManager implements TickObserver, Renderable {
         ArrayList<TileEntity> ret = new ArrayList<>();
         for ( Chunk chunk : getChunksAround(entity) ) {
             if ( chunk == null ) continue;
-            for ( TileEntity tileEntity : chunk.getTilesAround(entity) )
-                ret.add(tileEntity);
+            for ( TileEntity tileEntity : chunk.getTilesAround(entity) ) ret.add(tileEntity);
         }
         return ret;
     }
