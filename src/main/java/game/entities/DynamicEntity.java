@@ -115,8 +115,9 @@ public abstract class DynamicEntity extends Entity {
         if ( isSwimming() ) addBuff(Buff.load(x, this, "swimming"));
         
         double finalSpeedModifier = 1;
-        for ( Buff buff : buffs )
-            finalSpeedModifier *= buff.getSpeedModifier(); 
+        for ( Buff buff : buffs ) finalSpeedModifier *= buff.getSpeedModifier(); 
+
+        if ( dx == 0 && dy == 0 ) return;
 
         position.setLocation(position.getX()+dx*speed*finalSpeedModifier, position.getY()+dy*speed*finalSpeedModifier);
         if ( x.getChunkManager().testCollision(this) ) position.setLocation(position.getX()-dx*speed*finalSpeedModifier, 

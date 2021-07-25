@@ -44,4 +44,6 @@ public class ItemStack implements Saveable {
         block.addProperty(new ParserProperty("size", new ParserInt(size)));
         return block;
     }
+
+    @Override public String toString() { return "{" + "item: " + item.getId() + ", size: " + size + "}"; }
 }
