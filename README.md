@@ -1,5 +1,5 @@
 # Mystic
-Mystic is a 2D Open World Java Game. You will need the latest version of java to run. To run, simply execute the latest .jar file in the build/libs directory. To rebuild and run, simply execute the shell script entitiled run in this folder which will build and execute the current version of the game. Or if you know gradle you can always use that directly.
+Mystic is a Open World Java Game. You will need the latest version of java to run. To run, simply execute the latest .jar file in the build/libs directory. To rebuild and run, simply execute the shell script entitiled run in this folder which will build and execute the current version of the game. Or if you know gradle you can always use that directly.
 
 ## Gameplay
 
