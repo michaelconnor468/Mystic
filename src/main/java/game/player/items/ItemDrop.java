@@ -43,8 +43,8 @@ public class ItemDrop extends StaticEntity {
         this.position = 
             new Point2D.Double((int) entity.getPosition().getX()+(new Random()).nextInt((int) entity.getSize().getX()),
             (int) entity.getPosition().getY() + (int) entity.getSize().getY() + (new Random()).nextInt(30));
-        this.addCollisionBox(new CollisionBox(this, new Point(0, (int) this.size.getX()), 
-            new Point(0, (int) this.size.getY()), false));
+        this.addCollisionBox(new CollisionBox(this, new Point(0, 0), 
+            new Point((int) this.size.getX(), (int) this.size.getY()), false));
     }
     
     @Override public void onCollision(Collidable entity) {
