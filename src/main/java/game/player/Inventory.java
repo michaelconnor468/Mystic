@@ -51,7 +51,7 @@ public class Inventory implements Saveable, Observable {
     @Override public ParserBlock save(ParserBlock block) {
         ParserBlock inventoryBlock = new ParserBlock();
         ParserArray parserArray = new ParserArray(ParserObject.ObjectType.BLOCK);
-        // TODO save into array
+        for ( ItemStack item : items ) parserArray.add(item.save(new ParserBlock()));
         inventoryBlock.addProperty(new ParserProperty("items", parserArray));
         block.addProperty(new ParserProperty("inventory", inventoryBlock));
         return block;
