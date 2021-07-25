@@ -93,10 +93,9 @@ public class Chunk implements TickObserver, Renderable {
 
     public ArrayList<TileEntity> getTilesAround( Entity entity ) {
         ArrayList<TileEntity> ret = new ArrayList<>();
-        for ( TileEntity tileEntity : tileEntities.getEntitiesWithinRange( 
-            entity.getPosition().getX(), entity.getPosition().getX() + entity.getSize().getX(), 
-                entity.getPosition().getY(), entity.getPosition().getY() + entity.getSize().getY() ) )
-                    ret.add(tileEntity);
+        for ( TileEntity tileEntity : tileEntities.getEntitiesWithinRange( entity.getPosition().getX() - tileSize, 
+            entity.getPosition().getX() + entity.getSize().getX(), entity.getPosition().getY() - tileSize, 
+            entity.getPosition().getY() + entity.getSize().getY() ) ) ret.add(tileEntity);
         return ret;
     }
     

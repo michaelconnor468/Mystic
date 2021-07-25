@@ -112,8 +112,7 @@ public abstract class DynamicEntity extends Entity {
             dy = 0;
         }
 
-        if ( isSwimming() )
-            addBuff(Buff.load(x, this, "swimming"));
+        if ( isSwimming() ) addBuff(Buff.load(x, this, "swimming"));
         
         double finalSpeedModifier = 1;
         for ( Buff buff : buffs )
@@ -125,8 +124,9 @@ public abstract class DynamicEntity extends Entity {
     }
 
     public boolean isSwimming() {
-        for ( TileEntity entity : x.getChunkManager().getTilesAround(this) )
+        for ( TileEntity entity : x.getChunkManager().getTilesAround(this) ) {
             if ( !entity.isLiquid() ) return false;
+        }
         return true;
     }
 

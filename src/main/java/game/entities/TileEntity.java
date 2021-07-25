@@ -56,6 +56,7 @@ public class TileEntity extends Entity {
     
     public int getChunkRow() { return chunkRow; }
     public int getChunkColumn() { return chunkColumn; }
+    public int getType() { return type; }
     public boolean isLiquid() { return liquid; }
 
     public ParserBlock save(ParserBlock block) {
