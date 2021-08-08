@@ -1,9 +1,10 @@
 {
     name: "medium oak tree",
-    maxHealth: 400,
-    health: 400,
-    ySize: 128,
-    xSize: 64,
+    maxHealth: 40,
+    health: 40,
+    ySize: 392,
+    xSize: 241,
     damageable: 1,
-    collisionBoxes: [{xMin: 30, xMax: 34, yMin: 94, yMax:128}]
+    collisionBoxes: [{xMin: 100, xMax: 140, yMin: 280, yMax:390}],
+    drops: [0, 0, 0, 0]
 }
