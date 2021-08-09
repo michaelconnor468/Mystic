@@ -64,9 +64,8 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
     public ArrayList<E> getEntitiesWithinRange(Point min, Point max) {
         indexEntities();
         ArrayList<E> ret = new ArrayList<E>();
-        for ( int i = binarySearchFirstIndex( min.getY() ); i > -1 && i < entities.size() && 
-            entities.get(i).getPosition().getY() <= max.getY(); i++ )
-            if (entities.get(i).getPosition().getX() >= min.getX() && entities.get(i).getPosition().getX() <= max.getX())
+        for ( int i = binarySearchFirstIndex( min.getY() - maxEntitySize ); i > -1 && i < entities.size() && entities.get(i).getPosition().getY() <= max.getY(); i++ )
+            if (entities.get(i).getPosition().getX() + entities.get(i).getSize().getX() >= min.getX() && entities.get(i).getPosition().getX() <= max.getX())
                 ret.add(entities.get(i));
         return ret;
     }
