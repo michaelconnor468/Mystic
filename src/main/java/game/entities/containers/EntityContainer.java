@@ -41,7 +41,7 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
      * y position of which there are not many in a given chunk making this efficient and worthwhile.
      */
     private void indexEntities() { 
-        Collections.sort(entities, (e1, e2) -> (int) (e1.getPosition().getY() - e2.getPosition().getY())); 
+        Collections.sort(entities, (e1, e2) -> (int) (e2.getPosition().getY() - e1.getPosition().getY())); 
     }
 
     public boolean testCollision(Entity entity) {
