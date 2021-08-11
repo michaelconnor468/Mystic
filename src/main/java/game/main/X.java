@@ -102,7 +102,8 @@ public class X {
     }
     public HashMap<String, ParserObject> getMainSettings() { return mainSettings; }
 
-    public void createPlayer(Path path) { 
+    public void createPlayer(Path path) {
+        if ( player != null ) player.destroy();
         player = new Player(this, FileParser.parse(path.resolve("player/player.msv")), 
             FileParser.parse(Paths.get("src/main/config/templates/player/player.mcfg"))); 
     }

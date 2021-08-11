@@ -36,7 +36,8 @@ public class Player extends DynamicEntity {
     }
 
     public void tick(X x) { 
-        super.tick(x); 
+        super.tick(x);
+        System.out.println(position);
         animation.tick(x); 
     }
     
@@ -99,4 +100,5 @@ public class Player extends DynamicEntity {
     }
 
     public Inventory getInventory() { return this.inventory; }
+    public void destroy() { x.getTimingManager().unregister(this); }
 }
