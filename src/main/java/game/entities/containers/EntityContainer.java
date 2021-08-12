@@ -64,23 +64,11 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
     public ArrayList<E> getEntitiesWithinRange(Point min, Point max) {
         indexEntities();
         ArrayList<E> ret = new ArrayList<E>();
-        for ( int i = binarySearchFirstIndex( min.getY() - maxEntitySize ); i > -1 && i < entities.size() && entities.get(i).getPosition().getY() <= max.getY(); i++ )
-            if (entities.get(i).getPosition().getX() + entities.get(i).getSize().getX() >= min.getX() && entities.get(i).getPosition().getX() <= max.getX())
-                ret.add(entities.get(i));
+        for ( int i = 0; i > -1 && i < entities.size(); i++ )
+            if (entities.get(i).getPosition().getY() - entities.get(i).getSize().getY() <= max.getY() && entities.get(i).getPosition().getY() + entities.get(i).getSize().getY() >= min.getY())
+                if (entities.get(i).getPosition().getX() + entities.get(i).getSize().getX() >= min.getX() && entities.get(i).getPosition().getX() - entities.get(i).getSize().getX() <= max.getX())
+                    ret.add(entities.get(i));
         return ret;
-    }
-
-    private int binarySearchFirstIndex( double yPositionLow ) {
-        if ( entities.size() == 0 ) return -1;
-        int currentIndex = 0;
-        int formerIndex = entities.size();
-        while ( true ) {
-            if ( formerIndex == currentIndex || currentIndex == 0 ) 
-                return entities.get(currentIndex).getPosition().getY() >= yPositionLow ? 0 : -1;
-            int half = (int) Math.abs( currentIndex - formerIndex ) / 2;
-            formerIndex = currentIndex;
-            currentIndex -= entities.get(currentIndex).getPosition().getY() >= yPositionLow ? half : -half; 
-        }
     }
 
     public int getEntityCount() { return entityCount; } 
