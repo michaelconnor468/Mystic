@@ -7,8 +7,10 @@ import game.main.render.Renderer;
 import game.main.TickObserver;
 import game.main.X;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.stream.Collectors;
 import java.awt.Point;
 
 /**
@@ -61,14 +63,11 @@ public abstract class EntityContainer<E extends Entity> implements TickObserver,
         for ( int i = entities.size(); i > 0; i-- ) entities.get(i-1).render(renderer); 
     }
     public ArrayList<E> getAllEntities() { return (ArrayList<E>) entities.clone(); }
-    public ArrayList<E> getEntitiesWithinRange(Point min, Point max) {
-        indexEntities();
-        ArrayList<E> ret = new ArrayList<E>();
-        for ( int i = 0; i > -1 && i < entities.size(); i++ )
-            if (entities.get(i).getPosition().getY() - entities.get(i).getSize().getY() <= max.getY() && entities.get(i).getPosition().getY() + entities.get(i).getSize().getY() >= min.getY())
-                if (entities.get(i).getPosition().getX() + entities.get(i).getSize().getX() >= min.getX() && entities.get(i).getPosition().getX() - entities.get(i).getSize().getX() <= max.getX())
-                    ret.add(entities.get(i));
-        return ret;
+    public List<E> getEntitiesWithinRange(Point min, Point max) {
+        return entities.parallelStream()
+            .filter(e -> (e.getPosition().getY() - e.getSize().getY() <= max.getY() && e.getPosition().getY() + e.getSize().getY() >= min.getY()))
+            .filter(e -> (e.getPosition().getX() - e.getSize().getX() <= max.getX() && e.getPosition().getX() + e.getSize().getX() >= min.getY()))
+            .collect(Collectors.toList());
     }
 
     public int getEntityCount() { return entityCount; } 
